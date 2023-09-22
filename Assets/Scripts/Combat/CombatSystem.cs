@@ -5,14 +5,9 @@ using UnityEngine.UI;
 
 public enum CombatState { START, P1TURN, P2TURN, P1WON, P2WON }
 
+
 public class CombatSystem : MonoBehaviour
 {
-    //public GameObject p1Prefab;
-    //public GameObject p2Prefab;
-    
-    //public Transform p1Station;
-    //public Transform p2Station;
-
     public Text combatStatus;
 
     [SerializeField] Unit p1Unit;
@@ -24,6 +19,8 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] CombatDialogBox dialogBox;
 
     public CombatState state;
+
+    public Dice dice = new Dice(); 
     private void Start()
     {
         state = CombatState.START;
@@ -39,107 +36,135 @@ public class CombatSystem : MonoBehaviour
         p2HUD.SetHUD(p2Unit.Hero);
 
         StartCoroutine( dialogBox.TypeDialog($"{p1Unit.Hero.Base.Name} VS {p2Unit.Hero.Base.Name}!"));
-
-        //GameObject p1GO = Instantiate(p1Prefab, p1Station);
-        //p1Unit = p1GO.GetComponent<Unit>();
-        //GameObject p2GO = Instantiate(p2Prefab, p2Station);
-        //p2Unit = p2GO.GetComponent<Unit>();
-
-        //combatStatus.text = "Combat begin ! " + p1Unit.unitName + " VS " + p2Unit.unitName;
-
         yield return new WaitForSeconds(2f);
+        yield return dialogBox.TypeDialogSlow($"3......2......1.....GO!");
+        yield return new WaitForSeconds(1f);
 
-        //Debug.Log("P" + StaticStores.firstPlayer + "'s turn");
-        //    if (SpeedCheck() == 1)
-        //    {
-        //        state = CombatState.P1TURN;
-        //        StartCoroutine(Player1Turn());
+        Debug.Log("检查出手权：p" + SpeedCheck() + "先手");
 
-        //    }
-        //    else
-        //    {
-        //        state = CombatState.P2TURN;
-        //        StartCoroutine(Player2Turn());
-        //    }
+        if (SpeedCheck() == 1)
+        {
+            state = CombatState.P1TURN;
+            StartCoroutine(Player1Turn());
+
+        }
+        else
+        {
+            state = CombatState.P2TURN;
+            StartCoroutine(Player2Turn());
+        }
     }
 
     //SpeedCheck 比较双方速度决定出手权
-    //public int SpeedCheck()
-    //{
-    //int firstPlayer;
-    //if(p1Unit.speed > p2Unit.speed)
-    //{
-    //    firstPlayer = 1;
-    //}
-    //else if (p1Unit.speed < p2Unit.speed)
-    //{
-    //    firstPlayer = 2;
-    //}
-    //else
-    //{
-    //    firstPlayer = Random.Range(1, 3);
-    //}
-    //return firstPlayer;
-    //}
+    public int SpeedCheck()
+    {
+        int firstPlayer;
+        if (p1Unit.Hero.Base .Speed > p2Unit.Hero.Base.Speed)
+        {
+            firstPlayer = 1;
+        }
+        else if (p1Unit.Hero.Base.Speed < p2Unit.Hero.Base.Speed)
+        {
+            firstPlayer = 2;
+        }
+        else
+        {
+            firstPlayer = Random.Range(1, 3);
+        }
+        return firstPlayer;
+    }
+
+    //PlayerMovePerform 放技能
+    IEnumerator PerformP1Move()
+    {
+        //扔骰子
+        int currentValue =  dice.DiceRoll();
+        yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.name } rolled a  ...... {currentValue+1}");
+        yield return new WaitForSeconds(1.2f);
+
+        //选技能
+        var move = p1Unit.Hero.Moves[dice.CurrentValue];
+        yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.name } used {move.Base.name}");//有乱序Bug先不用
+        //dialogBox.SetDialog($"{p1Unit.Hero.Base.name } used {move.Base.name}");
+        yield return new WaitForSeconds(1.2f);
+
+        //结算伤害
+        bool isFainted = p2Unit.Hero.TakeDamage(move, p1Unit.Hero, currentValue);
+        p2HUD.UpdateHp();
+        p1HUD.ShowDamage();
+        //Debug.Log("p1还有" + p1Unit.Hero.HP + "血");
+        
+        //判断死亡
+        if (isFainted)
+        {
+            state = CombatState.P1WON;
+            EndCombat();
+        }
+        else
+        {
+            state = CombatState.P2TURN;
+            StartCoroutine(Player2Turn());
+        }
+    }
+
+    IEnumerator PerformP2Move()
+    {
+        //扔骰子
+        int currentValue = dice.DiceRoll();
+        yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.name } rolled a ...... {currentValue + 1}");
+        yield return new WaitForSeconds(1.2f);
+
+        //选技能
+        var move = p2Unit.Hero.Moves[dice.CurrentValue];
+        yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.name } used {move.Base.name}");//有乱序Bug先不用
+        //dialogBox.SetDialog($"{p2Unit.Hero.Base.name } used {move.Base.name}");
+        yield return new WaitForSeconds(1.2f);
+
+        //结算伤害
+        bool isFainted = p1Unit.Hero.TakeDamage(move, p2Unit.Hero, currentValue);
+        p1HUD.UpdateHp();
+        p2HUD.ShowDamage();
+        //Debug.Log("p2还有" + p2Unit.Hero.HP + "血");
+
+        //判断死亡
+        if (isFainted)
+        {
+            state = CombatState.P2WON;
+            EndCombat();
+        }
+        else
+        {
+            state = CombatState.P1TURN;
+            StartCoroutine(Player1Turn());
+        }
+    }
+
 
     //Player turn 玩家一回合的流程
-    //IEnumerator Player1Turn()
-    //{
-    //combatStatus.text = p1Unit.unitName + "attacks!";
-    //yield return new WaitForSeconds(1f);
+    IEnumerator Player1Turn()
+    {
+        StartCoroutine(PerformP1Move());
+        yield return new WaitForSeconds(1.2f);
+    }
 
-    //bool isDead = p2Unit.TakeDamage(p1Unit.damage);
-    //p2HUD.SetHp(p2Unit.currentHP);
-    //combatStatus.text = p2Unit.unitName + " loses " + p1Unit.damage + " life ";
-
-    //yield return new WaitForSeconds(1f);
-
-    //if (isDead)
-    //{
-    //    state = CombatState.P1WON;
-    //    EndCombat();
-    //}
-    //else
-    //{
-    //    state = CombatState.P2TURN;
-    //    StartCoroutine(Player2Turn());
-    //}
-    //}
-
-    //IEnumerator Player2Turn()
-    //{
-    //    combatStatus.text = p2Unit.unitName  + "attacks!";
-    //    yield return new WaitForSeconds(1f);
-
-    //    bool isDead = p1Unit.TakeDamage(p2Unit.damage);
-    //    p1HUD.SetHp(p1Unit.currentHP);
-    //    combatStatus.text = p1Unit.unitName + " loses " + p2Unit.damage + " life ";
-    //    yield return new WaitForSeconds(1f);
-
-    //    if (isDead)
-    //    {
-    //        state = CombatState.P2WON;
-    //        EndCombat();
-    //    }
-    //    else
-    //    {
-    //        state = CombatState.P1TURN;
-    //        StartCoroutine(Player1Turn());
-    //    }
-    //}
+    IEnumerator Player2Turn()
+    {
+        StartCoroutine(PerformP2Move());
+        yield return new WaitForSeconds(1.2f);
+    }
 
     //EndBattle 游戏结束
-    //    void EndCombat()
-    //    {
-    //        if(state == CombatState.P1WON)
-    //        {
-    //            combatStatus.text = p1Unit.unitName + " Won!";
-    //        }
-    //        else if (state == CombatState.P2WON)
-    //        {
-    //            combatStatus.text = p2Unit.unitName + " Won!";
-    //        }
-    //    }
+    void EndCombat()
+    {
+        if (state == CombatState.P1WON)
+        {
+            combatStatus.text = p1Unit.Hero.Base.Name + " Won!";
+        }
+        else if (state == CombatState.P2WON)
+        {
+            combatStatus.text = p2Unit.Hero.Base.Name + " Won!";
+        }
+    }
 
 
 }

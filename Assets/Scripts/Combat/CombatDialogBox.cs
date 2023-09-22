@@ -24,4 +24,14 @@ public class CombatDialogBox : MonoBehaviour
         }
     }
 
+    public IEnumerator TypeDialogSlow(string dialog)
+    {
+        dialogText.text = "";
+        foreach (var letter in dialog.ToCharArray())
+        {
+            dialogText.text += letter;
+            yield return new WaitForSeconds(2f / lettersPerSec);
+        }
+    }
+
 }

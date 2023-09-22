@@ -14,41 +14,8 @@ public class Unit : MonoBehaviour
     public void Setup()
     {
         Hero = new Hero(_base, level);
-        Debug.Log("Status:" + Hero.Base.MaxHP + " " + Hero.Base.Attack + " " + Hero.Base.Defence);
+        //Debug.Log(Hero .Base.Name + "的初始血量攻防:" + Hero.Base.MaxHP + " " + Hero.Base.Attack + " " + Hero.Base.Defence);
         GetComponent<SpriteRenderer>().sprite = Hero.Base.Sprite;
-        Debug.Log("Sprite name:" );
+        //Debug.Log("Sprite name:" );
     }
-
-
-    //public string unitName;
-    //public int unitLevel;
-
-    //public int damage;//临时测试用，后面删掉
-    //public int atk;
-    //public int magic;
-    //public int def;
-    //public int magicDef;
-    //public int evasion;
-
-    //public int maxHP;
-    //public int currentHP;
-    //public int maxMP;
-    //public int currentMP;
-
-    //public int speed;
-
-    //TakeDamage 受伤逻辑以及死亡判定
-    //public bool TakeDamage(int dmg)
-    //{
-    //    currentHP -= dmg;
-
-    //    if(currentHP <= 0)
-    //    {
-    //        return true;
-    //    }
-    //    else
-    //    {
-    //        return false;
-    //    }
-    //}
 }

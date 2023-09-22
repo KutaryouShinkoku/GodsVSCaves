@@ -17,11 +17,23 @@ MonoBehaviour:
   description: Default hero for test.
   sprite: {fileID: -1441590681, guid: ee1a3dbb8776c204c81f4d582e1c273c, type: 3}
   frame: {fileID: 21300000, guid: 3c1f7aaa31794634ab4652621d475d95, type: 3}
-  maxHP: 10
-  attack: 2
-  defence: 1
-  magic: 2
-  magicDef: 1
-  speed: 2
+  maxHP: 60
+  attack: 52
+  defence: 25
+  magic: 5
+  magicDef: 2
+  speed: 3
   evasion: 0
-  movesOfDice: []
+  movesOfDice:
+  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+    diceNum: 1
+  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+    diceNum: 2
+  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+    diceNum: 3
+  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+    diceNum: 4
+  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+    diceNum: 5
+  - moveBase: {fileID: 11400000, guid: 73cdf3916fb7ba54db1c1448123b2ccd, type: 2}
+    diceNum: 6

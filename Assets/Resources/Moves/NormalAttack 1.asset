@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Normal Attack
   description: Deal 2xAtk damage.
-  power: 2
+  power: 40
