@@ -59,23 +59,46 @@ public class Hero
         get { return Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5; }
     }
 
-    //Damage 伤害处理
-    public bool TakeDamage(Move move, Hero attacker, int currentValue)
+    //CritCheck 暴击检查
+    public bool CritCheck()
+    {
+        if (Random.value * 100f <= 4f)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //Damage 伤害计算
+    public int CalculateDamage(Move move, Hero attacker, int currentValue)
     {
         //Debug.Log("骰子点数：" + currentValue);
-        float modifiers =(currentValue/10f)+0.7f;
+        float modifiers = ((currentValue / 10f) + 0.7f);
         //Debug.Log("伤害调整值：" + modifiers);
         float a = (2 * attacker.Level + 10) / 250f;
         float d = a * move.Base.Power * ((float)attacker.Attack / Defence) + 2;
+        if (move.Base.Power == 0)
+        {
+            d = 0;
+        }
         int damage = Mathf.FloorToInt(d * modifiers);
         //Debug.Log("伤害：" + damage);
+        return damage;
+    }
+
+    //Damage 伤害处理
+    public bool TakeDamage(int damage)
+    {
         HP -= damage;
         if (HP <= 0)
         {
             HP = 0;
             return true;
         }
-        
         return false;
     }
+
 }

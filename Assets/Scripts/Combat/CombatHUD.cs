@@ -9,10 +9,13 @@ public class CombatHUD : MonoBehaviour
     [SerializeField] Text nameText;
     [SerializeField] Text levelText;
     [SerializeField] Text dmgText;
-    [SerializeField] Slider HPSlider;
+    [SerializeField] Slider hPSlider;
+    [SerializeField] GameObject turnArrow;
     //[SerializeField Slider EXPSlider;
 
     Hero _hero;
+
+    //HUD初始化
     public void SetHUD(Hero hero)
     {
         _hero = hero;
@@ -20,18 +23,61 @@ public class CombatHUD : MonoBehaviour
         nameText.text = hero.Base.name;
         levelText.text = "LV" + hero.Level;
         dmgText.text = "";
-        HPSlider.maxValue = hero.MaxHP;
-        HPSlider.value = hero.MaxHP;
+        hPSlider.maxValue = hero.MaxHP;
+        hPSlider.value = hero.MaxHP;
+        turnArrow.SetActive(false);
     }
 
-    public void UpdateHp()
+    //显示血量
+    public IEnumerator UpdateHp()
     {
-        HPSlider.value = _hero.HP;
+        yield return SetHpSmooth (_hero .HP);
     }
 
-    public void ShowDamage()
+    //血量降低
+    public IEnumerator SetHpSmooth(float newHp)
     {
-        //显示伤害值
+        float curHp = hPSlider.value;
+        float changeAmt = curHp - newHp;
+
+        while(curHp-newHp>Mathf .Epsilon)
+        {
+            curHp -= 4*changeAmt * Time.deltaTime;
+            hPSlider.value = curHp ;
+            yield return null;
+        }
+
+        hPSlider.value = newHp;
+    }
+
+    //回合标识箭头
+
+    public IEnumerator SetArrow()
+    {
+        turnArrow.SetActive(true);
+        yield return null;
+    }
+    public IEnumerator HideArrow()
+    {
+        turnArrow.SetActive(false);
+        yield return null;
+    }
+
+
+    //显示伤害
+    public IEnumerator ShowDamage(int damage,bool crit)
+    {
+        dmgText.color = Color.red;
+        if (crit)
+        {
+            dmgText.color = Color.yellow;
+        }
+        if(damage != 0)
+        {
+            dmgText.text = "-" + damage;
+            yield return new WaitForSeconds(0.5f);
+        }
+        dmgText.text = "";
     }
 
 }

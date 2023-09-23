@@ -79,7 +79,7 @@ public class CombatSystem : MonoBehaviour
     {
         //扔骰子
         int currentValue =  dice.DiceRoll();
-        yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.name } rolled a  ...... {currentValue+1}");
+        yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.name } rolled a ......{currentValue+1}!");
         yield return new WaitForSeconds(1.2f);
 
         //选技能
@@ -89,9 +89,27 @@ public class CombatSystem : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
 
         //结算伤害
-        bool isFainted = p2Unit.Hero.TakeDamage(move, p1Unit.Hero, currentValue);
-        p2HUD.UpdateHp();
-        p1HUD.ShowDamage();
+        int damage = p2Unit.Hero.CalculateDamage(move, p1Unit.Hero, currentValue);
+
+        //暴击判断
+        bool isCrit = p2Unit.Hero.CritCheck();
+        if(damage != 0 && isCrit)
+        {
+            yield return dialogBox.TypeDialog($"Critical Hit!");
+            damage = (int)(damage * 1.5f);
+            yield return new WaitForSeconds(0.7f);
+        }
+
+        //受伤与死亡
+        bool isFainted = p2Unit.Hero.TakeDamage(damage);
+
+        if(damage != 0)
+        {
+            yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.name } lose {damage} life");
+        }
+        yield return p2HUD.ShowDamage(damage,isCrit);
+        yield return p2HUD.UpdateHp();
+        yield return new WaitForSeconds(0.7f);
         //Debug.Log("p1还有" + p1Unit.Hero.HP + "血");
         
         //判断死亡
@@ -111,7 +129,7 @@ public class CombatSystem : MonoBehaviour
     {
         //扔骰子
         int currentValue = dice.DiceRoll();
-        yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.name } rolled a ...... {currentValue + 1}");
+        yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.name } rolled a ......{currentValue + 1}!");
         yield return new WaitForSeconds(1.2f);
 
         //选技能
@@ -121,9 +139,26 @@ public class CombatSystem : MonoBehaviour
         yield return new WaitForSeconds(1.2f);
 
         //结算伤害
-        bool isFainted = p1Unit.Hero.TakeDamage(move, p2Unit.Hero, currentValue);
-        p1HUD.UpdateHp();
-        p2HUD.ShowDamage();
+        int damage = p1Unit.Hero.CalculateDamage(move, p2Unit.Hero, currentValue);
+
+        //暴击判断
+        bool isCrit = p1Unit.Hero.CritCheck();
+        if (damage != 0 && isCrit)
+        {
+            yield return dialogBox.TypeDialog($"Critical Hit!");
+            damage = (int)(damage * 1.5f);
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        //受伤与死亡
+        bool isFainted = p1Unit.Hero.TakeDamage(damage);
+        if(damage != 0)
+        {
+            yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.name } lose {damage} life");
+        }
+        yield return p1HUD.ShowDamage(damage,isCrit );
+        yield return p1HUD.UpdateHp();
+        yield return new WaitForSeconds(0.5f);
         //Debug.Log("p2还有" + p2Unit.Hero.HP + "血");
 
         //判断死亡
@@ -143,12 +178,16 @@ public class CombatSystem : MonoBehaviour
     //Player turn 玩家一回合的流程
     IEnumerator Player1Turn()
     {
+        StartCoroutine(p1HUD.SetArrow());
+        StartCoroutine(p2HUD.HideArrow());
         StartCoroutine(PerformP1Move());
         yield return new WaitForSeconds(1.2f);
     }
 
     IEnumerator Player2Turn()
     {
+        StartCoroutine(p2HUD.SetArrow());
+        StartCoroutine(p1HUD.HideArrow());
         StartCoroutine(PerformP2Move());
         yield return new WaitForSeconds(1.2f);
     }
