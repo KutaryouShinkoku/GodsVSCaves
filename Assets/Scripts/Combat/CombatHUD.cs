@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class CombatHUD : MonoBehaviour
 {
-
+    [SerializeField] GameObject combatHUD;
     [SerializeField] Text nameText;
     [SerializeField] Text levelText;
     [SerializeField] Text dmgText;
@@ -14,18 +15,27 @@ public class CombatHUD : MonoBehaviour
     //[SerializeField Slider EXPSlider;
 
     Hero _hero;
+    Vector3 originalDmgPos;
 
     //HUD初始化
     public void SetHUD(Hero hero)
     {
-        _hero = hero;
+        combatHUD.SetActive(true); //显示HUD
 
+        //英雄数据初始化
+        _hero = hero; 
         nameText.text = hero.Base.name;
         levelText.text = "LV" + hero.Level;
-        dmgText.text = "";
+
+        //血条初始化
         hPSlider.maxValue = hero.MaxHP;
         hPSlider.value = hero.MaxHP;
-        turnArrow.SetActive(false);
+
+        turnArrow.SetActive(false); //回合标记初始化
+
+        //伤害数值播报初始化
+        dmgText.text = "";
+        originalDmgPos = dmgText .transform.localPosition;
     }
 
     //显示血量
@@ -67,6 +77,8 @@ public class CombatHUD : MonoBehaviour
     //显示伤害
     public IEnumerator ShowDamage(int damage,bool crit)
     {
+        var sequence = DOTween.Sequence();
+
         dmgText.color = Color.red;
         if (crit)
         {
@@ -75,9 +87,20 @@ public class CombatHUD : MonoBehaviour
         if(damage != 0)
         {
             dmgText.text = "-" + damage;
+            sequence.Append(dmgText .transform.DOLocalMoveY(originalDmgPos.y + 20f, 0.8f));
+            sequence.Join(dmgText.DOFade(0, 0.8f));
             yield return new WaitForSeconds(0.5f);
         }
+    }
+
+    public IEnumerator HideDamage()
+    {
+        var sequence = DOTween.Sequence();
+
         dmgText.text = "";
+        sequence.Append(dmgText.transform.DOLocalMoveY(originalDmgPos.y, 0.1f));
+
+        yield return null;
     }
 
 }

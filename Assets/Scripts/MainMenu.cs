@@ -13,8 +13,4 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene(selectHeros);
     }
 
-    public void Combat()
-    {
-        SceneManager.LoadScene(combat);
-    }
 }
