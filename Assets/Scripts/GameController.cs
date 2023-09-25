@@ -26,7 +26,11 @@ public class GameController : MonoBehaviour
         combatSystem.gameObject.SetActive(true);
         combatCamera.gameObject.SetActive(true);
         selectorCamera.gameObject.SetActive(false);
-        combatSystem.HandleCombatStart();
+
+        var p1Hero = heroSelector.GetComponent<HeroSelector>().GetP1Hero();
+        var p2Hero = heroSelector.GetComponent<HeroSelector>().GetP2Hero();
+
+        combatSystem.HandleCombatStart(p1Hero ,p2Hero );
     }
 
     public IEnumerator CombatEnd()

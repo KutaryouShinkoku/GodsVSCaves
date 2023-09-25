@@ -20,8 +20,8 @@ MonoBehaviour:
   maxHP: 60
   attack: 52
   defence: 25
-  magic: 5
-  magicDef: 2
+  magic: 40
+  magicDef: 30
   speed: 3
   evasion: 0
   movesOfDice:

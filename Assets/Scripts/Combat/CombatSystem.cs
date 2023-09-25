@@ -21,15 +21,21 @@ public class CombatSystem : MonoBehaviour
 
     public CombatState state;
 
-    public Dice dice = new Dice(); 
+    public Dice dice = new Dice();
+
+    Hero p1Hero;
+    Hero p2Hero;
     public void Start()
     {
         
     }
 
-    public void HandleCombatStart()
+    public void HandleCombatStart(Hero p1Hero,Hero p2Hero)
     {
         state = CombatState.START;
+
+        this.p1Hero = p1Hero;
+        this.p2Hero = p2Hero;
         StartCoroutine(SetupCombat());
         Debug.Log("战斗开始");
     }
@@ -43,8 +49,8 @@ public class CombatSystem : MonoBehaviour
         StartCoroutine(p2Unit.AnimationReset());
 
         //小人从天而降，产生出场特效
-        p1Unit.Setup();
-        p2Unit.Setup();
+        p1Unit.Setup(p1Hero);
+        p2Unit.Setup(p2Hero);
 
         //战斗HUD出现
         yield return new WaitForSeconds(0.25f);
@@ -102,14 +108,16 @@ public class CombatSystem : MonoBehaviour
 
         //选技能
         var move = p1Unit.Hero.Moves[dice.CurrentValue];
+        int moveActionType = move.Base.MoveActionType;
+        bool isMagic = move.Base.IsMagic;
         yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.name } used {move.Base.name}");
         //dialogBox.SetDialog($"{p1Unit.Hero.Base.name } used {move.Base.name}"); //备用，防止出字bug
         yield return new WaitForSeconds(0.5f);
 
         //技能动画
-        StartCoroutine(p1Unit.PlayAttackAnimation());
+        StartCoroutine(p1Unit.PlayAttackAnimation(moveActionType));
         yield return new WaitForSeconds(0.25f);
-        StartCoroutine(p2Unit.PlayHitAnimation());
+        StartCoroutine(p2Unit.PlayHitAnimation(moveActionType));
 
         //计算伤害
         int damage = p2Unit.Hero.CalculateDamage(move, p1Unit.Hero, currentValue);
@@ -125,7 +133,7 @@ public class CombatSystem : MonoBehaviour
 
         //受伤与死亡
         bool isFainted = p2Unit.Hero.TakeDamage(damage);
-        yield return p2HUD.ShowDamage(damage, isCrit);
+        yield return p2HUD.ShowDamage(damage, isCrit, isMagic);
         yield return p2HUD.UpdateHp();
         yield return p2HUD.HideDamage();
         if (damage != 0)
@@ -158,14 +166,16 @@ public class CombatSystem : MonoBehaviour
 
         //选技能
         var move = p2Unit.Hero.Moves[dice.CurrentValue];
+        int moveActionType = move.Base.MoveActionType;
+        bool isMagic = move.Base.IsMagic;
         yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.name } used {move.Base.name}");
         //dialogBox.SetDialog($"{p2Unit.Hero.Base.name } used {move.Base.name}");  //备用，防止出字bug
         yield return new WaitForSeconds(0.5f);
 
         //技能动画
-        StartCoroutine(p2Unit.PlayAttackAnimation());
+        StartCoroutine(p2Unit.PlayAttackAnimation(moveActionType));
         yield return new WaitForSeconds(0.25f);
-        StartCoroutine(p1Unit.PlayHitAnimation());
+        StartCoroutine(p1Unit.PlayHitAnimation(moveActionType));
 
         //计算伤害
         int damage = p1Unit.Hero.CalculateDamage(move, p2Unit.Hero, currentValue);
@@ -181,7 +191,7 @@ public class CombatSystem : MonoBehaviour
 
         //受伤与死亡
         bool isFainted = p1Unit.Hero.TakeDamage(damage);
-        yield return p1HUD.ShowDamage(damage, isCrit);
+        yield return p1HUD.ShowDamage(damage, isCrit, isMagic);
         yield return p1HUD.UpdateHp();
         yield return p1HUD.HideDamage();
         if (damage != 0)

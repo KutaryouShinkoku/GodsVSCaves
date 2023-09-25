@@ -25,9 +25,9 @@ public class Unit : MonoBehaviour
     }
 
     //角色导入
-    public void Setup()
+    public void Setup(Hero hero)
     {
-        Hero = new Hero(_base, level);
+        Hero = hero;
         //Debug.Log(Hero .Base.Name + "的初始血量攻防:" + Hero.Base.MaxHP + " " + Hero.Base.Attack + " " + Hero.Base.Defence);
         spRenderer.sprite = Hero.Base.Sprite;
 
@@ -36,7 +36,7 @@ public class Unit : MonoBehaviour
         StartCoroutine (PlayEnterAnimation());
     }
 
-    //--------------------------动画相关
+    //--------------------------动画相关---------------------------
     //动画复原
     public IEnumerator AnimationReset()
     {
@@ -54,34 +54,80 @@ public class Unit : MonoBehaviour
     }
     
     //攻击
-    public IEnumerator PlayAttackAnimation()
+    public IEnumerator PlayAttackAnimation(int moveActionType)
     {
         var sequence = DOTween.Sequence();
-        if(isPlayer1)
+        if (moveActionType == 1) //近战动画
         {
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 443f, 0.25f));
+            if (isPlayer1)
+            {
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 443f, 0.25f));
+            }
+            else
+            {
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 443f, 0.25f));
+            }
         }
-        else
+        if (moveActionType == 2) //远程动画
         {
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 443f, 0.25f));
+            if (isPlayer1)
+            {
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 50f, 0.25f));
+            }
+            else
+            {
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 50f, 0.25f));
+            }
         }
-
-        sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x, 0.2f));
+        if (moveActionType == 3) //治疗动画
+        {
+            if (isPlayer1)
+            {
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 20f, 0.1f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 20f, 0.2f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 20f, 0.2f));
+            }
+            else
+            {
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 20f, 0.1f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 20f, 0.2f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 20f, 0.2f));
+            }
+        }
+        if (moveActionType == 4) //特殊动画
+        {
+            if (isPlayer1)
+            {
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 20f, 0.1f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 20f, 0.2f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 20f, 0.2f));
+            }
+            else
+            {
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 20f, 0.1f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 20f, 0.2f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 20f, 0.2f));
+            }
+        }
+        sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x, 0.2f)); // 还原
         yield return null;
     }
 
     //受击
-    public IEnumerator PlayHitAnimation()
+    public IEnumerator PlayHitAnimation(int moveActionType)
     {
         var sequence = DOTween.Sequence();
-        sequence.Append(spRenderer.DOColor(Color.gray, 0.1f));
-        if (isPlayer1)
+        if (moveActionType == 1|| moveActionType == 2) //受击
         {
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 2f, 0.1f));
-        }
-        else
-        {
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 2f, 0.1f));
+            sequence.Append(spRenderer.DOColor(Color.gray, 0.1f));
+            if (isPlayer1)
+            {
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 2f, 0.1f));
+            }
+            else
+            {
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 2f, 0.1f));
+            }
         }
         sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x, 0.1f));
         sequence.Append(spRenderer.DOColor(originalColor, 0.1f));

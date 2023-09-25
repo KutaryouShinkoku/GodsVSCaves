@@ -15,3 +15,6 @@ MonoBehaviour:
   name: AttackBoost
   description: Increase 2 attack.
   power: 0
+  accuracy: 0
+  isMagic: 0
+  moveActionType: 2

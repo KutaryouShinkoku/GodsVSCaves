@@ -75,11 +75,15 @@ public class CombatHUD : MonoBehaviour
 
 
     //œ‘ æ…À∫¶
-    public IEnumerator ShowDamage(int damage,bool crit)
+    public IEnumerator ShowDamage(int damage,bool crit,bool isMagic)
     {
         var sequence = DOTween.Sequence();
 
         dmgText.color = Color.red;
+        if(isMagic)
+        {
+            dmgText.color = Color.blue ;
+        }
         if (crit)
         {
             dmgText.color = Color.yellow;

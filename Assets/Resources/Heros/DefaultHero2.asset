@@ -20,20 +20,20 @@ MonoBehaviour:
   maxHP: 50
   attack: 60
   defence: 25
-  magic: 11
-  magicDef: 2
+  magic: 70
+  magicDef: 25
   speed: 2
   evasion: 0
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
     diceNum: 1
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+  - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
     diceNum: 2
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+  - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
     diceNum: 3
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+  - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
     diceNum: 4
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+  - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
     diceNum: 5
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+  - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
     diceNum: 6

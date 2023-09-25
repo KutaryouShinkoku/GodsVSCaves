@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class Hero
 {
-    public HeroBase Base { get; set; }
-    public int Level { get; set; }
+    [SerializeField] HeroBase _base;
+    [SerializeField] int level;
+    public HeroBase Base { get { return _base; } }
+    public int Level { get { return level; } }
 
     public int HP { get; set; }
     public List<Move> Moves { get; set; }
 
     public Dice dice = new Dice();
 
-    public Hero(HeroBase hBase,int hLevel)
+    public void Init()
     {
-        Base = hBase;
-        Level = hLevel;
         HP = MaxHP;
 
         Moves = new List<Move>();
@@ -75,11 +76,14 @@ public class Hero
     //Damage 伤害计算
     public int CalculateDamage(Move move, Hero attacker, int currentValue)
     {
+        float attack = (move.Base.IsMagic) ? attacker.Magic : attacker.Attack;
+        float defence = (move.Base.IsMagic) ? attacker.MagicDef : attacker.Defence ;
+
         //Debug.Log("骰子点数：" + currentValue);
         float modifiers = ((currentValue / 10f) + 0.7f);
         //Debug.Log("伤害调整值：" + modifiers);
         float a = (2 * attacker.Level + 10) / 250f;
-        float d = a * move.Base.Power * ((float)attacker.Attack / Defence) + 2;
+        float d = a * move.Base.Power * ((float)Attack / Defence) + 2;
         if (move.Base.Power == 0)
         {
             d = 0;
