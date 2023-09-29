@@ -30,6 +30,7 @@ public class CombatSystem : MonoBehaviour
         
     }
 
+    //以输入的英雄信息开始游戏
     public void HandleCombatStart(Hero p1Hero,Hero p2Hero)
     {
         state = CombatState.START;

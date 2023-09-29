@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class HeroSelectButton : MonoBehaviour
 {
-    public SelectState state;
     public Hero hero;
-
-    private void Start()
+    public Hero GetHero()
     {
-        
+        Hero curHero = GetComponent<HeroSelectButton>().hero;
+        return curHero;
     }
+
+
+
 }

@@ -10,12 +10,12 @@ public class Hero
     [SerializeField] int level;
     public HeroBase Base { get { return _base; } }
     public int Level { get { return level; } }
-
     public int HP { get; set; }
     public List<Move> Moves { get; set; }
 
     public Dice dice = new Dice();
 
+    //实装英雄血量和技能的函数
     public void Init()
     {
         HP = MaxHP;

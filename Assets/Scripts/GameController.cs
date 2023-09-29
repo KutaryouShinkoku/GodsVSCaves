@@ -17,7 +17,9 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-
+        combatSystem.gameObject.SetActive(false);
+        combatCamera.gameObject.SetActive(false);
+        selectorCamera.gameObject.SetActive(true);
     }
 
     public void CombatStart()
@@ -27,9 +29,11 @@ public class GameController : MonoBehaviour
         combatCamera.gameObject.SetActive(true);
         selectorCamera.gameObject.SetActive(false);
 
+        //把英雄选择界面的数据拿进来
         var p1Hero = heroSelector.GetComponent<HeroSelector>().GetP1Hero();
         var p2Hero = heroSelector.GetComponent<HeroSelector>().GetP2Hero();
 
+        //把英雄数据放进战斗系统
         combatSystem.HandleCombatStart(p1Hero ,p2Hero );
     }
 
