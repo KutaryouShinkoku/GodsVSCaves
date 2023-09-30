@@ -15,13 +15,16 @@ public class GameController : MonoBehaviour
 
     public GameState state;
 
+    //初始化：选择界面
     private void Start()
     {
+        state = GameState.SELECT;
         combatSystem.gameObject.SetActive(false);
         combatCamera.gameObject.SetActive(false);
         selectorCamera.gameObject.SetActive(true);
     }
 
+    //切换到战斗界面
     public void CombatStart()
     {
         state = GameState.COMBAT;
@@ -37,6 +40,7 @@ public class GameController : MonoBehaviour
         combatSystem.HandleCombatStart(p1Hero ,p2Hero );
     }
 
+    //战斗结束，回到选择界面
     public IEnumerator CombatEnd()
     {
         state = GameState.SELECT;

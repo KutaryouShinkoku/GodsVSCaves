@@ -24,7 +24,7 @@ public class CombatHUD : MonoBehaviour
 
         //英雄数据初始化
         _hero = hero; 
-        nameText.text = hero.Base.name;
+        nameText.text = hero.Base.HeroName;
         levelText.text = "LV" + hero.Level;
 
         //血条初始化
@@ -97,6 +97,7 @@ public class CombatHUD : MonoBehaviour
         }
     }
 
+    //隐藏伤害
     public IEnumerator HideDamage()
     {
         var sequence = DOTween.Sequence();

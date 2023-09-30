@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88df5df539cc67a40b7d466b9de0bd57, type: 3}
-  m_Name: AttackBoost
+  m_Name: Smash
   m_EditorClassIdentifier: 
-  moveName: Attack Boost
-  description: Increase 2 attack.
-  power: 0
+  moveName: Smash
+  description: 
+  power: 90
   accuracy: 0
   isMagic: 0
-  moveActionType: 3
-  moveCatagory: 3
+  moveActionType: 0
+  moveCatagory: 0
   moveEffects:
     boosts:
     - stat: 0
       boost: 1
-  moveTarget: 0
+  moveTarget: 1

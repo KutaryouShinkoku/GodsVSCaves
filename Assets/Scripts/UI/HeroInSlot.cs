@@ -6,10 +6,9 @@ using UnityEngine.UI;
 public class HeroInSlot : MonoBehaviour
 {
     [HideInInspector] public Hero hero;
-    public Image image;
 
+    public Image image;
     public HeroSelector heroSelector;
-    public SelectState state;
 
     void Start()
     {
@@ -23,9 +22,9 @@ public class HeroInSlot : MonoBehaviour
         heroSelector = selector;
     }
 
+    //按钮事件：点击英雄图标选择英雄
     public void SelectHero()
     {
         heroSelector.UpdateHeroSelection(hero);
-        Debug.Log("Select! State is:"+ state);
     }
 }

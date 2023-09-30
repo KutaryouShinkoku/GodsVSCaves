@@ -12,15 +12,12 @@ public class CombatSystem : MonoBehaviour
 
     [SerializeField] Unit p1Unit;
     [SerializeField] Unit p2Unit;
-
     [SerializeField] CombatHUD p1HUD;
     [SerializeField] CombatHUD p2HUD;
     [SerializeField] GameController gameController;
-
     [SerializeField] CombatDialogBox dialogBox;
 
     public CombatState state;
-
     public Dice dice = new Dice();
 
     Hero p1Hero;
@@ -59,7 +56,7 @@ public class CombatSystem : MonoBehaviour
         p2HUD.SetHUD(p2Unit.Hero);
 
         //开战播报
-        StartCoroutine( dialogBox.TypeDialog($"{p1Unit.Hero.Base.Name} VS {p2Unit.Hero.Base.Name}!"));
+        StartCoroutine( dialogBox.TypeDialog($"{p1Unit.Hero.Base.HeroName} VS {p2Unit.Hero.Base.HeroName}!"));
         yield return new WaitForSeconds(2f);
         yield return dialogBox.TypeDialogSlow($"3......2......1.....GO!");
         yield return new WaitForSeconds(1f);
@@ -99,32 +96,94 @@ public class CombatSystem : MonoBehaviour
         return firstPlayer;
     }
 
+    //-----------------------------一个回合-----------------------------
     //PlayerMovePerform 放技能
     IEnumerator PerformP1Move()
     {
         //扔骰子
-        int currentValue =  dice.DiceRoll();
-        yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.name } rolled a ......{currentValue+1}!");
-        yield return new WaitForSeconds(0.8f);
+        int currentValue = dice.DiceRoll(p1Unit.Hero.Base.Luck);
+        yield return StartCoroutine(HandleDiceRoll(p1Unit, currentValue));
+        //处理任何因为技能效果增加的点数，大于6的调整为6
+        if(currentValue > 5)
+        {
+            currentValue = 5;
+        }
 
         //选技能
-        var move = p1Unit.Hero.Moves[dice.CurrentValue];
-        int moveActionType = move.Base.MoveActionType;
+        var move = p1Unit.Hero.Moves[currentValue];
+
+        //放技能
+        StartCoroutine((RunMove(p1Unit,p2Unit,move,p1HUD,p2HUD,currentValue)));
+    }
+
+    IEnumerator PerformP2Move()
+    {
+        //扔骰子
+        int currentValue = dice.DiceRoll(p2Unit.Hero.Base.Luck);
+        yield return StartCoroutine(HandleDiceRoll(p2Unit, currentValue));
+        //处理任何因为技能效果增加的点数，大于6的调整为6
+        if (currentValue > 5)
+        {
+            currentValue = 5;
+        }
+
+        //选技能
+        var move = p2Unit.Hero.Moves[currentValue];
+        //放技能
+        StartCoroutine((RunMove(p2Unit, p1Unit, move, p2HUD, p1HUD, currentValue)));
+    }
+    //-----------------------------处理骰子-----------------------------
+
+    IEnumerator HandleDiceRoll(Unit sourceUnit,int value)
+    {
+        if (value == 6)
+        {
+            yield return dialogBox.TypeDialog($"Lucky Boost!!!");
+            yield return new WaitForSeconds(0.5f);
+            value = 5;
+        }
+        yield return dialogBox.TypeDialog($"{sourceUnit.Hero.Base.HeroName } rolled a ......{value + 1}!");
+        yield return new WaitForSeconds(0.8f);
+    }
+
+    //-----------------------------处理技能-----------------------------
+
+    IEnumerator RunMove(Unit sourceUnit, Unit targetUnit,Move move,CombatHUD sourceHUD,CombatHUD targetHUD,int currentValue)
+    {
+        MoveActionType moveActionType = move.Base.MoveActionType;
         bool isMagic = move.Base.IsMagic;
-        yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.name } used {move.Base.name}");
+        yield return dialogBox.TypeDialog($"{sourceUnit.Hero.Base.HeroName } used {move.Base.MoveName}");
         //dialogBox.SetDialog($"{p1Unit.Hero.Base.name } used {move.Base.name}"); //备用，防止出字bug
         yield return new WaitForSeconds(0.5f);
 
         //技能动画
-        StartCoroutine(p1Unit.PlayAttackAnimation(moveActionType));
+        StartCoroutine(sourceUnit.PlayAttackAnimation(moveActionType));
         yield return new WaitForSeconds(0.25f);
-        StartCoroutine(p2Unit.PlayHitAnimation(moveActionType));
+        StartCoroutine(targetUnit.PlayHitAnimation(moveActionType));
+
+        //状态改变
+        var effect = move.Base.MoveEffects;
+        if (effect.Boosts != null)
+        {
+            if (move.Base.MoveTarget == MoveTarget.Self)
+            {
+                sourceUnit.Hero.ApplyBoosts(effect.Boosts);
+                Debug.Log("Attack:" + sourceUnit.Hero.Attack);
+                
+            }
+            else if (move.Base.MoveTarget == MoveTarget.Enemy)
+            {
+                targetUnit.Hero.ApplyBoosts(effect.Boosts);
+            }
+        }
+        yield return ShowStatusChanges(sourceUnit.Hero);
+        yield return ShowStatusChanges(targetUnit.Hero);
 
         //计算伤害
-        int damage = p2Unit.Hero.CalculateDamage(move, p1Unit.Hero, currentValue);
+        int damage = targetUnit.Hero.CalculateDamage(move, sourceUnit.Hero, currentValue);
 
         //暴击判断
-        bool isCrit = p2Unit.Hero.CritCheck();
+        bool isCrit = targetUnit.Hero.CritCheck(targetUnit.Hero .Base .Luck);
         if(damage != 0 && isCrit)
         {
             yield return dialogBox.TypeDialog($"Critical Hit!");
@@ -133,90 +192,74 @@ public class CombatSystem : MonoBehaviour
         }
 
         //受伤与死亡
-        bool isFainted = p2Unit.Hero.TakeDamage(damage);
-        yield return p2HUD.ShowDamage(damage, isCrit, isMagic);
-        yield return p2HUD.UpdateHp();
-        yield return p2HUD.HideDamage();
+        bool isFainted = targetUnit.Hero.TakeDamage(damage);
+        yield return targetHUD.ShowDamage(damage, isCrit, isMagic);
+        yield return targetHUD.UpdateHp();
+        yield return targetHUD.HideDamage();
         if (damage != 0)
         {
-            yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.name } lose {damage} life");
+            yield return dialogBox.TypeDialog($"{targetUnit.Hero.Base.HeroName } lose {damage} life");
         }
         yield return new WaitForSeconds(0.7f);
         //Debug.Log("p1还有" + p1Unit.Hero.HP + "血");
         
         //判断死亡
-        if (isFainted)
+        if (targetUnit.Hero .HP<=0)
         {
-            StartCoroutine(p2Unit.PlayFaintAnimation());
-            state = CombatState.P1WON;
-            StartCoroutine(EndCombat());
+            CheckBattleOver(targetUnit);
+        }
+        else if (sourceUnit.Hero.HP <= 0)
+        {
+            CheckBattleOver(sourceUnit);
         }
         else
+        {
+            PassTurn(sourceUnit);
+        }
+    }
+    //属性增减
+    IEnumerator ShowStatusChanges(Hero hero)
+    {
+        while (hero.StatusChanges.Count > 0)
+        {
+            var message = hero.StatusChanges.Dequeue();
+            yield return dialogBox.TypeDialog(message);
+        }
+    }
+
+    //过回合
+    void PassTurn(Unit turnUnit)
+    {
+        if(turnUnit == p1Unit)
         {
             state = CombatState.P2TURN;
             StartCoroutine(Player2Turn());
         }
-    }
-
-    IEnumerator PerformP2Move()
-    {
-        //扔骰子
-        int currentValue = dice.DiceRoll();
-        yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.name } rolled a ......{currentValue + 1}!");
-        yield return new WaitForSeconds(0.8f);
-
-        //选技能
-        var move = p2Unit.Hero.Moves[dice.CurrentValue];
-        int moveActionType = move.Base.MoveActionType;
-        bool isMagic = move.Base.IsMagic;
-        yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.name } used {move.Base.name}");
-        //dialogBox.SetDialog($"{p2Unit.Hero.Base.name } used {move.Base.name}");  //备用，防止出字bug
-        yield return new WaitForSeconds(0.5f);
-
-        //技能动画
-        StartCoroutine(p2Unit.PlayAttackAnimation(moveActionType));
-        yield return new WaitForSeconds(0.25f);
-        StartCoroutine(p1Unit.PlayHitAnimation(moveActionType));
-
-        //计算伤害
-        int damage = p1Unit.Hero.CalculateDamage(move, p2Unit.Hero, currentValue);
-
-        //暴击判断
-        bool isCrit = p1Unit.Hero.CritCheck();
-        if (damage != 0 && isCrit)
-        {
-            yield return dialogBox.TypeDialog($"Critical Hit!");
-            damage = (int)(damage * 1.5f);
-            yield return new WaitForSeconds(0.5f);
-        }
-
-        //受伤与死亡
-        bool isFainted = p1Unit.Hero.TakeDamage(damage);
-        yield return p1HUD.ShowDamage(damage, isCrit, isMagic);
-        yield return p1HUD.UpdateHp();
-        yield return p1HUD.HideDamage();
-        if (damage != 0)
-        {
-            yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.name } lose {damage} life");
-        }
-        yield return new WaitForSeconds(0.5f);
-        //Debug.Log("p2还有" + p2Unit.Hero.HP + "血");
-
-        //判断死亡
-        if (isFainted)
-        {
-            StartCoroutine(p1Unit.PlayFaintAnimation());
-            state = CombatState.P2WON;
-            StartCoroutine(EndCombat());
-        }
-        else
+        else if (turnUnit == p2Unit)
         {
             state = CombatState.P1TURN;
             StartCoroutine(Player1Turn());
         }
     }
 
+    //处理角色死亡
+    void CheckBattleOver(Unit faintedUnit)
+    {
+        if(faintedUnit == p1Unit)
+        {
+            StartCoroutine(faintedUnit.PlayFaintAnimation());
+            state = CombatState.P2WON;
+            StartCoroutine(EndCombat());
+        }
+        else if (faintedUnit == p2Unit)
+        {
+            StartCoroutine(faintedUnit.PlayFaintAnimation());
+            state = CombatState.P1WON;
+            StartCoroutine(EndCombat());
+        }
+    }
 
+    //------------------------------------------------------------------
     //Player turn 玩家一回合的流程
     IEnumerator Player1Turn()
     {
@@ -225,7 +268,6 @@ public class CombatSystem : MonoBehaviour
         StartCoroutine(PerformP1Move());
         yield return new WaitForSeconds(1.2f);
     }
-
     IEnumerator Player2Turn()
     {
         StartCoroutine(p2HUD.SetArrow());
@@ -239,17 +281,15 @@ public class CombatSystem : MonoBehaviour
     {
         if (state == CombatState.P1WON)
         {
-            combatStatus.text = p1Unit.Hero.Base.Name + " Won!";
+            yield return dialogBox.TypeDialog(p1Unit.Hero.Base.HeroName + " Victory won! \n \n...............for now........");
         }
         else if (state == CombatState.P2WON)
         {
-            combatStatus.text = p2Unit.Hero.Base.Name + " Won!";
+            yield return dialogBox.TypeDialog(p2Unit.Hero.Base.HeroName + " Victory won! \n \n...............for now........");
         }
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(3f);
+
         StartCoroutine(gameController.CombatEnd());
     }
-
-
-
 }

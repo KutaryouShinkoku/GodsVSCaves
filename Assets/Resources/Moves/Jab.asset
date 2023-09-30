@@ -10,11 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88df5df539cc67a40b7d466b9de0bd57, type: 3}
-  m_Name: NormalMagic
+  m_Name: Jab
   m_EditorClassIdentifier: 
-  name: Normal Magic
+  moveName: Jab
   description: Deal 2xAtk damage.
   power: 40
   accuracy: 0
-  isMagic: 1
-  moveActionType: 2
+  isMagic: 0
+  moveActionType: 0
+  moveCatagory: 0
+  moveEffects:
+    boosts: []
+  moveTarget: 1

@@ -10,13 +10,14 @@ public class Unit : MonoBehaviour
     [SerializeField] int level;
     [SerializeField] GameObject smoke;
     [SerializeField] float enterDelay;
-    [SerializeField] bool isPlayer1; //备用，用来检查角色属于哪边
+    [SerializeField] bool isPlayer1; //用来检查角色属于哪边
 
     public Hero Hero { get; set; }
     SpriteRenderer spRenderer;
     Vector3 originalPos;
     Color originalColor;
 
+    //初始化，存储角色unit的初始状态，便于动画还原
     private void Awake()
     {
         spRenderer = GetComponent<SpriteRenderer>();
@@ -28,15 +29,13 @@ public class Unit : MonoBehaviour
     public void Setup(Hero hero)
     {
         Hero = hero;
-        //Debug.Log(Hero .Base.Name + "的初始血量攻防:" + Hero.Base.MaxHP + " " + Hero.Base.Attack + " " + Hero.Base.Defence);
+        Debug.Log(Hero .Base.HeroName + "的当前数值:" + Hero.HP + " " + Hero.Attack + " " + Hero.Defence + " " + Hero.Magic + " " + Hero.MagicDef + " " + Hero.Luck);
         spRenderer.sprite = Hero.Base.Sprite;
 
-
-        //Debug.Log("Sprite name:" );
         StartCoroutine (PlayEnterAnimation());
     }
 
-    //--------------------------动画相关---------------------------
+    //-----------------------------动画相关-----------------------------
     //动画复原
     public IEnumerator AnimationReset()
     {
@@ -54,10 +53,10 @@ public class Unit : MonoBehaviour
     }
     
     //攻击
-    public IEnumerator PlayAttackAnimation(int moveActionType)
+    public IEnumerator PlayAttackAnimation(MoveActionType moveActionType)
     {
         var sequence = DOTween.Sequence();
-        if (moveActionType == 1) //近战动画
+        if (moveActionType == MoveActionType.Melee) //近战动画
         {
             if (isPlayer1)
             {
@@ -68,7 +67,7 @@ public class Unit : MonoBehaviour
                 sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 443f, 0.25f));
             }
         }
-        if (moveActionType == 2) //远程动画
+        if (moveActionType == MoveActionType.Ranged) //远程动画
         {
             if (isPlayer1)
             {
@@ -79,7 +78,7 @@ public class Unit : MonoBehaviour
                 sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 50f, 0.25f));
             }
         }
-        if (moveActionType == 3) //治疗动画
+        if (moveActionType == MoveActionType.Heal) //治疗动画
         {
             if (isPlayer1)
             {
@@ -94,7 +93,7 @@ public class Unit : MonoBehaviour
                 sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 20f, 0.2f));
             }
         }
-        if (moveActionType == 4) //特殊动画
+        if (moveActionType == MoveActionType.Special) //特殊动画
         {
             if (isPlayer1)
             {
@@ -114,10 +113,10 @@ public class Unit : MonoBehaviour
     }
 
     //受击
-    public IEnumerator PlayHitAnimation(int moveActionType)
+    public IEnumerator PlayHitAnimation(MoveActionType moveActionType)
     {
         var sequence = DOTween.Sequence();
-        if (moveActionType == 1|| moveActionType == 2) //受击
+        if (moveActionType == MoveActionType.Melee|| moveActionType == MoveActionType.Ranged) //受击
         {
             sequence.Append(spRenderer.DOColor(Color.gray, 0.1f));
             if (isPlayer1)

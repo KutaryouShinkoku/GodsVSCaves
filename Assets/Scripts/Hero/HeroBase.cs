@@ -5,16 +5,15 @@ using UnityEngine;
 [CreateAssetMenu (fileName = "Hero", menuName = "Hero/Create a new hero")]
 public class HeroBase : ScriptableObject 
 {
-    [SerializeField] string name;
+    [SerializeField] string heroName;
     [SerializeField] HeroCamp camp;
 
     [TextArea]
     [SerializeField] string description;
 
     [SerializeField] Sprite sprite;
-    [SerializeField] Sprite frame;
 
-    //Base stats
+    //Base stats 英雄属性
     [SerializeField] int maxHP;
     [SerializeField] int attack;
     [SerializeField] int defence;
@@ -22,10 +21,12 @@ public class HeroBase : ScriptableObject
     [SerializeField] int magicDef;
     [SerializeField] int speed;
     [SerializeField] int evasion;
+    [SerializeField] int luck;
     [SerializeField] List<MoveOfDice> movesOfDice;
 
-    public string Name{
-        get{ return name;}
+    //-----------------------------使属性可读-----------------------------
+    public string HeroName{
+        get{ return heroName;}
     }
 
     public string Description{
@@ -34,10 +35,6 @@ public class HeroBase : ScriptableObject
 
     public Sprite Sprite{
         get { return sprite; }
-    }
-
-    public Sprite Frame{
-        get { return frame; }
     }
 
     public int MaxHP{
@@ -68,6 +65,10 @@ public class HeroBase : ScriptableObject
         get { return evasion; }
     }
 
+    public int Luck{
+        get { return luck; }
+    }
+
     public List<MoveOfDice> MovesOfDice{
         get { return movesOfDice; }
     }
@@ -95,3 +96,6 @@ public enum HeroCamp
 {
     GOD,CAVE,OTHER
 }
+
+//属性
+public enum Stat { Attack,Defence,Magic,MagicDef,Luck}

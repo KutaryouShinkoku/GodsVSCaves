@@ -2623,10 +2623,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   p1Hero:
     _base: {fileID: 11400000, guid: 091e25466345c194791303c2173aef79, type: 2}
-    level: 2
+    level: 50
   p2Hero:
     _base: {fileID: 11400000, guid: fd4e3e52e35a03a4b9da6342e0837b27, type: 2}
-    level: 2
+    level: 50
   guide: {fileID: 205070325}
   heros:
   - _base: {fileID: 11400000, guid: 091e25466345c194791303c2173aef79, type: 2}
@@ -2635,7 +2635,7 @@ MonoBehaviour:
     level: 50
   - _base: {fileID: 11400000, guid: 6c0daa8bdc41b3445be5b5d43122025a, type: 2}
     level: 50
-  - _base: {fileID: 11400000, guid: 091e25466345c194791303c2173aef79, type: 2}
+  - _base: {fileID: 11400000, guid: 9eb49fd6876b9a9429b70608b72f0639, type: 2}
     level: 50
   heroSlots:
   - {fileID: 901560620}
@@ -4705,8 +4705,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 271.61, y: -20.583}
-  m_SizeDelta: {x: 157, y: 17.185}
+  m_AnchoredPosition: {x: 267.47, y: -20.583}
+  m_SizeDelta: {x: 207.55, y: 17.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1064898824
 MonoBehaviour:
@@ -5755,7 +5755,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 70.755}
-  m_SizeDelta: {x: -60, y: 141.51}
+  m_SizeDelta: {x: -29.999996, y: 141.51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1423129929
 MonoBehaviour:
@@ -5779,10 +5779,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: a2164c731c4152b4f8b6ce78a239b505, type: 3}
-    m_FontSize: 23
+    m_FontSize: 21
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -6563,7 +6563,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.4
-  m_Text: "Level\uFF1A\nHP:\nAttack:\nDefence:\nMagic:\nMagicDef:\nSpeed:\nEvasion:"
+  m_Text: "Level\uFF1A\nHP:\nAttack:\nDefence:\nMagic:\nMagicDef:\nSpeed:\nLuck:"
 --- !u!222 &1689309687
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8021,8 +8021,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -250, y: -20.583}
-  m_SizeDelta: {x: 157, y: 17.185}
+  m_AnchoredPosition: {x: -252.29, y: -20.583}
+  m_SizeDelta: {x: 222.28, y: 17.18}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1997785305
 MonoBehaviour:
@@ -8219,7 +8219,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.4
-  m_Text: "Level\uFF1A\nHP:\nAttack:\nDefence:\nMagic:\nMagicDef:\nSpeed:\nEvasion:"
+  m_Text: "Level\uFF1A\nHP:\nAttack:\nDefence:\nMagic:\nMagicDef:\nSpeed:\nLuck:"
 --- !u!222 &2048082823
 CanvasRenderer:
   m_ObjectHideFlags: 0

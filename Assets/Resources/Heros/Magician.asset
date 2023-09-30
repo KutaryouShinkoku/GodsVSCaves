@@ -10,30 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f3632f4d5647c84eb3c9a0e63a474ce, type: 3}
-  m_Name: DefaultHero
+  m_Name: Magician
   m_EditorClassIdentifier: 
-  name: DefaultHero
-  camp: 0
-  description: Default hero for test.
-  sprite: {fileID: -1441590681, guid: ee1a3dbb8776c204c81f4d582e1c273c, type: 3}
-  frame: {fileID: 21300000, guid: 3c1f7aaa31794634ab4652621d475d95, type: 3}
-  maxHP: 60
-  attack: 52
-  defence: 25
-  magic: 40
-  magicDef: 30
-  speed: 3
+  heroName: Magician
+  camp: 1
+  description: Default hero 2 for test.
+  sprite: {fileID: 1715490860, guid: ee1a3dbb8776c204c81f4d582e1c273c, type: 3}
+  maxHP: 200
+  attack: 60
+  defence: 75
+  magic: 120
+  magicDef: 80
+  speed: 2
   evasion: 0
+  luck: 5
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
     diceNum: 1
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+  - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
     diceNum: 2
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+  - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
     diceNum: 3
   - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
     diceNum: 4
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+  - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
     diceNum: 5
-  - moveBase: {fileID: 11400000, guid: 73cdf3916fb7ba54db1c1448123b2ccd, type: 2}
+  - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
     diceNum: 6

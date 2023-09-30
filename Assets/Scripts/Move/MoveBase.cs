@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class MoveBase : ScriptableObject 
 {
-    [SerializeField] string name;
+    [SerializeField] string moveName;
 
     [TextArea]
     [SerializeField] string description;
@@ -15,10 +15,12 @@ public class MoveBase : ScriptableObject
     [SerializeField] int power;
     [SerializeField] int accuracy;
     [SerializeField] bool isMagic;
-    [SerializeField] int moveActionType; //1：近战| 2：远程| 3：治疗| 4：特殊
-
-    public string Name{
-        get { return name; }
+    [SerializeField] MoveActionType moveActionType;
+    [SerializeField] MoveCatagory moveCatagory;
+    [SerializeField] MoveEffects moveEffects;
+    [SerializeField] MoveTarget moveTarget;
+    public string MoveName{
+        get { return moveName; }
     }
 
     public string Description{
@@ -37,7 +39,52 @@ public class MoveBase : ScriptableObject
         get { return isMagic; }
     }
 
-    public int MoveActionType{
+    public MoveActionType MoveActionType{
         get { return moveActionType; }
     }
+
+    public MoveCatagory MoveCatagory { 
+        get { return moveCatagory; }
+    }
+
+    public MoveEffects MoveEffects{
+        get { return moveEffects; }
+    }
+
+    public MoveTarget MoveTarget{
+        get { return moveTarget; }
+    }
+}
+[System.Serializable]
+public class MoveEffects
+{
+    [SerializeField] List<StatBoost> boosts;
+
+    public List<StatBoost> Boosts
+    {
+        get { return boosts; }
+    }
+}
+
+[System.Serializable]
+public class StatBoost
+{
+    public Stat stat;
+    public int boost;
+}
+
+//技能动画类型
+public enum MoveActionType
+{
+    Melee,Ranged,Heal,Special
+}
+//技能类型
+public enum MoveCatagory
+{
+    Physics,Magic,Heal,Status,Special
+}
+
+public enum MoveTarget
+{
+    Self,Enemy
 }
