@@ -31,11 +31,11 @@ public class HeroInSlot : MonoBehaviour
     public void OnMouseEnter()
     {
         Debug.Log("µãÒ»ÏÂ");
-        TipManager._instance.SetAndShowTip(hero.Base .HeroName, hero .Base .Description);
+        TipManager._instance.SetAndShowTip(hero.Base .HeroName, hero .Base .Description,hero.Base.Sprite);
     }
 
     public void OnMouseExit()
     {
-        //TipManager._instance.HideTip();
+        TipManager._instance.HideTip();
     }
 }

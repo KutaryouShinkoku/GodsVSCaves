@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heroName: Gong Ju Ren
   camp: 0
-  description: 
+  description: 'Don''t select
+
+    Just for test'
   sprite: {fileID: 21300000, guid: a153f0a58b66e9d42b60b574547207df, type: 3}
   maxHP: 100
   attack: 100

@@ -14,7 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   heroName: God of Normal
   camp: 0
-  description: Default hero for test.
+  description: 'The god who symbolizes normal is very normal.
+
+    <color="#FF1818">1,2,3,5:[Jab]</color>
+    deal small amount physical damage.
+
+    <color="#FF1818">4:[ATK Boost]</color>
+    increase attack.
+
+    <color="#FF1818">6:[Normal Smash!]</color> deal large amount
+    damage and increase attack.'
   sprite: {fileID: -1441590681, guid: ee1a3dbb8776c204c81f4d582e1c273c, type: 3}
   maxHP: 220
   attack: 102

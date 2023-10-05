@@ -11,6 +11,7 @@ public class TipManager : MonoBehaviour
 
     public Text heroNameText;
     public Text heroDiscText;
+    public Image heroPortrait;
 
     private Vector2 screenPoint;
     private Vector2 uiPoint;
@@ -39,25 +40,26 @@ public class TipManager : MonoBehaviour
 
     void Update()
     {
-        //世界转屏幕
-        worldPoint = Input.mousePosition;
-        Debug.Log($"世界坐标：{worldPoint}");
-        screenPoint = Camera.main.WorldToScreenPoint(worldPoint);
-        Debug.Log($"屏幕坐标：{screenPoint}");
+        ////世界转屏幕
+        //worldPoint = Input.mousePosition;
+        //Debug.Log($"世界坐标：{worldPoint}");
+        //screenPoint = Camera.main.WorldToScreenPoint(worldPoint);
+        //Debug.Log($"屏幕坐标：{screenPoint}");
 
-        //屏幕转UI
-        Debug.Log($"当前相机：{selectorCam}");
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiRT, screenPoint, selectorCam, out uiPoint);
-        Debug.Log($"UI坐标：{uiPoint}");
+        ////屏幕转UI
+        //Debug.Log($"当前相机：{selectorCam}");
+        //RectTransformUtility.ScreenPointToLocalPointInRectangle(uiRT, screenPoint, selectorCam, out uiPoint);
+        //Debug.Log($"UI坐标：{uiPoint}");
 
-        tipGO.transform.position = uiPoint;
+        //tipGO.transform.position = uiPoint;
     }
 
-    public void SetAndShowTip(string name,string desc)
+    public void SetAndShowTip(string name,string desc,Sprite sprite)
     {
         gameObject.SetActive(true);
         heroNameText.text = name;
         heroDiscText.text = desc;
+        heroPortrait.sprite = sprite;
     }
 
     public void HideTip()

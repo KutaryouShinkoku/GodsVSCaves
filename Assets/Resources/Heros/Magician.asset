@@ -12,14 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3632f4d5647c84eb3c9a0e63a474ce, type: 3}
   m_Name: Magician
   m_EditorClassIdentifier: 
-  heroName: Magician
+  heroName: Cave Magician
   camp: 1
-  description: Default hero 2 for test.
+  description: 'Magician from the Magic Cave who likes tricks.
+
+    <color="#FF1818">1:[Jab]</color>
+    deal small amount physical damage.
+
+    <color="#FF1818">2:[Calm Mind]</color>
+    Increase magic sharply.
+
+    <color="#FF1818">3,4,5:[Magic Trick]</color> deal
+    small amount magic damage.
+
+    <color="#FF1818">6:[HUGE Trick]</color> deal
+    LARGE amount magic damage.'
   sprite: {fileID: 1715490860, guid: ee1a3dbb8776c204c81f4d582e1c273c, type: 3}
   maxHP: 200
   attack: 60
   defence: 75
-  magic: 120
+  magic: 110
   magicDef: 80
   speed: 2
   evasion: 0
@@ -27,7 +39,7 @@ MonoBehaviour:
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
     diceNum: 1
-  - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
+  - moveBase: {fileID: 11400000, guid: 94ffd107d94852b4cbbf7baa925031ba, type: 2}
     diceNum: 2
   - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
     diceNum: 3
@@ -35,5 +47,5 @@ MonoBehaviour:
     diceNum: 4
   - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
     diceNum: 5
-  - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
+  - moveBase: {fileID: 11400000, guid: b05b74cc5953e83448f8c83bb1f27eff, type: 2}
     diceNum: 6
