@@ -18,7 +18,7 @@ public class MoveBase : ScriptableObject
     [SerializeField] MoveActionType moveActionType;
     [SerializeField] MoveCatagory moveCatagory;
     [SerializeField] MoveEffects moveEffects;
-    [SerializeField] MoveTarget moveTarget;
+    [SerializeField] EffectTarget effectTarget;
     public string MoveName{
         get { return moveName; }
     }
@@ -51,8 +51,8 @@ public class MoveBase : ScriptableObject
         get { return moveEffects; }
     }
 
-    public MoveTarget MoveTarget{
-        get { return moveTarget; }
+    public EffectTarget EffectTarget{
+        get { return effectTarget; }
     }
 }
 [System.Serializable]
@@ -70,6 +70,7 @@ public class MoveEffects
 public class StatBoost
 {
     public Stat stat;
+    public EffectTarget target;
     public int boost;
 }
 
@@ -84,7 +85,9 @@ public enum MoveCatagory
     Physics,Magic,Heal,Status,Special
 }
 
-public enum MoveTarget
+public enum EffectTarget
 {
-    Self,Enemy
+    Self,//自己
+    Enemy, //敌人
+    All,//全部
 }

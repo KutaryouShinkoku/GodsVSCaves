@@ -22,5 +22,6 @@ MonoBehaviour:
   moveEffects:
     boosts:
     - stat: 0
+      target: 0
       boost: 1
-  moveTarget: 1
+  effectTarget: 2

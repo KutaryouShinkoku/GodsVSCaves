@@ -150,34 +150,15 @@ public class CombatSystem : MonoBehaviour
 
     IEnumerator RunMove(Unit sourceUnit, Unit targetUnit,Move move,CombatHUD sourceHUD,CombatHUD targetHUD,int currentValue)
     {
+        //技能基础信息初始化
         MoveActionType moveActionType = move.Base.MoveActionType;
         bool isMagic = move.Base.IsMagic;
         yield return dialogBox.TypeDialog($"{sourceUnit.Hero.Base.HeroName } used {move.Base.MoveName}");
-        //dialogBox.SetDialog($"{p1Unit.Hero.Base.name } used {move.Base.name}"); //备用，防止出字bug
         yield return new WaitForSeconds(0.5f);
 
         //技能动画
-        StartCoroutine(sourceUnit.PlayAttackAnimation(moveActionType));
-        yield return new WaitForSeconds(0.25f);
-        StartCoroutine(targetUnit.PlayHitAnimation(moveActionType));
-
-        //状态改变
-        var effect = move.Base.MoveEffects;
-        if (effect.Boosts != null)
-        {
-            if (move.Base.MoveTarget == MoveTarget.Self)
-            {
-                sourceUnit.Hero.ApplyBoosts(effect.Boosts);
-                Debug.Log("Attack:" + sourceUnit.Hero.Attack);
-                
-            }
-            else if (move.Base.MoveTarget == MoveTarget.Enemy)
-            {
-                targetUnit.Hero.ApplyBoosts(effect.Boosts);
-            }
-        }
-        yield return ShowStatusChanges(sourceUnit.Hero);
-        yield return ShowStatusChanges(targetUnit.Hero);
+        yield return(StartCoroutine(sourceUnit.PlayAttackAnimation(moveActionType)));
+        yield return(StartCoroutine(targetUnit.PlayHitAnimation(moveActionType)));
 
         //计算伤害
         int damage = targetUnit.Hero.CalculateDamage(move, sourceUnit.Hero, currentValue);
@@ -201,8 +182,10 @@ public class CombatSystem : MonoBehaviour
             yield return dialogBox.TypeDialog($"{targetUnit.Hero.Base.HeroName } lose {damage} life");
         }
         yield return new WaitForSeconds(0.7f);
-        //Debug.Log("p1还有" + p1Unit.Hero.HP + "血");
-        
+
+        //状态改变 //TODO:现在状态改变只能指定单目标，有时间的话分开写，然后把这一坨放到新的函数里
+        yield return (StartCoroutine(HandleMoveEffects(move, sourceUnit, targetUnit)));
+
         //判断死亡
         if (targetUnit.Hero .HP<=0)
         {
@@ -217,14 +200,44 @@ public class CombatSystem : MonoBehaviour
             PassTurn(sourceUnit);
         }
     }
-    //属性增减
-    IEnumerator ShowStatusChanges(Hero hero)
+
+    //处理技能效果
+    IEnumerator HandleMoveEffects(Move move,Unit source, Unit target)
     {
-        while (hero.StatusChanges.Count > 0)
+        var effect = move.Base.MoveEffects;
+        if (effect.Boosts != null)
         {
-            var message = hero.StatusChanges.Dequeue();
-            yield return dialogBox.TypeDialog(message);
+            if (move.Base.EffectTarget == EffectTarget.Self)
+            {
+                source.Hero.ApplyBoosts(effect.Boosts);
+                Debug.Log("Attack:" + source.Hero.Attack);
+
+            }
+            else if (move.Base.EffectTarget == EffectTarget.Enemy)
+            {
+                target.Hero.ApplyBoosts(effect.Boosts);
+            }
+            else if (move.Base.EffectTarget == EffectTarget.All)
+            {
+                source.Hero.ApplyBoosts(effect.Boosts);
+                target.Hero.ApplyBoosts(effect.Boosts);
+            }
         }
+        yield return ShowStatusChanges(source);
+        yield return ShowStatusChanges(target);
+    }
+
+    //显示属性增减文字和动画
+    IEnumerator ShowStatusChanges(Unit unit)
+    {
+        while (unit.Hero.StatusChanges.Count > 0)
+        {
+            var message = unit.Hero.StatusChanges.Dequeue();
+            StartCoroutine(unit.PlayBoostedAnimation());
+            yield return dialogBox.TypeDialog(message);
+            yield return new WaitForSeconds(0.4f);
+        }
+        yield return new WaitForSeconds(0.4f);
     }
 
     //过回合

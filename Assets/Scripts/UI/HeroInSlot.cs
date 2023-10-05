@@ -27,4 +27,15 @@ public class HeroInSlot : MonoBehaviour
     {
         heroSelector.UpdateHeroSelection(hero);
     }
+
+    public void OnMouseEnter()
+    {
+        Debug.Log("µãÒ»ÏÂ");
+        TipManager._instance.SetAndShowTip(hero.Base .HeroName, hero .Base .Description);
+    }
+
+    public void OnMouseExit()
+    {
+        //TipManager._instance.HideTip();
+    }
 }

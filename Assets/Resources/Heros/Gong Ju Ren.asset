@@ -21,9 +21,9 @@ MonoBehaviour:
   defence: 100
   magic: 1
   magicDef: 100
-  speed: 1
+  speed: 99
   evasion: 0
-  luck: 0
+  luck: 99
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: 73cdf3916fb7ba54db1c1448123b2ccd, type: 2}
     diceNum: 0
@@ -35,5 +35,5 @@ MonoBehaviour:
     diceNum: 0
   - moveBase: {fileID: 11400000, guid: 73cdf3916fb7ba54db1c1448123b2ccd, type: 2}
     diceNum: 0
-  - moveBase: {fileID: 11400000, guid: 73cdf3916fb7ba54db1c1448123b2ccd, type: 2}
+  - moveBase: {fileID: 11400000, guid: 6ddcf887cc615894a9e3dcf816096176, type: 2}
     diceNum: 0

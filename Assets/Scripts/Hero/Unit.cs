@@ -35,7 +35,7 @@ public class Unit : MonoBehaviour
         StartCoroutine (PlayEnterAnimation());
     }
 
-    //-----------------------------动画相关-----------------------------
+    //-----------------------------动画相关（屎山部分，因为美术人手不足）-----------------------------
     //动画复原
     public IEnumerator AnimationReset()
     {
@@ -109,7 +109,7 @@ public class Unit : MonoBehaviour
             }
         }
         sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x, 0.2f)); // 还原
-        yield return null;
+        yield return new WaitForSeconds(0.45f);
     }
 
     //受击
@@ -131,6 +131,17 @@ public class Unit : MonoBehaviour
         sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x, 0.1f));
         sequence.Append(spRenderer.DOColor(originalColor, 0.1f));
         yield return null;
+    }
+
+    //受到强化
+    public IEnumerator PlayBoostedAnimation()
+    {
+        var sequence = DOTween.Sequence();
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 20f, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 20f, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y, 0.1f));
+        yield return new WaitForSeconds(0.4f);
     }
 
     //阵亡

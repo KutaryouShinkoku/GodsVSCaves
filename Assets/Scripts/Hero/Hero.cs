@@ -184,5 +184,4 @@ public class Hero
             Debug.Log($"{stat} has been boosted to {StatBoosts[stat]} ");
         }
     }
-
 }
