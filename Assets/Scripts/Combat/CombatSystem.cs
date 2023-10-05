@@ -210,7 +210,7 @@ public class CombatSystem : MonoBehaviour
             if (move.Base.EffectTarget == EffectTarget.Self)
             {
                 source.Hero.ApplyBoosts(effect.Boosts);
-                Debug.Log("Attack:" + source.Hero.Attack);
+                Debug.Log("Magic:" + source.Hero.Magic);
 
             }
             else if (move.Base.EffectTarget == EffectTarget.Enemy)

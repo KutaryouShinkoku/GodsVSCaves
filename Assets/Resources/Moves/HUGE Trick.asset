@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: HUGE Trick
   description: Deal 2xAtk damage.
-  power: 120
+  power: 100
   accuracy: 0
   isMagic: 1
   moveActionType: 1

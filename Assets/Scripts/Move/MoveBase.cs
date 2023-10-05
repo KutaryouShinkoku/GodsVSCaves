@@ -82,7 +82,7 @@ public enum MoveActionType
 //技能类型
 public enum MoveCatagory
 {
-    Physics,Magic,Heal,Status,Special
+    Physics,Magic,Shield,Heal,Status,Special
 }
 
 public enum EffectTarget

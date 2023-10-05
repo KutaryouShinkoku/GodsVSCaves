@@ -134,13 +134,15 @@ public class Hero
     public int CalculateDamage(Move move, Hero attacker, int currentValue)
     {
         float attack = (move.Base.MoveCatagory == MoveCatagory.Magic) ? attacker.Magic : attacker.Attack;
+        attack = (move.Base.MoveCatagory == MoveCatagory.Shield) ? attacker.Defence : attack;
         float defence = (move.Base.MoveCatagory == MoveCatagory.Physics) ? attacker.MagicDef : attacker.Defence ;
 
+
         //Debug.Log("骰子点数：" + currentValue);
-        float modifiers = ((currentValue / 10f) + 0.7f);
+        float modifiers = ((currentValue / 10f) + 0.7f+Random .Range(-0.15f,0.15f));
         //Debug.Log("伤害调整值：" + modifiers);
         float a = (2 * attacker.Level + 10) / 250f;
-        float d = a * move.Base.Power * ((float)Attack / Defence) + 2;
+        float d = a * move.Base.Power * ((float)attack / defence) + 2;
         if (move.Base.Power == 0)
         {
             d = 0;

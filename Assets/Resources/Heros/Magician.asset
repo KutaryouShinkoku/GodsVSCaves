@@ -16,19 +16,19 @@ MonoBehaviour:
   camp: 1
   description: 'Magician from the Magic Cave who likes tricks.
 
-    <color="#FF1818">1:[Jab]</color>
+    <color="#FF1818">1,4:[Jab]</color>
     deal small amount physical damage.
 
     <color="#FF1818">2:[Calm Mind]</color>
     Increase magic sharply.
 
-    <color="#FF1818">3,4,5:[Magic Trick]</color> deal
+    <color="#FF1818">3,5:[Magic Trick]</color> deal
     small amount magic damage.
 
     <color="#FF1818">6:[HUGE Trick]</color> deal
     LARGE amount magic damage.'
   sprite: {fileID: 1715490860, guid: ee1a3dbb8776c204c81f4d582e1c273c, type: 3}
-  maxHP: 200
+  maxHP: 180
   attack: 60
   defence: 75
   magic: 110
