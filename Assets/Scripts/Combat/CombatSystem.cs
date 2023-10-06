@@ -56,7 +56,7 @@ public class CombatSystem : MonoBehaviour
         p2HUD.SetHUD(p2Unit.Hero);
 
         //开战播报
-        StartCoroutine( dialogBox.TypeDialog($"{p1Unit.Hero.Base.HeroName} VS {p2Unit.Hero.Base.HeroName}!"));
+        StartCoroutine( dialogBox.TypeDialog($"{p1Unit.Hero.Base.HeroName} {Localize .GetInstance ().GetTextByKey("VS")} {p2Unit.Hero.Base.HeroName}!"));
         yield return new WaitForSeconds(2f);
         yield return dialogBox.TypeDialogSlow($"3......2......1.....GO!");
         yield return new WaitForSeconds(1f);
@@ -138,11 +138,11 @@ public class CombatSystem : MonoBehaviour
     {
         if (value == 6)
         {
-            yield return dialogBox.TypeDialog($"Lucky Boost!!!");
+            yield return dialogBox.TypeDialog($"{Localize.GetInstance().GetTextByKey("Lucky Boost")}!!!");
             yield return new WaitForSeconds(0.5f);
             value = 5;
         }
-        yield return dialogBox.TypeDialog($"{sourceUnit.Hero.Base.HeroName } rolled a ......{value + 1}!");
+        yield return dialogBox.TypeDialog($"{sourceUnit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("rolled a")} ......{value + 1}!");
         yield return new WaitForSeconds(0.8f);
     }
 
@@ -153,7 +153,7 @@ public class CombatSystem : MonoBehaviour
         //技能基础信息初始化
         MoveActionType moveActionType = move.Base.MoveActionType;
         bool isMagic = move.Base.IsMagic;
-        yield return dialogBox.TypeDialog($"{sourceUnit.Hero.Base.HeroName } used {move.Base.MoveName}");
+        yield return dialogBox.TypeDialog($"{sourceUnit.Hero.Base.HeroName } {Localize.GetInstance().GetTextByKey("used")} {move.Base.MoveName}");
         yield return new WaitForSeconds(0.5f);
 
         //技能动画
@@ -167,7 +167,7 @@ public class CombatSystem : MonoBehaviour
         bool isCrit = targetUnit.Hero.CritCheck(targetUnit.Hero .Base .Luck);
         if(damage != 0 && isCrit)
         {
-            yield return dialogBox.TypeDialog($"Critical Hit!");
+            yield return dialogBox.TypeDialog($"{Localize.GetInstance().GetTextByKey("Critical Hit")}!");
             damage = (int)(damage * 1.5f);
             yield return new WaitForSeconds(0.7f);
         }
@@ -179,7 +179,7 @@ public class CombatSystem : MonoBehaviour
         yield return targetHUD.HideDamage();
         if (damage != 0)
         {
-            yield return dialogBox.TypeDialog($"{targetUnit.Hero.Base.HeroName } lose {damage} life");
+            yield return dialogBox.TypeDialog($"{targetUnit.Hero.Base.HeroName } {Localize.GetInstance().GetTextByKey("lose")} {damage} {Localize.GetInstance().GetTextByKey("life")}");
         }
         yield return new WaitForSeconds(0.7f);
 
@@ -207,10 +207,10 @@ public class CombatSystem : MonoBehaviour
         var effect = move.Base.MoveEffects;
         if (effect.Boosts != null)
         {
-            if (move.Base.EffectTarget == EffectTarget.Self)
+            if (move.Base. EffectTarget == EffectTarget.Self)
             {
                 source.Hero.ApplyBoosts(effect.Boosts);
-                Debug.Log("Magic:" + source.Hero.Magic);
+                //Debug.Log("Magic:" + source.Hero.Magic);
 
             }
             else if (move.Base.EffectTarget == EffectTarget.Enemy)
@@ -294,11 +294,11 @@ public class CombatSystem : MonoBehaviour
     {
         if (state == CombatState.P1WON)
         {
-            yield return dialogBox.TypeDialog(p1Unit.Hero.Base.HeroName + " Victory won! \n \n...............for now........");
+            yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n \n...............{Localize.GetInstance().GetTextByKey("for now")}........");
         }
         else if (state == CombatState.P2WON)
         {
-            yield return dialogBox.TypeDialog(p2Unit.Hero.Base.HeroName + " Victory won! \n \n...............for now........");
+            yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n \n...............{Localize.GetInstance().GetTextByKey("for now")}........");
         }
 
         yield return new WaitForSeconds(3f);

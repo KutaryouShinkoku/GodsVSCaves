@@ -35,7 +35,7 @@ public class Unit : MonoBehaviour
         StartCoroutine (PlayEnterAnimation());
     }
 
-    //-----------------------------动画相关（屎山部分，因为美术人手不足）-----------------------------
+    //-----------------------------动画相关（屎山部分）-----------------------------
     //动画复原
     public IEnumerator AnimationReset()
     {

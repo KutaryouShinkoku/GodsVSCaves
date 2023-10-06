@@ -12,21 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3632f4d5647c84eb3c9a0e63a474ce, type: 3}
   m_Name: Magician
   m_EditorClassIdentifier: 
-  heroName: Cave Magician
+  heroName: CaveMagician_name
   camp: 1
-  description: 'Magician from the Magic Cave who likes tricks.
-
-    <color="#FF1818">1,4:[Jab]</color>
-    deal small amount physical damage.
-
-    <color="#FF1818">2:[Calm Mind]</color>
-    Increase magic sharply.
-
-    <color="#FF1818">3,5:[Magic Trick]</color> deal
-    small amount magic damage.
-
-    <color="#FF1818">6:[HUGE Trick]</color> deal
-    LARGE amount magic damage.'
+  description: CaveMagician_disc
   sprite: {fileID: 1715490860, guid: ee1a3dbb8776c204c81f4d582e1c273c, type: 3}
   maxHP: 180
   attack: 60

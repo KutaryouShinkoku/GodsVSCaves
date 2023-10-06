@@ -176,11 +176,11 @@ public class Hero
 
             if (boost > 0)
             {
-                StatusChanges.Enqueue($"{Base.HeroName}'s {stat} get {boost*50}% up!");
+                StatusChanges.Enqueue($"{Base.HeroName}{Localize.GetInstance().GetTextByKey("'s")} {Localize.GetInstance().GetTextByKey($"{stat}")} +{boost*50}%!");
             }
             else
             {
-                StatusChanges.Enqueue($"{Base.HeroName}'s {stat} get {boost*50}% up!");
+                StatusChanges.Enqueue($"{Base.HeroName}{Localize.GetInstance().GetTextByKey("'s")} {Localize.GetInstance().GetTextByKey($"{stat}")} -{-boost*50}%.");
             }
 
             Debug.Log($"{stat} has been boosted to {StatBoosts[stat]} ");

@@ -1,0 +1,21 @@
+Change$更换
+Begin$开战
+VS$对阵
+Lucky Boost$超幸运
+rolled a$掷骰结果是
+used$使出了
+Critical Hit$命中要害
+lose$失去了
+life$生命
+Victory won$获胜了
+for now$至少是这次
+'s$的
+get+$得到了
+get-$遭到了
+up$提升
+down$降低
+Attack$攻击
+Defence$D防御
+Magic$魔力
+MagicDef$魔抗
+Luck$幸运

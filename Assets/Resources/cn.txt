@@ -1,0 +1,3 @@
+Change=更换
+Begin=开战
+BeginReport={p1Unit.Hero.Base.HeroName} 对阵 {p2Unit.Hero.Base.HeroName}！

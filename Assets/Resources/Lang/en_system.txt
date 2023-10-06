@@ -1,0 +1,21 @@
+Change$Change
+Begin$Begin
+VS$VS
+Lucky Boost$Lucky Boost
+rolled a$rolled a
+used$used
+Critical Hit$Critical Hit
+lose$lose
+life$life
+Victory won$Victory won
+for now$for now
+'s$'s 
+get+$get 
+get-$get 
+up$up
+down$down
+Attack$Attack 
+Defence$Defence 
+Magic$Magic 
+MagicDef$MagicDef 
+Luck$Luck 

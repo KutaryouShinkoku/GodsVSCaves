@@ -1,0 +1,9 @@
+AttackBoost_name$Attack Boost
+CaLmMind_name$Calm Mind
+HugeTrick_name$HUGE TRICK
+IronDefence_name$Iron Defence
+Jab_name$Jab
+MagicTrick_name$Magic Trick
+NormalSlash_name$Normal Slash!
+Tackle_name$Tackle
+ShieldAttack_name$Shield Attack!

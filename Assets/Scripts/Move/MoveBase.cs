@@ -20,11 +20,11 @@ public class MoveBase : ScriptableObject
     [SerializeField] MoveEffects moveEffects;
     [SerializeField] EffectTarget effectTarget;
     public string MoveName{
-        get { return moveName; }
+        get { return $"{Localize.GetInstance().GetTextByKey($"{moveName}")}"; }
     }
 
     public string Description{
-        get { return description; }
+        get { return $"{Localize.GetInstance().GetTextByKey($"{description}")}"; }
     }
 
     public int Power{
@@ -70,7 +70,6 @@ public class MoveEffects
 public class StatBoost
 {
     public Stat stat;
-    public EffectTarget target;
     public int boost;
 }
 

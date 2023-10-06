@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88df5df539cc67a40b7d466b9de0bd57, type: 3}
   m_Name: Iron Defence
   m_EditorClassIdentifier: 
-  moveName: Iron Defence
+  moveName: IronDefence_name
   description: 
   power: 0
   accuracy: 0
@@ -22,9 +22,7 @@ MonoBehaviour:
   moveEffects:
     boosts:
     - stat: 1
-      target: 0
       boost: 1
     - stat: 3
-      target: 0
       boost: 1
   effectTarget: 0

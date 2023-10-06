@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88df5df539cc67a40b7d466b9de0bd57, type: 3}
   m_Name: AttackBoost
   m_EditorClassIdentifier: 
-  moveName: Attack Boost
+  moveName: AttackBoost_name
   description: Increase 2 attack.
   power: 0
   accuracy: 0
@@ -22,6 +22,5 @@ MonoBehaviour:
   moveEffects:
     boosts:
     - stat: 0
-      target: 0
       boost: 1
   effectTarget: 0

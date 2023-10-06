@@ -1,0 +1,8 @@
+Gong Ju Ren$Gong Ju Ren
+Don't select;Just for test$Don't select;Just for test
+GodOfNormal_name$普通之神
+GodOfNormal_disc$普通之神象征普通，真是普通极了。\n<color="#FF1818">1,2,3,5:[普通攻击]</color> 造成少量物理伤害。\n<color="#FF1818">4:[强化]</color>提升攻击。\n<color="#FF1818">6:[普通一拳！]</color>造成大量物理伤害，然后提升攻击。
+GodOfDefence_name$防守之神
+GodOfDefence_disc$防守之神认为防守是最好的防守。\n<color="#FF1818">1,2,5:[撞击]</color> 造成少量物理伤害。\n<color="#FF1818">3,4:[铁壁]</color>提升防御和魔抗。\n<color="#FF1818">6:[盾牌猛击！]</color>造成大量物理伤害，计算防御力而不是攻击。
+CaveMagician_name$巢穴法师
+CaveMagician_disc$巢穴法师喜欢恶作剧。\n<color="#FF1818">1,4:[普通攻击]</color> 造成少量物理伤害。\n<color="#FF1818">2:[冥想]</color>大幅提升魔法。\n<color="#FF1818">3,5:[戏法]</color>造成少量魔法伤害。\n<color="#FF1818">6:[帽子戏法]</color>造成巨量魔法伤害。

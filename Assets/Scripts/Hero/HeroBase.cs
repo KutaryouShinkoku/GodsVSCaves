@@ -26,11 +26,11 @@ public class HeroBase : ScriptableObject
 
     //----------------------------- π Ù–‘ø…∂¡-----------------------------
     public string HeroName{
-        get{ return heroName;}
+        get{ return $"{Localize.GetInstance().GetTextByKey($"{heroName}")}";}
     }
 
     public string Description{
-        get { return description; }
+        get { return $"{Localize.GetInstance().GetTextByKey($"{description}")}"; }
     }
 
     public Sprite Sprite{

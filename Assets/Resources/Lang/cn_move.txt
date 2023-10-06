@@ -1,0 +1,9 @@
+AttackBoost_name$强化
+CameMind_name$冥想
+HugeTrick_name$帽子戏法！
+IronDefence_name$铁壁
+Jab_name$普通攻击
+MagicTrick_name$戏法
+NormalSlash_name$普通一拳！
+Tackle_name$撞击
+ShieldAttack_name$盾牌猛击！

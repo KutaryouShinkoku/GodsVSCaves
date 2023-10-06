@@ -12,19 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f3632f4d5647c84eb3c9a0e63a474ce, type: 3}
   m_Name: GodOfDefence
   m_EditorClassIdentifier: 
-  heroName: God of Defence
+  heroName: GodOfDefence_name
   camp: 0
-  description: 'The god who symbolizes defense believes that defense is the best
-    way to fight in the world.
-
-    <color="#FF1818">1,2,5:[Jab]</color> deal small
-    amount physical damage.
-
-    <color="#FF1818">3,4:[Iron Defence]</color> increase
-    defence and magicDef.
-
-    <color="#FF1818">6:[Sheild Attack]</color> deal phisical
-    damage, power is rely on defence'
+  description: GodOfDefence_disc
   sprite: {fileID: 21300000, guid: a153f0a58b66e9d42b60b574547207df, type: 3}
   maxHP: 270
   attack: 52
@@ -35,15 +25,15 @@ MonoBehaviour:
   evasion: 0
   luck: 15
   movesOfDice:
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+  - moveBase: {fileID: 11400000, guid: 1cc0c1986ce0faa4cb26ae31b1df866d, type: 2}
     diceNum: 0
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
-    diceNum: 0
-  - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
+  - moveBase: {fileID: 11400000, guid: 1cc0c1986ce0faa4cb26ae31b1df866d, type: 2}
     diceNum: 0
   - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
     diceNum: 0
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+  - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
+    diceNum: 0
+  - moveBase: {fileID: 11400000, guid: 1cc0c1986ce0faa4cb26ae31b1df866d, type: 2}
     diceNum: 0
   - moveBase: {fileID: 11400000, guid: b4efc95f28ee031438f11eb2c3f69367, type: 2}
     diceNum: 0

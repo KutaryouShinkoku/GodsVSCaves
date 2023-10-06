@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88df5df539cc67a40b7d466b9de0bd57, type: 3}
   m_Name: HUGE Trick
   m_EditorClassIdentifier: 
-  moveName: HUGE Trick
+  moveName: HugeTrick_name
   description: Deal 2xAtk damage.
   power: 100
   accuracy: 0
