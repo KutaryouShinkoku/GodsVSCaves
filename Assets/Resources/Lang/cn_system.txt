@@ -19,3 +19,7 @@ Defence$D防御
 Magic$魔力
 MagicDef$魔抗
 Luck$幸运
+Select Heros$选择一名英雄
+Select Hero for Gods$为神界选择英雄
+Select Hero for Caves$为巢穴选择英雄
+basic_stats$等级:\n生命:\n攻击:\n防御:\n魔力:\n魔抗:\n速度:\n幸运:\n

@@ -19,3 +19,7 @@ Defence$Defence
 Magic$Magic 
 MagicDef$MagicDef 
 Luck$Luck 
+Select Heros$Select Heros
+Select Hero for Gods$Select Hero for Gods
+Select Hero for Caves$Select Hero for Caves
+basic_stats$Level:\nHP:\nAttack:\nDefence:\nMagic:\nMagicDef:\nSpeed:\nLuck:\n

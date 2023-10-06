@@ -39,7 +39,7 @@ public class HeroSelector : MonoBehaviour
         UpdateSelectedHeroInfoP2();
 
         //初始化引导词
-        guide.text = "Select Heros!";
+        guide.text =$"{Localize.GetInstance().GetTextByKey($"Select Heros")}!";
 
         //初始化选人界面
         foreach (var hero in heros)
@@ -76,14 +76,14 @@ public class HeroSelector : MonoBehaviour
     {
         state = SelectState.SELECTP1;
         Debug.Log("state=" + state);
-        guide.text = "Select Hero for Gods";
+        guide.text = $"{Localize.GetInstance().GetTextByKey($"Select Hero for Gods")}";
     }
 
     public void ChangeP2()
     {
         state = SelectState.SELECTP2;
         Debug.Log("state=" + state);
-        guide.text = "Select Hero for Caves";
+        guide.text = $"{Localize.GetInstance().GetTextByKey($"Select Hero for Caves")}";
     }
 
     //选人后更新英雄信息

@@ -17,6 +17,6 @@ public class LocalizeTxt : MonoBehaviour
 
     public void OnLanguageChanged()
     {
-        m_text.text = Localize.GetInstance().GetTextByKey(m_key);
+        m_text.text = Localize.GetInstance().GetTextByKey(m_key).Replace("\\n", "\n");
     }
 }
