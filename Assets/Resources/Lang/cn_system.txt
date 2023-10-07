@@ -1,21 +1,18 @@
 Change$更换
 Begin$开战
-VS$对阵
-Lucky Boost$超幸运
+{0} VS {1}!${0} 对阵 {1}！
+Lucky Boost!!!$超幸运！！！
 rolled a$掷骰结果是
-used$使出了
-Critical Hit$命中要害
-lose$失去了
-life$生命
+{0} rolled a ......{1}!${0}掷出了......{1}！
+{0} used {1}${0}使出了{1}
+Critical Hit!$命中要害！
+{0} lose {1} life${0}失去了{1}点生命
 Victory won$获胜了
 for now$至少是这次
-'s$的
-get+$得到了
-get-$遭到了
-up$提升
-down$降低
+{0}'s {1} increase {2}%!${0}的{1}提升了{2}%！
+{0}'s {1} decrease {2}%${0}的{1}下降了{2}%
 Attack$攻击
-Defence$D防御
+Defence$防御
 Magic$魔力
 MagicDef$魔抗
 Luck$幸运
@@ -23,3 +20,8 @@ Select Heros$选择一名英雄
 Select Hero for Gods$为神界选择英雄
 Select Hero for Caves$为巢穴选择英雄
 basic_stats$等级:\n生命:\n攻击:\n防御:\n魔力:\n魔抗:\n速度:\n幸运:\n
+Poison$中毒
+has been poisoned$中毒了
+{0} lose life due to poison${0}因为中毒失去了部分生命
+{0}'s HP is restored${0}的生命恢复了一些
+{0}'s HP is restored to full${0}的生命回满了

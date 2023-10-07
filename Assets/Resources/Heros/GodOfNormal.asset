@@ -15,7 +15,7 @@ MonoBehaviour:
   heroName: GodOfNormal_name
   camp: 0
   description: GodOfNormal_disc
-  sprite: {fileID: -1441590681, guid: ee1a3dbb8776c204c81f4d582e1c273c, type: 3}
+  sprite: {fileID: 21300000, guid: 634fd177d4227e843a5c7831bd5c5856, type: 3}
   maxHP: 220
   attack: 102
   defence: 60

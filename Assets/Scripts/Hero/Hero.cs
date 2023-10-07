@@ -15,7 +15,10 @@ public class Hero
 
     public Dictionary<Stat, int> Stats { get; private set; }
     public Dictionary<Stat, int> StatBoosts { get; private set; }
+    public Condition Status { get; private set; }
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
+
+    public bool HpChanged { get; set; }
 
     public Dice dice = new Dice(); //备用，用来给角色绑骰子
 
@@ -71,12 +74,11 @@ public class Hero
     {
         int statVal = Stats[stat];
 
-        //TODO:statBoost
         int boost = StatBoosts[stat];
         var boostValues = new float[] { 1f, 1.5f, 2f, 2.5f, 3f, 3.5f, 4f, 4.5f, 5f, 5.5f, 6f, 6.5f, 7f, 7.5f, 8f };
 
-        if (boost >= 0) { statVal = Mathf.FloorToInt(statVal * boostValues[boost]); }
-        else { statVal = Mathf.FloorToInt(statVal / boostValues[boost]); }
+        if (boost > 0) { statVal = Mathf.FloorToInt(statVal * boostValues[boost]); }
+        else if (boost < 0){ statVal = Mathf.FloorToInt(statVal / boostValues[-boost]); }
 
         return statVal;
     }
@@ -115,6 +117,18 @@ public class Hero
     public int Luck{
         get { return GetStat(Stat.Luck); }
     }
+    //-----------------------------特殊状态部分-----------------------------
+    public void SetStatus(ConditionID conditionID)
+    {
+        Status = ConditionsDB.Conditions[conditionID];
+        StatusChanges.Enqueue(string.Format("{0}{1}",Base.HeroName,Status.StartMessage));
+    }
+
+    //回合末处理以特殊状态为主的事件
+    public void OnAfterTurn()
+    {
+        Status?.OnAfterTurn?.Invoke(this); //处理特殊状态
+    }
 
     //-----------------------------数值check部分-----------------------------
     //CritCheck 暴击检查
@@ -131,16 +145,13 @@ public class Hero
     }
 
     //Damage 伤害计算
-    public int CalculateDamage(Move move, Hero attacker, int currentValue)
+    public int CalculateDamage(Move move, Hero attacker, Hero defender, int currentValue)
     {
-        float attack = (move.Base.MoveCatagory == MoveCatagory.Magic) ? attacker.Magic : attacker.Attack;
-        attack = (move.Base.MoveCatagory == MoveCatagory.Shield) ? attacker.Defence : attack;
-        float defence = (move.Base.MoveCatagory == MoveCatagory.Physics) ? attacker.MagicDef : attacker.Defence ;
+        float attack = CalculateAttakerStat(move, attacker);
+        float defence = CalculateDefenderStat(move, attacker, defender);
 
 
-        //Debug.Log("骰子点数：" + currentValue);
         float modifiers = ((currentValue / 10f) + 0.7f+Random .Range(-0.15f,0.15f));
-        //Debug.Log("伤害调整值：" + modifiers);
         float a = (2 * attacker.Level + 10) / 250f;
         float d = a * move.Base.Power * ((float)attack / defence) + 2;
         if (move.Base.Power == 0)
@@ -148,22 +159,44 @@ public class Hero
             d = 0;
         }
         int damage = Mathf.FloorToInt(d * modifiers);
-        //Debug.Log("伤害：" + damage);
         return damage;
+    }
+    //确定进攻和防御者用什么属性
+    public float CalculateAttakerStat(Move move, Hero attacker)
+    {
+        if(move.Base .MoveCatagory == MoveCatagory.Physics) { return attacker.Attack; }
+        else if (move.Base.MoveCatagory == MoveCatagory.Magic ) { return attacker.Magic ; }
+        else if (move.Base.MoveCatagory == MoveCatagory.Shield) { return attacker.Defence ; }
+        else return attacker.Attack;
+    }
+    public float CalculateDefenderStat(Move move, Hero attacker,Hero defender)
+    {
+        if(move .Base .MoveCatagory == MoveCatagory.Magic ) { return defender.MagicDef; }
+        else return defender.Defence;
     }
 
     //Damage 伤害处理
-    public bool TakeDamage(int damage)
+    //掉血血量更新，单独写出来用于处理非攻击导致的掉血
+    public void UpdateHp(int damage)
     {
-        HP -= damage;
-        if (HP <= 0)
-        {
-            HP = 0;
-            return true;
-        }
-        return false;
+        HP = Mathf.Clamp(HP - damage, 0, MaxHP);
+        HpChanged = true;
     }
 
+    //治疗血量更新
+    public void UpdateHpHeal(int heal,int diceValue)
+    {
+        HP = (int)Mathf.Min(HP + (1f /heal) * MaxHP* diceValue, MaxHP);
+        if (heal == 1)
+        {
+            StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s HP is restored to full")}", Base.HeroName));
+        }
+        else { StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s HP is restored")}", Base.HeroName)); }
+        HpChanged = true;
+    }
+
+
+    //-----------------------------属性增减部分-----------------------------
     //属性变化
     public void ApplyBoosts(List<StatBoost> statBoosts)
     {
@@ -176,11 +209,11 @@ public class Hero
 
             if (boost > 0)
             {
-                StatusChanges.Enqueue($"{Base.HeroName}{Localize.GetInstance().GetTextByKey("'s")} {Localize.GetInstance().GetTextByKey($"{stat}")} +{boost*50}%!");
+                StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s {1} increase {2}%!")}", Base.HeroName, Localize.GetInstance().GetTextByKey($"{stat}"), boost * 50));
             }
             else
             {
-                StatusChanges.Enqueue($"{Base.HeroName}{Localize.GetInstance().GetTextByKey("'s")} {Localize.GetInstance().GetTextByKey($"{stat}")} -{-boost*50}%.");
+                StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s {1} decrease {2}%")}", Base.HeroName, Localize.GetInstance().GetTextByKey($"{stat}"), -boost * 50));
             }
 
             Debug.Log($"{stat} has been boosted to {StatBoosts[stat]} ");

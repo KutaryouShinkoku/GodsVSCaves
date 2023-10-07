@@ -56,13 +56,24 @@ public class MoveBase : ScriptableObject
     }
 }
 [System.Serializable]
+//技能特效
 public class MoveEffects
 {
     [SerializeField] List<StatBoost> boosts;
+    [SerializeField] ConditionID status;
+    [SerializeField] int heal;
 
     public List<StatBoost> Boosts
     {
         get { return boosts; }
+    }
+    public ConditionID Status
+    {
+        get { return status; }
+    }
+    public int Heal
+    {
+        get { return heal; }
     }
 }
 
@@ -72,6 +83,8 @@ public class StatBoost
     public Stat stat;
     public int boost;
 }
+
+
 
 //技能动画类型
 public enum MoveActionType

@@ -7,3 +7,13 @@ MagicTrick_name$Magic Trick
 NormalSlash_name$Normal Slash!
 Tackle_name$Tackle
 ShieldAttack_name$Shield Attack!
+AncientPoison_name$Ancient Poison
+FirstAid_name$First Aid
+TakeANap_name$Take A Nap
+EldritchBlast_name$Eldritch Blast
+EldritchArrow_name$Eldritch Arrow
+AncientCurse_name$Ancient Curse
+AngelsGrace_name$Angel's Grace
+SwordsToPlowshares_name$Swords To Plowshares
+EnlightenedTutor_name$Enlightened Tutor
+WrathOfGod_name$Wrath of God

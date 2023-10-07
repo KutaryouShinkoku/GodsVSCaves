@@ -41,7 +41,12 @@ public class CombatHUD : MonoBehaviour
     //ÏÔÊ¾ÑªÁ¿
     public IEnumerator UpdateHp()
     {
-        yield return SetHpSmooth (_hero .HP);
+        if (_hero.HpChanged)
+        {
+            _hero.HpChanged = false;
+            yield return SetHpSmooth(_hero.HP);
+        }
+
     }
 
     //ÑªÁ¿½µµÍ
@@ -49,13 +54,25 @@ public class CombatHUD : MonoBehaviour
     {
         float curHp = hPSlider.value;
         float changeAmt = curHp - newHp;
-
-        while(curHp-newHp>Mathf .Epsilon)
+        if(changeAmt >= 0)
         {
-            curHp -= 4*changeAmt * Time.deltaTime;
-            hPSlider.value = curHp ;
-            yield return null;
+            while (curHp - newHp > Mathf.Epsilon)
+            {
+                curHp -= 4 * changeAmt * Time.deltaTime;
+                hPSlider.value = curHp;
+                yield return null;
+            }
         }
+        else
+        {
+            while (newHp - curHp > Mathf.Epsilon)
+            {
+                curHp -= 4 * changeAmt * Time.deltaTime;
+                hPSlider.value = curHp;
+                yield return null;
+            }
+        }
+
 
         hPSlider.value = newHp;
     }
@@ -93,7 +110,7 @@ public class CombatHUD : MonoBehaviour
             dmgText.text = "-" + damage;
             sequence.Append(dmgText .transform.DOLocalMoveY(originalDmgPos.y + 20f, 0.8f));
             sequence.Join(dmgText.DOFade(0, 0.8f));
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 

@@ -10,18 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88df5df539cc67a40b7d466b9de0bd57, type: 3}
-  m_Name: Calm Mind
+  m_Name: EnlightenedTutor
   m_EditorClassIdentifier: 
-  moveName: CalmMind_name
+  moveName: EnlightenedTutor_name
   description: 
   power: 0
   accuracy: 0
   isMagic: 0
   moveActionType: 3
-  moveCatagory: 4
+  moveCatagory: 5
   moveEffects:
     boosts:
     - stat: 2
-      boost: 2
+      boost: 1
+    - stat: 3
+      boost: 1
     status: 0
+    heal: 0
   effectTarget: 0

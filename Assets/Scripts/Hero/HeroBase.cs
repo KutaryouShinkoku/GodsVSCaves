@@ -98,4 +98,4 @@ public enum HeroCamp
 }
 
 // Ù–‘
-public enum Stat { Attack,Defence,Magic,MagicDef,Luck}
+public enum Stat {Attack,Defence,Magic,MagicDef,Luck}

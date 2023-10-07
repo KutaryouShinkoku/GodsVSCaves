@@ -1,25 +1,27 @@
 Change$Change
 Begin$Begin
-VS$VS
-Lucky Boost$Lucky Boost
+{0} VS {1}!${0} VS {1}!
+Lucky Boost!!!$Lucky Boost!!!
 rolled a$rolled a
-used$used
-Critical Hit$Critical Hit
-lose$lose
-life$life
+{0} rolled a ......{1}!${0} rolled a ......{1}!
+{0} used {1}${0} used {1}
+Critical Hit!$Critical Hit!
+{0} lose {1} life${0} lose {1} life
 Victory won$Victory won
 for now$for now
-'s$'s 
-get+$get 
-get-$get 
-up$up
-down$down
-Attack$Attack 
-Defence$Defence 
-Magic$Magic 
-MagicDef$MagicDef 
-Luck$Luck 
+{0}'s {1} increase {2}%!${0}'s {1} increase by {2}%!
+{0}'s {1} decrease {2}%${0}'s {1} decrease by {2}%
+Attack$Attack
+Defence$Defence
+Magic$Magic
+MagicDef$MagicDef
+Luck$Luck
 Select Heros$Select Heros
 Select Hero for Gods$Select Hero for Gods
 Select Hero for Caves$Select Hero for Caves
 basic_stats$Level:\nHP:\nAttack:\nDefence:\nMagic:\nMagicDef:\nSpeed:\nLuck:\n
+Poison$Poison
+has been poisoned$ has been poisoned
+{0} lose life due to poison${0} lose life due to poison
+{0}'s HP is restored${0}'s HP is restored
+{0}'s HP is restored to full${0}'s HP is restored to full

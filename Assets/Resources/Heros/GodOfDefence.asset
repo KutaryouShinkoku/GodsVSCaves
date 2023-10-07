@@ -27,7 +27,7 @@ MonoBehaviour:
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: 1cc0c1986ce0faa4cb26ae31b1df866d, type: 2}
     diceNum: 0
-  - moveBase: {fileID: 11400000, guid: 1cc0c1986ce0faa4cb26ae31b1df866d, type: 2}
+  - moveBase: {fileID: 11400000, guid: 1323e13a76788a845acb06c4cb9d2037, type: 2}
     diceNum: 0
   - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
     diceNum: 0
