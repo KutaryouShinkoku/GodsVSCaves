@@ -1,5 +1,5 @@
 AttackBoost_name$强化
-CameMind_name$冥想
+CalmMind_name$巢穴秘法
 HugeTrick_name$帽子戏法！
 IronDefence_name$防御姿态
 Jab_name$普通攻击
