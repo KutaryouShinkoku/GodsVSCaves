@@ -1,6 +1,6 @@
 AttackBoost_name$Attack Boost
 CalmMind_name$Calm Mind
-HugeTrick_name$HUGE TRICK
+HugeTrick_name$Hat-trick!
 IronDefence_name$Iron Defence
 Jab_name$Jab
 MagicTrick_name$Magic Trick
@@ -17,3 +17,4 @@ AngelsGrace_name$Angel's Grace
 SwordsToPlowshares_name$Swords To Plowshares
 EnlightenedTutor_name$Enlightened Tutor
 WrathOfGod_name$Wrath of God
+Working_name$Working...

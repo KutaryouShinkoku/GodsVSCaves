@@ -9,6 +9,7 @@ public class Unit : MonoBehaviour
     [SerializeField] HeroBase _base;
     [SerializeField] int level;
     [SerializeField] GameObject smoke;
+    [SerializeField] GameObject bullet;
     [SerializeField] float enterDelay;
     [SerializeField] bool isPlayer1; //用来检查角色属于哪边
 
@@ -31,6 +32,7 @@ public class Unit : MonoBehaviour
         Hero = hero;
         Debug.Log(Hero .Base.HeroName + "的当前数值:" + Hero.HP + " " + Hero.Attack + " " + Hero.Defence + " " + Hero.Magic + " " + Hero.MagicDef + " " + Hero.Luck);
         spRenderer.sprite = Hero.Base.Sprite;
+        bullet = Hero.Base.Bullet;
 
         StartCoroutine (PlayEnterAnimation());
     }
@@ -71,11 +73,21 @@ public class Unit : MonoBehaviour
         {
             if (isPlayer1)
             {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 50f, 0.25f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 50f, 0.2f));
+                yield return new WaitForSeconds(0.2f);
+                if (bullet != null)
+                {
+                    Instantiate(bullet, spRenderer.transform);
+                }
             }
             else
             {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 50f, 0.25f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 50f, 0.2f));
+                yield return new WaitForSeconds(0.2f);
+                if (bullet != null)
+                {
+                    Instantiate(bullet, spRenderer.transform.position ,Quaternion.Euler(0,180,0));
+                }
             }
         }
         if (moveActionType == MoveActionType.Heal) //治疗动画

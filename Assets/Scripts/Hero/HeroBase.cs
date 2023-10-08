@@ -12,6 +12,7 @@ public class HeroBase : ScriptableObject
     [SerializeField] string description;
 
     [SerializeField] Sprite sprite;
+    [SerializeField] GameObject bullet;
 
     //Base stats 英雄属性
     [SerializeField] int maxHP;
@@ -22,6 +23,7 @@ public class HeroBase : ScriptableObject
     [SerializeField] int speed;
     [SerializeField] int evasion;
     [SerializeField] int luck;
+    [SerializeField] Character character;
     [SerializeField] List<MoveOfDice> movesOfDice;
 
     //-----------------------------使属性可读-----------------------------
@@ -35,6 +37,10 @@ public class HeroBase : ScriptableObject
 
     public Sprite Sprite{
         get { return sprite; }
+    }
+
+    public GameObject Bullet{
+        get { return bullet; }
     }
 
     public int MaxHP{
@@ -72,6 +78,10 @@ public class HeroBase : ScriptableObject
     public List<MoveOfDice> MovesOfDice{
         get { return movesOfDice; }
     }
+
+    public Character Character{
+        get { return character ; }
+    }
 }
 
 //Moves of Dice 骰子对应的技能
@@ -79,14 +89,9 @@ public class HeroBase : ScriptableObject
 public class MoveOfDice
 {
     [SerializeField] MoveBase moveBase;
-    [SerializeField] int diceNum;
 
     public MoveBase Base{
         get { return moveBase; }
-    }
-
-    public int DiceNum{
-        get { return diceNum; }
     }
 }
 
@@ -99,3 +104,12 @@ public enum HeroCamp
 
 //属性
 public enum Stat {Attack,Defence,Magic,MagicDef,Luck}
+
+//骰子性格
+public enum Character
+{
+    Ordinary, //普通
+    Brave, //勇敢
+    Timid, //胆小
+    Experienced, //老练
+}

@@ -17,6 +17,7 @@ public class Hero
     public Dictionary<Stat, int> StatBoosts { get; private set; }
     public Condition Status { get; private set; }
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
+    public Queue<string> CharacterBoost { get; private set; } = new Queue<string>();
 
     public bool HpChanged { get; set; }
 
@@ -29,7 +30,7 @@ public class Hero
         foreach(var move in Base.MovesOfDice)
         {
             //实装技能
-            if(move.DiceNum <= 6) { Moves.Add(new Move(move.Base)); }
+            if(Moves .Count <= 6) { Moves.Add(new Move(move.Base)); }
 
             if (Moves.Count >= 6) break;
         }
@@ -77,7 +78,7 @@ public class Hero
         int boost = StatBoosts[stat];
         var boostValues = new float[] { 1f, 1.5f, 2f, 2.5f, 3f, 3.5f, 4f, 4.5f, 5f, 5.5f, 6f, 6.5f, 7f, 7.5f, 8f };
 
-        if (boost > 0) { statVal = Mathf.FloorToInt(statVal * boostValues[boost]); }
+        if (boost >= 0) { statVal = Mathf.FloorToInt(statVal * boostValues[boost]); }
         else if (boost < 0){ statVal = Mathf.FloorToInt(statVal / boostValues[-boost]); }
 
         return statVal;
@@ -117,6 +118,30 @@ public class Hero
     public int Luck{
         get { return GetStat(Stat.Luck); }
     }
+    //-----------------------------特殊骰子部分-----------------------------
+    public void CharacterRoll(Character character) //性格roll
+    {
+        switch (character)
+        {
+            case Character.Ordinary:
+                break;
+            case Character.Brave:
+                CharacterBoost.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("The more {0}'s dice fights, the braver it becomes!")}", Base.HeroName));
+                break;
+            case Character.Timid:
+                CharacterBoost.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s dice is scared because its HP is too low!")}", Base.HeroName));
+                break;
+            case Character.Experienced:
+                CharacterBoost.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("Boosts double {0}'s dice's confidence!")}", Base.HeroName));
+                break;
+        }
+        
+    }
+    public void LuckyRoll() //超幸运
+    {
+        CharacterBoost.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("Lucky Boost!!!")}"));
+    }
+
     //-----------------------------特殊状态部分-----------------------------
     public void SetStatus(ConditionID conditionID)
     {

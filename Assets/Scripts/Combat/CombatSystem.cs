@@ -101,7 +101,7 @@ public class CombatSystem : MonoBehaviour
     IEnumerator PerformP1Move()
     {
         //扔骰子
-        int currentValue = dice.DiceRoll(p1Unit.Hero.Base.Luck);
+        int currentValue = dice.DiceRoll(p1Unit.Hero.Base.Luck,p1Unit .Hero);
         yield return StartCoroutine(HandleDiceRoll(p1Unit, currentValue));
         //处理任何因为技能效果增加的点数，大于6的调整为6
         if(currentValue > 5)
@@ -119,7 +119,7 @@ public class CombatSystem : MonoBehaviour
     IEnumerator PerformP2Move()
     {
         //扔骰子
-        int currentValue = dice.DiceRoll(p2Unit.Hero.Base.Luck);
+        int currentValue = dice.DiceRoll(p2Unit.Hero.Base.Luck,p2Unit.Hero);
         yield return StartCoroutine(HandleDiceRoll(p2Unit, currentValue));
         //处理任何因为技能效果增加的点数，大于6的调整为6
         if (currentValue > 5)
@@ -136,10 +136,17 @@ public class CombatSystem : MonoBehaviour
 
     IEnumerator HandleDiceRoll(Unit sourceUnit,int value)
     {
-        if (value == 6)
+        //文字提示更新
+        while (sourceUnit.Hero.CharacterBoost.Count > 0)
         {
-            yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("Lucky Boost!!!")}"));
-            yield return new WaitForSeconds(0.5f);
+            var message = sourceUnit.Hero.CharacterBoost.Dequeue();
+            yield return dialogBox.TypeDialog(message);
+            yield return new WaitForSeconds(0.8f);
+        }
+        if (value >= 6) //重置过量的点数
+        {
+            //yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("Lucky Boost!!!")}"));
+            //yield return new WaitForSeconds(0.5f);
             value = 5;
         }
         yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("{0} rolled a ......{1}!")}", sourceUnit.Hero.Base.HeroName, value + 1));
@@ -157,31 +164,19 @@ public class CombatSystem : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         //技能动画
-        yield return(StartCoroutine(sourceUnit.PlayAttackAnimation(moveActionType)));
-        yield return(StartCoroutine(targetUnit.PlayHitAnimation(moveActionType)));
-
-        //计算伤害
-        int damage = targetUnit.Hero.CalculateDamage(move, sourceUnit.Hero,targetUnit.Hero , currentValue);
-
-        //暴击判断
-        bool isCrit = targetUnit.Hero.CritCheck(targetUnit.Hero .Base .Luck);
-        if(damage != 0 && isCrit)
+        //算伤害
+        if (move .Base.ExtraTime > 0)
         {
-            yield return dialogBox.TypeDialog($"{Localize.GetInstance().GetTextByKey("Critical Hit!")}");
-            damage = (int)(damage * 1.5f);
-            yield return new WaitForSeconds(0.7f);
+            for(int i = move.Base.ExtraTime; i > 0; i--)
+            {
+                yield return (StartCoroutine(sourceUnit.PlayAttackAnimation(moveActionType)));
+                yield return (StartCoroutine(targetUnit.PlayHitAnimation(moveActionType)));
+                yield return (StartCoroutine(HandleDamage(sourceUnit, targetUnit, move, targetHUD, currentValue, move.Base.IsMagic)));
+            }
         }
-
-        //受伤与死亡
-        targetUnit.Hero.UpdateHp(damage);
-        yield return targetHUD.ShowDamage(damage, isCrit, isMagic);
-        yield return targetHUD.UpdateHp();
-        yield return targetHUD.HideDamage();
-        if (damage != 0)
-        {
-            yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("{0} lose {1} life")}", targetUnit.Hero.Base.HeroName, damage));
-        }
-        yield return new WaitForSeconds(0.7f);
+        yield return (StartCoroutine(sourceUnit.PlayAttackAnimation(moveActionType)));
+        yield return (StartCoroutine(targetUnit.PlayHitAnimation(moveActionType)));
+        yield return (StartCoroutine(HandleDamage(sourceUnit ,targetUnit,move,targetHUD,currentValue,move.Base.IsMagic)));
 
         //处理技能特效 //TODO:现在状态改变只能指定单目标，有时间的话分开写，然后把这一坨放到新的函数里
         yield return (StartCoroutine(HandleMoveEffects(move, sourceUnit, targetUnit,currentValue)));
@@ -208,6 +203,35 @@ public class CombatSystem : MonoBehaviour
         else
         {
             PassTurn(sourceUnit);
+        }
+    }
+    //算伤害
+    IEnumerator HandleDamage(Unit sourceUnit, Unit targetUnit, Move move, CombatHUD targetHUD, int currentValue,bool isMagic)
+    {
+        if (move.Base.Power != 0)
+        {
+            //计算伤害
+            int damage = targetUnit.Hero.CalculateDamage(move, sourceUnit.Hero, targetUnit.Hero, currentValue);
+
+            //暴击判断
+            bool isCrit = targetUnit.Hero.CritCheck(targetUnit.Hero.Base.Luck);
+            if (damage != 0 && isCrit)
+            {
+                yield return dialogBox.TypeDialog($"{Localize.GetInstance().GetTextByKey("Critical Hit!")}");
+                damage = (int)(damage * 1.5f);
+                yield return new WaitForSeconds(0.7f);
+            }
+
+            //受伤与死亡
+            targetUnit.Hero.UpdateHp(damage);
+            yield return targetHUD.ShowDamage(damage, isCrit, isMagic);
+            yield return targetHUD.UpdateHp();
+            if (damage != 0)
+            {
+                yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("{0} lose {1} life")}", targetUnit.Hero.Base.HeroName, damage));
+            }
+            yield return new WaitForSeconds(0.7f);
+            yield return targetHUD.HideDamage();
         }
     }
 
@@ -284,11 +308,11 @@ public class CombatSystem : MonoBehaviour
     {
         if (state == CombatState.P1WON)
         {
-            yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n \n...............{Localize.GetInstance().GetTextByKey("for now")}........");
+            yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n ...............{Localize.GetInstance().GetTextByKey("for now")}........");
         }
         else if (state == CombatState.P2WON)
         {
-            yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n \n...............{Localize.GetInstance().GetTextByKey("for now")}........");
+            yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n ...............{Localize.GetInstance().GetTextByKey("for now")}........");
         }
 
         yield return new WaitForSeconds(3f);

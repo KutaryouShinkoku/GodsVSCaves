@@ -14,6 +14,7 @@ public class MoveBase : ScriptableObject
 
     [SerializeField] int power;
     [SerializeField] int accuracy;
+    [SerializeField] int extraTime;
     [SerializeField] bool isMagic;
     [SerializeField] MoveActionType moveActionType;
     [SerializeField] MoveCatagory moveCatagory;
@@ -33,6 +34,9 @@ public class MoveBase : ScriptableObject
 
     public int Accuracy{
         get { return accuracy; }
+    }
+    public int ExtraTime{
+        get { return extraTime; }
     }
 
     public bool IsMagic{

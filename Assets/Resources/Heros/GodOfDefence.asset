@@ -16,6 +16,7 @@ MonoBehaviour:
   camp: 0
   description: GodOfDefence_disc
   sprite: {fileID: 21300000, guid: a153f0a58b66e9d42b60b574547207df, type: 3}
+  bullet: {fileID: 0}
   maxHP: 270
   attack: 52
   defence: 168
@@ -24,16 +25,11 @@ MonoBehaviour:
   speed: 1
   evasion: 0
   luck: 15
+  character: 3
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: 1cc0c1986ce0faa4cb26ae31b1df866d, type: 2}
-    diceNum: 0
   - moveBase: {fileID: 11400000, guid: 1323e13a76788a845acb06c4cb9d2037, type: 2}
-    diceNum: 0
   - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
-    diceNum: 0
   - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
-    diceNum: 0
   - moveBase: {fileID: 11400000, guid: 1cc0c1986ce0faa4cb26ae31b1df866d, type: 2}
-    diceNum: 0
   - moveBase: {fileID: 11400000, guid: b4efc95f28ee031438f11eb2c3f69367, type: 2}
-    diceNum: 0

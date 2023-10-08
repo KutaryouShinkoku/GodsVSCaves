@@ -46,7 +46,6 @@ public class CombatHUD : MonoBehaviour
             _hero.HpChanged = false;
             yield return SetHpSmooth(_hero.HP);
         }
-
     }
 
     //ÑªÁ¿½µµÍ
@@ -108,8 +107,8 @@ public class CombatHUD : MonoBehaviour
         if(damage != 0)
         {
             dmgText.text = "-" + damage;
-            sequence.Append(dmgText .transform.DOLocalMoveY(originalDmgPos.y + 20f, 0.8f));
-            sequence.Join(dmgText.DOFade(0, 0.8f));
+            yield return sequence.Append(dmgText .transform.DOLocalMoveY(originalDmgPos.y + 20f, 0.8f));
+            yield return sequence.Join(dmgText.DOFade(0, 0.8f));
             yield return new WaitForSeconds(0.1f);
         }
     }

@@ -16,6 +16,7 @@ MonoBehaviour:
   camp: 1
   description: AncientWarlock_disc
   sprite: {fileID: 21300000, guid: 4fa3889457b3d1a42a37c6ece8740b60, type: 3}
+  bullet: {fileID: 6411294760156536683, guid: 5e6e34b0e15da4f429cf058a3b1cf985, type: 3}
   maxHP: 220
   attack: 40
   defence: 80
@@ -24,16 +25,11 @@ MonoBehaviour:
   speed: 2
   evasion: 0
   luck: 10
+  character: 2
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: 20fe85e674800644a95debb0ff006d8d, type: 2}
-    diceNum: 0
   - moveBase: {fileID: 11400000, guid: e12d1a5523b22c84b820ee2b1ab4a7b3, type: 2}
-    diceNum: 0
   - moveBase: {fileID: 11400000, guid: 20fe85e674800644a95debb0ff006d8d, type: 2}
-    diceNum: 0
   - moveBase: {fileID: 11400000, guid: 20fe85e674800644a95debb0ff006d8d, type: 2}
-    diceNum: 0
   - moveBase: {fileID: 11400000, guid: d5c6580948a12c44386cba4b7c403518, type: 2}
-    diceNum: 0
   - moveBase: {fileID: 11400000, guid: a1c0bd399dfb9b647b0f325315e61a52, type: 2}
-    diceNum: 0

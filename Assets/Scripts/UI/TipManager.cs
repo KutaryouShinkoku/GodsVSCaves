@@ -12,11 +12,7 @@ public class TipManager : MonoBehaviour
     public Text heroNameText;
     public Text heroDiscText;
     public Image heroPortrait;
-
-    private Vector2 screenPoint;
-    private Vector2 uiPoint;
-    private RectTransform uiRT;
-    private Vector3 worldPoint;
+    public Text heroCharacter;
 
     private void Awake()
     {
@@ -34,16 +30,16 @@ public class TipManager : MonoBehaviour
     {
         Cursor.visible = true;
         tipGO.SetActive(false);
-
-        uiRT = tipGO.GetComponent<RectTransform>();
     }
 
-    public void SetAndShowTip(string name,string desc,Sprite sprite)
+    public void SetAndShowTip(string name,string desc,Sprite sprite,Character character)
     {
         gameObject.SetActive(true);
         heroNameText.text = name;
         heroDiscText.text = desc.Replace("\\n","\n");
         heroPortrait.sprite = sprite;
+        string characterLocalize = string .Format($"{Localize.GetInstance().GetTextByKey($"{character}")}");
+        heroCharacter.text = string.Format($"{Localize.GetInstance().GetTextByKey("[ Character of dice: {0} ]")}", characterLocalize);
     }
 
     public void HideTip()
@@ -53,6 +49,5 @@ public class TipManager : MonoBehaviour
         heroDiscText.text = "";
     }
     
-    //×ø±ê×ª»»
-    
+
 }

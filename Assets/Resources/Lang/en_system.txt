@@ -19,9 +19,18 @@ Luck$Luck
 Select Heros$Select Heros
 Select Hero for Gods$Select Hero for Gods
 Select Hero for Caves$Select Hero for Caves
+Unable to select the same hero to fight against!$<color="#FF5B5B">Unable to select the same hero to fight against!</color>
 basic_stats$Level:\nHP:\nAttack:\nDefence:\nMagic:\nMagicDef:\nSpeed:\nLuck:\n
+[ Character of dice: {0} ]$[ Character of dice: {0} ]
+Ordinary$Ordinary
+Brave$Brave
+Timid$Timid
+Experienced$Experienced
 Poison$Poison
 has been poisoned$ has been poisoned
 {0} lose life due to poison${0} lose life due to poison
 {0}'s HP is restored${0}'s HP is restored
 {0}'s HP is restored to full${0}'s HP is restored to full
+The more {0}'s dice fights, the braver it becomes!$The more {0}'s dice fights, the braver it becomes!
+{0}'s dice is scared because its HP is too low!${0}'s dice is scared because its HP is too low!
+Boosts double {0}'s dice's confidence!$Boosts double {0}'s dice's confidence!

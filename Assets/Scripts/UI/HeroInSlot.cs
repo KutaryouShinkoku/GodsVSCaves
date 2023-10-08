@@ -30,7 +30,7 @@ public class HeroInSlot : MonoBehaviour
 
     public void OnMouseEnter()
     {
-        TipManager._instance.SetAndShowTip(hero.Base .HeroName, hero .Base .Description,hero.Base.Sprite);
+        TipManager._instance.SetAndShowTip(hero.Base .HeroName, hero .Base .Description,hero.Base.Sprite,hero.Base .Character);
     }
 
     public void OnMouseExit()

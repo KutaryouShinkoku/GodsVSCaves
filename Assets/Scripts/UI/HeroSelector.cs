@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 using UnityEngine.UI;
 
-public enum SelectState { NONE,SELECTP1,SELECTP2,READY}
+public enum SelectState { NONE,SELECTP1,SELECTP2,READY,ERROR}
 
 public class HeroSelector : MonoBehaviour
 {
@@ -32,7 +32,17 @@ public class HeroSelector : MonoBehaviour
     {
         //Debug.Log("Static Hero Updated!!P1:" + p1Hero.Base.name + "||P2:" + p2Hero.Base.name);
         //初始化选人状态
-        state = SelectState.NONE; 
+        state = SelectState.NONE;
+
+        //初始化选人界面
+        foreach (var hero in heros)
+        {
+            AddHero(hero);
+            Debug.Log("Add" + hero.Base.name);
+        }
+        //默认英雄
+        p1Hero = heros[0];
+        p2Hero = heros[1];
 
         //初始化角色立绘数值
         UpdateSelectedHeroInfoP1();
@@ -41,12 +51,6 @@ public class HeroSelector : MonoBehaviour
         //初始化引导词
         guide.text =$"{Localize.GetInstance().GetTextByKey($"Select Heros")}!";
 
-        //初始化选人界面
-        foreach (var hero in heros)
-        {
-            AddHero(hero);
-            Debug.Log("Add" + hero.Base.name);
-        }
     }
     //-----------------------------加载选人界面-----------------------------
     //把slot初始化到选人界面
@@ -75,14 +79,14 @@ public class HeroSelector : MonoBehaviour
     public void ChangeP1()
     {
         state = SelectState.SELECTP1;
-        Debug.Log("state=" + state);
+
         guide.text = $"{Localize.GetInstance().GetTextByKey($"Select Hero for Gods")}";
     }
 
     public void ChangeP2()
     {
         state = SelectState.SELECTP2;
-        Debug.Log("state=" + state);
+
         guide.text = $"{Localize.GetInstance().GetTextByKey($"Select Hero for Caves")}";
     }
 
@@ -91,17 +95,35 @@ public class HeroSelector : MonoBehaviour
     {
         if (state == SelectState.SELECTP1)
         {
-            p1Hero = hero;
-            UpdateSelectedHeroInfoP1();
-            state = SelectState.NONE;
-            Debug.Log("Set1Hero = " + p1Hero.Base.HeroName);
+            if(hero == p2Hero)
+            {
+                guide.text = $"{Localize.GetInstance().GetTextByKey($"Unable to select the same hero to fight against!")}";
+                state = SelectState.ERROR;
+                Invoke("ChangeP1", 1);
+            }
+            else
+            {
+                p1Hero = hero;
+                UpdateSelectedHeroInfoP1();
+                state = SelectState.NONE;
+                Debug.Log("Set1Hero = " + p1Hero.Base.HeroName);
+            }
         }
         else if (state == SelectState.SELECTP2)
         {
-            p2Hero = hero;
-            UpdateSelectedHeroInfoP2();
-            state = SelectState.NONE;
-            Debug.Log("Set1Hero = " + p2Hero.Base.HeroName);
+            if (hero == p1Hero)
+            {
+                guide.text = $"{Localize.GetInstance().GetTextByKey($"Unable to select the same hero to fight against!")}";
+                state = SelectState.ERROR;
+                Invoke("ChangeP2", 1);
+            }
+            else
+            {
+                p2Hero = hero;
+                UpdateSelectedHeroInfoP2();
+                state = SelectState.NONE;
+                Debug.Log("Set1Hero = " + p2Hero.Base.HeroName);
+            }
         }
         Debug.Log("Hero Selection Updated!P1:" + p1Hero.Base.HeroName + "Hero Selection Updated!P2:" + p2Hero.Base.HeroName);
     }
