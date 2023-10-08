@@ -42,17 +42,19 @@ public class Dice
         }
         if(hero .Base .Character == Character.Brave) //勇敢骰子，血越少点越大
         {
-            float boost = hero.HP / hero.Base.MaxHP*50;
-            if(boost >= par)
+            float boost = (1f-(float)hero.HP / hero.Base.MaxHP)*50;
+            Debug.Log(par + "/" + boost);
+            if (boost >= par)
             {
                 hero.CharacterRoll(hero.Base.Character); 
                 return Mathf.Min(Random.Range(0, 6) + 2, 5);
             }
             else return Random.Range(0, 6);
+
         }
         if(hero .Base .Character == Character.Timid)  //胆小骰子，血少有可能扔1
         {
-            float boost = hero.HP / hero.Base.MaxHP *20;
+            float boost = (1f- (float)hero.HP / hero.Base.MaxHP)*20;
             if(boost >= par)
             {
                 hero.CharacterRoll(hero.Base.Character);

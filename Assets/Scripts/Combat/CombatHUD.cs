@@ -11,6 +11,7 @@ public class CombatHUD : MonoBehaviour
     [SerializeField] Text levelText;
     [SerializeField] Text dmgText;
     [SerializeField] Slider hPSlider;
+    [SerializeField] Image hPColor;
     [SerializeField] GameObject turnArrow;
     //[SerializeField Slider EXPSlider;
 
@@ -46,6 +47,16 @@ public class CombatHUD : MonoBehaviour
             _hero.HpChanged = false;
             yield return SetHpSmooth(_hero.HP);
         }
+    }
+
+    //根据异常状态更新血条颜色
+    public IEnumerator UpdateHpBarColor()
+    {
+        if(_hero.Status == ConditionsDB.Conditions[ConditionID.psn])
+        {
+            hPColor.color = new Color(0.66f, 0.12f, 0.61f, 1f);
+        }
+        yield return null;
     }
 
     //血量降低

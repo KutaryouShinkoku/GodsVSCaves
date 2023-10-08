@@ -180,6 +180,8 @@ public class CombatSystem : MonoBehaviour
 
         //处理技能特效 //TODO:现在状态改变只能指定单目标，有时间的话分开写，然后把这一坨放到新的函数里
         yield return (StartCoroutine(HandleMoveEffects(move, sourceUnit, targetUnit,currentValue)));
+        yield return sourceHUD.UpdateHpBarColor();
+        yield return targetHUD.UpdateHpBarColor();
         yield return sourceHUD.UpdateHp();
         yield return targetHUD.UpdateHp();
 
@@ -308,11 +310,11 @@ public class CombatSystem : MonoBehaviour
     {
         if (state == CombatState.P1WON)
         {
-            yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n ...............{Localize.GetInstance().GetTextByKey("for now")}........");
+            yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n...............{Localize.GetInstance().GetTextByKey("for now")}........");
         }
         else if (state == CombatState.P2WON)
         {
-            yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n ...............{Localize.GetInstance().GetTextByKey("for now")}........");
+            yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n...............{Localize.GetInstance().GetTextByKey("for now")}........");
         }
 
         yield return new WaitForSeconds(3f);

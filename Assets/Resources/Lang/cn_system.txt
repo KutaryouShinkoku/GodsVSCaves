@@ -16,7 +16,7 @@ Defence$防御
 Magic$魔力
 MagicDef$魔抗
 Luck$幸运
-Select Heros$选择一名英雄
+Select Heros$点击“更换”可选择新英雄
 Select Hero for Gods$为神界选择英雄
 Select Hero for Caves$为巢穴选择英雄
 Unable to select the same hero to fight against!$<color="#FF5B5B">不要自己打自己！会导致湮灭！</color>

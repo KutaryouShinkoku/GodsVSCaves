@@ -79,14 +79,12 @@ public class HeroSelector : MonoBehaviour
     public void ChangeP1()
     {
         state = SelectState.SELECTP1;
-
         guide.text = $"{Localize.GetInstance().GetTextByKey($"Select Hero for Gods")}";
     }
 
     public void ChangeP2()
     {
         state = SelectState.SELECTP2;
-
         guide.text = $"{Localize.GetInstance().GetTextByKey($"Select Hero for Caves")}";
     }
 
@@ -106,6 +104,7 @@ public class HeroSelector : MonoBehaviour
                 p1Hero = hero;
                 UpdateSelectedHeroInfoP1();
                 state = SelectState.NONE;
+                guide.text = $"{Localize.GetInstance().GetTextByKey($"Select Heros")}!";
                 Debug.Log("Set1Hero = " + p1Hero.Base.HeroName);
             }
         }
@@ -122,6 +121,7 @@ public class HeroSelector : MonoBehaviour
                 p2Hero = hero;
                 UpdateSelectedHeroInfoP2();
                 state = SelectState.NONE;
+                guide.text = $"{Localize.GetInstance().GetTextByKey($"Select Heros")}!";
                 Debug.Log("Set1Hero = " + p2Hero.Base.HeroName);
             }
         }

@@ -152,7 +152,7 @@ public class Hero
     //回合末处理以特殊状态为主的事件
     public void OnAfterTurn()
     {
-        Status?.OnAfterTurn?.Invoke(this); //处理特殊状态
+        Status?.OnAfterTurn?.Invoke(this); //处理特殊状态的回合末效应
     }
 
     //-----------------------------数值check部分-----------------------------
