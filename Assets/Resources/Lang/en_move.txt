@@ -18,3 +18,6 @@ SwordsToPlowshares_name$Swords To Plowshares
 EnlightenedTutor_name$Enlightened Tutor
 WrathOfGod_name$Wrath of God
 Working_name$Working...
+DiceAttack_name$Dice Attack
+LuckyDay_name$Lucky Day
+JackPot_name$Jackpot!

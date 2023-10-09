@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f3632f4d5647c84eb3c9a0e63a474ce, type: 3}
+  m_Name: GodOfFortune
+  m_EditorClassIdentifier: 
+  heroName: GodOfFortune_name
+  camp: 0
+  description: GodOfFortune_disc
+  sprite: {fileID: 21300000, guid: 599ab6dd61e663f4898dd517b3dcf1c0, type: 3}
+  bullet: {fileID: 0}
+  maxHP: 240
+  attack: 85
+  defence: 80
+  magic: 65
+  magicDef: 75
+  speed: 3
+  evasion: 0
+  luck: 10
+  character: 3
+  movesOfDice:
+  - moveBase: {fileID: 11400000, guid: f5cf1e5772693ac4c9e958acc2690101, type: 2}
+  - moveBase: {fileID: 11400000, guid: 11054e3ccd5a6f84badc5054c830dffa, type: 2}
+  - moveBase: {fileID: 11400000, guid: f5cf1e5772693ac4c9e958acc2690101, type: 2}
+  - moveBase: {fileID: 11400000, guid: 11054e3ccd5a6f84badc5054c830dffa, type: 2}
+  - moveBase: {fileID: 11400000, guid: f5cf1e5772693ac4c9e958acc2690101, type: 2}
+  - moveBase: {fileID: 11400000, guid: 0438bb7adf29cd342bbcbcfc47981981, type: 2}
