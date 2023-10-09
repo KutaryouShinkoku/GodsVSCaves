@@ -4,6 +4,7 @@ using UnityEngine;
 
 public static class SaveSystem
 {
+
     public static void SaveCoin (Coin coin)
     {
         BinaryFormatter formatter = new BinaryFormatter();
@@ -32,7 +33,7 @@ public static class SaveSystem
         }
         else
         {
-            return null;
+            return new CoinData(new Coin());
         }
     }
 }

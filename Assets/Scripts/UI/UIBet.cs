@@ -13,10 +13,13 @@ public class UIBet : MonoBehaviour
     public Text p2OddText;
     public Text p1CoinText;
     public Text p2CoinText;
+    public Text p1Bet;
+    public Text p2Bet;
     public Text timer;
     public GameObject btnP1GO;
     public GameObject btnP2GO;
     [SerializeField] CoinStorer coin;
+    private int bet;
 
     private float ftime;
     private bool isTimerActive;
@@ -61,19 +64,19 @@ public class UIBet : MonoBehaviour
 
     public void OnBetP1()
     {
-        if(coin.coinAmount >= 50)
+        if(coin.coinAmount >= 2)
         {
-            coin.coinAmount -= 50;
-            p1Coin += 50;
+            coin.coinAmount -= bet;
+            p1Coin += bet;
         }
     }
 
     public void OnBetP2()
     {
-        if (coin.coinAmount >= 50)
+        if (coin.coinAmount >= 2)
         {
-            coin.coinAmount -= 50;
-            p2Coin += 50;
+            coin.coinAmount -= bet;
+            p2Coin += bet;
         }
     }
     //更新下注和金币数
@@ -83,6 +86,9 @@ public class UIBet : MonoBehaviour
         p2OddText.text = $"{Localize.GetInstance().GetTextByKey("Odds:")} {string .Format("{0:N2}", p2Odd)}";
         p1CoinText.text = $"{p1Coin}";
         p2CoinText.text = $"{p2Coin}";
+        bet = coin.coinAmount / 2;
+        p1Bet.text = $"{bet}";
+        p2Bet.text = $"{bet}";
     }
 
     public void CalculateOdds()
@@ -105,7 +111,7 @@ public class UIBet : MonoBehaviour
         p2Odd = 1f;
     }
 
-    void DisableBet()
+    public void DisableBet()
     {
         timer.text = $"";
         btnP1GO.SetActive(false);

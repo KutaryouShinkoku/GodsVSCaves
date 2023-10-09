@@ -15,7 +15,7 @@ public class Hero
 
     public Dictionary<Stat, int> Stats { get; private set; }
     public Dictionary<Stat, int> StatBoosts { get; private set; }
-    public Condition Status { get; private set; }
+    public Condition Status { get; set; }
     public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
     public Queue<string> CharacterBoost { get; private set; } = new Queue<string>();
 
@@ -147,6 +147,11 @@ public class Hero
     {
         Status = ConditionsDB.Conditions[conditionID];
         StatusChanges.Enqueue(string.Format("{0}{1}",Base.HeroName,Status.StartMessage));
+    }
+
+    public void ResetStatus() //游戏开始重置异常状态
+    { 
+        Status = ConditionsDB.Conditions[ConditionID.none];
     }
 
     //回合末处理以特殊状态为主的事件

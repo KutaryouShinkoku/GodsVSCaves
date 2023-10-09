@@ -40,6 +40,12 @@ public class CombatHUD : MonoBehaviour
         originalDmgPos = dmgText .transform.localPosition;
     }
 
+    //Òþ²Ø
+    public void HideHUD()
+    {
+        combatHUD.SetActive(false);
+    }
+
     //ÏÔÊ¾ÑªÁ¿
     public IEnumerator UpdateHp()
     {

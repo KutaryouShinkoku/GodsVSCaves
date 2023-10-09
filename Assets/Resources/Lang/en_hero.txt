@@ -1,11 +1,11 @@
 Gong Ju Ren$Gong Ju Ren
 Don't select;Just for test$Don't select;Just for test
 GodOfNormal_name$God of Normal
-GodOfNormal_disc$The god who symbolizes normal is very normal.\n<color="#FF1818">1,2,3,5:[Working...]</color> Deal small amount of physical damage.\n<color="#FF1818">4:[ATK Boost]</color> increase attack.\n<color="#FF1818">6:[Normal Smash!]</color> Deal large amount if damage and increase attack.
+GodOfNormal_disc$The god who symbolizes normal is very normal.\n<color="#FF1818">1,2,3,5:[Working...]</color> Deal small amount of physical damage.\n<color="#FF1818">4:[ATK Boost]</color> increase attack.\n<color="#4DFF28">6:[Normal Smash!]</color> Deal large amount if damage and increase attack.
 GodOfDefence_name$God of Defence
-GodOfDefence_disc$The god who symbolizes defence believes that defence is the best way to defence.\n<color="#FF1818">1,5:[Tackle]</color> Deal small amount of physical damage.\n<color="#FF1818">2:[Take A Nap]</color> Heal small amount of health.\n<color="#FF1818">3,4:[Iron Defence]</color> Increase defence and magicDef.\n<color="#FF1818">6:[Shield Attack!]</color> Deal large amount damage, power is rely on defence.
+GodOfDefence_disc$The god who symbolizes defence believes that defence is the best way to defence.\n<color="#FF1818">1,5:[Tackle]</color> Deal small amount of physical damage.\n<color="#FF1818">2:[Take A Nap]</color> Heal small amount of health.\n<color="#FF1818">3,4:[Iron Defence]</color> Increase defence and magicDef.\n<color="#4DFF28">6:[Shield Attack!]</color> Deal large amount damage, power is rely on defence.
 CaveMagician_name$Cave Magician
-CaveMagician_disc$Magician who comes from Cave of Magic like tricks.\n<color="#FF1818">1,4:[Jab]</color> Deal small amount of physical damage.\n<color="#FF1818">2:[Calm Mind]</color> Increase magic sharply.\n<color="#FF1818">3,5:[Magic Trick]</color> Deal small amount of magic damage.\n<color="#FF1818">6:[Hat-trick]</color> Deal magic damage 3 times.
+CaveMagician_disc$Magician who comes from Cave of Magic like tricks.\n<color="#FF1818">1,4:[Jab]</color> Deal small amount of physical damage.\n<color="#FF1818">2:[Calm Mind]</color> Increase magic sharply.\n<color="#FF1818">3,5:[Magic Trick]</color> Deal small amount of magic damage.\n<color="#4DFF28">6:[Hat-trick]</color> Deal magic damage 3 times.
 ImmortalNun_name$Immortal Nun
 ImmortalNun_disc$It is said that she believes in "Heliod", and there is no such person in the divine world.\n<color="#FF1818">1:[Swords To Plowshares]</color> Decrease foe's attack and magic.\n<color="#FF1818">2,3,4:[Wrath of God]</color> Deal moderate amount of damage.\n<color="#FF1818">5:[Enlightened Tutor]</color> increase magic and magicDef.\n<color="#4DFF28">6:[Angel's Grace]</color> Restore all HP.
 AncientWarlock_name$Ancient Warlock

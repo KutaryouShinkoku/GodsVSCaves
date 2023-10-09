@@ -51,6 +51,10 @@ public class CombatSystem : MonoBehaviour
         //重置下注
         uiBet.ResetBetUI();
 
+        //重置异常状态
+        p1Hero.ResetStatus();
+        p2Hero.ResetStatus();
+
         //小人从天而降，产生出场特效
         p1Unit.Setup(p1Hero);
         p2Unit.Setup(p2Hero);
@@ -320,6 +324,10 @@ public class CombatSystem : MonoBehaviour
             yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n...............{Localize.GetInstance().GetTextByKey("for now")}........");
         }
         yield return new WaitForSeconds(0.5f);
+        uiBet.DisableBet();
+        p1HUD.HideHUD();
+        p2HUD.HideHUD();
+        Time.timeScale = 1;
         yield return StartCoroutine(ResolveCoins(uiBet .p1Odd,uiBet.p2Odd,uiBet.p1Coin,uiBet.p2Coin,state));
         yield return new WaitForSeconds(1f);
         StartCoroutine(gameController.CombatEnd());

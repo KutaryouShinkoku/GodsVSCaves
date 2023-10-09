@@ -12,14 +12,18 @@ public class GameController : MonoBehaviour
     [SerializeField] CombatSystem combatSystem;
     [SerializeField] Camera selectorCamera;
     [SerializeField] Camera combatCamera;
+    [SerializeField] CoinStorer coin;
 
     public GameState state;
-    public Coin coin = new Coin();
 
     //初始化：选择界面
     private void Start()
     {
-        coin.LoadCoin();
+        if (PlayerPrefs.HasKey("Coin"))
+        {
+            coin .coinAmount = PlayerPrefs.GetInt("Coin");
+        }
+        //coin.LoadCoin();
         state = GameState.SELECT;
         combatSystem.gameObject.SetActive(false);
         combatCamera.gameObject.SetActive(false);
@@ -49,7 +53,8 @@ public class GameController : MonoBehaviour
         combatSystem.gameObject.SetActive(false);
         combatCamera.gameObject.SetActive(false);
         selectorCamera.gameObject.SetActive(true);
-        coin.SaveCoin();
+        //coin.SaveCoin();
+        PlayerPrefs.SetInt("Coin", coin.coinAmount);
         yield return null;
     }
 }

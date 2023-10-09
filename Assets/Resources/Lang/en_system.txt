@@ -1,7 +1,7 @@
 Change$Change
 Begin$Begin
 Odds:$Odds:
-Place a bet 50$Place a bet 50
+Place a bet$Place a bet
 Countdown to placing a bet$Countdown to placing a bet
 You get {0} coins!$You get {0} coins!
 You have spent all your coins, and borrow some from the developer, remember to pay it back~$You have spent all your coins, and borrow some from the developer, remember to pay it back~

@@ -8,6 +8,10 @@ public class ConditionsDB
 
     public static Dictionary<ConditionID, Condition> Conditions { get; set; } = new Dictionary<ConditionID, Condition>()
     {
+        { 
+            ConditionID.none,
+            new Condition ()
+        },
         {
             ConditionID.psn ,
             new Condition()
