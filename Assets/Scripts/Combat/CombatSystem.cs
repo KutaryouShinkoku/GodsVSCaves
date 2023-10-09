@@ -16,6 +16,8 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] CombatHUD p2HUD;
     [SerializeField] GameController gameController;
     [SerializeField] CombatDialogBox dialogBox;
+    [SerializeField] UIBet uiBet;
+    [SerializeField] CoinStorer coin;
 
     public CombatState state;
     public Dice dice = new Dice();
@@ -45,6 +47,9 @@ public class CombatSystem : MonoBehaviour
         combatStatus.text = "";
         StartCoroutine(p1Unit.AnimationReset());
         StartCoroutine(p2Unit.AnimationReset());
+
+        //重置下注
+        uiBet.ResetBetUI();
 
         //小人从天而降，产生出场特效
         p1Unit.Setup(p1Hero);
@@ -145,8 +150,6 @@ public class CombatSystem : MonoBehaviour
         }
         if (value >= 6) //重置过量的点数
         {
-            //yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("Lucky Boost!!!")}"));
-            //yield return new WaitForSeconds(0.5f);
             value = 5;
         }
         yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("{0} rolled a ......{1}!")}", sourceUnit.Hero.Base.HeroName, value + 1));
@@ -316,9 +319,9 @@ public class CombatSystem : MonoBehaviour
         {
             yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n...............{Localize.GetInstance().GetTextByKey("for now")}........");
         }
-
-        yield return new WaitForSeconds(3f);
-
+        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(ResolveCoins(uiBet .p1Odd,uiBet.p2Odd,uiBet.p1Coin,uiBet.p2Coin,state));
+        yield return new WaitForSeconds(1f);
         StartCoroutine(gameController.CombatEnd());
     }
 
@@ -372,4 +375,29 @@ public class CombatSystem : MonoBehaviour
             yield return ShowStatusChanges(target);
         }
     }
+    //------------------------------------------------------------------
+    //局外
+    IEnumerator ResolveCoins(float p1Odd,float p2Odd,int p1Coin,int p2Coin,CombatState state) //结算金币
+    {
+        int coinChange = 0;
+        if (state == CombatState.P1WON)
+        {
+            coinChange = (int)((1f + p1Odd) * p1Coin);
+        }
+        if (state == CombatState.P2WON)
+        {
+            coinChange = (int)((1f + p2Odd) * p2Coin);
+        }
+        coin.CoinUp(coinChange);
+        
+        yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("You get {0} coins!")}", coinChange));
+        yield return new WaitForSeconds(1f);
+        if (coin.coinAmount < 100)
+        {
+            yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("You have spent all your coins, and borrow some from the developer, remember to pay it back~")}"));
+            coin.coinAmount = 100;
+            yield return new WaitForSeconds(2f);
+        }
+    }
+
 }

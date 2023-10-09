@@ -31,6 +31,7 @@ public class CombatHUD : MonoBehaviour
         //血条初始化
         hPSlider.maxValue = hero.MaxHP;
         hPSlider.value = hero.MaxHP;
+        hPColor.color = new Color(0.20f, 0.87f, 0.24f, 1f);
 
         turnArrow.SetActive(false); //回合标记初始化
 

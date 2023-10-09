@@ -1,5 +1,10 @@
 Change$更换
 Begin$开战
+Odds:$赔率：
+Place a bet 50$这边儿会赢！50
+Countdown to placing a bet$下注截止倒计时：
+You get {0} coins!$你获得了{0}金币！
+You have spent all your coins, and borrow some from the developer, remember to pay it back~$你破产了！然后找开发者借了点儿。记得还哦~
 {0} VS {1}!${0} 对阵 {1}！
 Lucky Boost!!!$超幸运！！！
 rolled a$掷骰结果是

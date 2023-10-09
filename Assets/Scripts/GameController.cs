@@ -14,10 +14,12 @@ public class GameController : MonoBehaviour
     [SerializeField] Camera combatCamera;
 
     public GameState state;
+    public Coin coin = new Coin();
 
     //初始化：选择界面
     private void Start()
     {
+        coin.LoadCoin();
         state = GameState.SELECT;
         combatSystem.gameObject.SetActive(false);
         combatCamera.gameObject.SetActive(false);
@@ -47,6 +49,7 @@ public class GameController : MonoBehaviour
         combatSystem.gameObject.SetActive(false);
         combatCamera.gameObject.SetActive(false);
         selectorCamera.gameObject.SetActive(true);
+        coin.SaveCoin();
         yield return null;
     }
 }
