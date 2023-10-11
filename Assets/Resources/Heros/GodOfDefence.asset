@@ -19,12 +19,12 @@ MonoBehaviour:
   bullet: {fileID: 0}
   maxHP: 270
   attack: 52
-  defence: 168
+  defence: 148
   magic: 47
-  magicDef: 158
+  magicDef: 138
   speed: 1
   evasion: 0
-  luck: 15
+  luck: 10
   character: 1
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: 1cc0c1986ce0faa4cb26ae31b1df866d, type: 2}

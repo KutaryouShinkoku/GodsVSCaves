@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: Working_name
   description: 
-  power: 40
+  power: 50
   accuracy: 0
+  extraTime: 0
   isMagic: 0
   moveActionType: 1
   moveCatagory: 0

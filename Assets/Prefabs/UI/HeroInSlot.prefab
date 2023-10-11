@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 416868219380681282}
   - component: {fileID: 127089230064274993}
   - component: {fileID: 994748074279138551}
+  - component: {fileID: 6308375124813971577}
   m_Layer: 0
   m_Name: HeroInSlot
   m_TagString: Untagged
@@ -200,3 +201,20 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6308375124813971577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271967326334861488}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5335125f56631f94085882ae3bc4d93e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curNormal: {fileID: 2800000, guid: 25c4fc8c47a4dbb438608cc35d4fdf8b, type: 3}
+  curInteract: {fileID: 2800000, guid: e77ef3a526d56ea47a743d5a4eee8208, type: 3}
+  curSelect: {fileID: 2800000, guid: 96083128edea0ef458c95889952789a5, type: 3}
+  cursorMode: 0
+  hotspot: {x: 0, y: 0}

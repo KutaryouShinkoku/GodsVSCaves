@@ -12,6 +12,10 @@ public class UISpeed : MonoBehaviour
     {
         Time.timeScale = 2;
     }
+    public void SetSpeed4x()
+    {
+        Time.timeScale = 4;
+    }
     public void SetSpeedPause()
     {
         Time.timeScale = 0;

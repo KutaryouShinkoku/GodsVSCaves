@@ -219,11 +219,13 @@ public class CombatSystem : MonoBehaviour
     {
         if (move.Base.Power != 0)
         {
-            //º∆À„…À∫¶
-            int damage = targetUnit.Hero.CalculateDamage(move, sourceUnit.Hero, targetUnit.Hero, currentValue);
-
             //±©ª˜≈–∂œ
-            bool isCrit = targetUnit.Hero.CritCheck(targetUnit.Hero.Base.Luck);
+            bool isCrit = targetUnit.Hero.CritCheck(sourceUnit.Hero.Base.Luck, targetUnit.Hero.Base.Luck);
+
+            //º∆À„…À∫¶
+            int damage = targetUnit.Hero.CalculateDamage(move, sourceUnit.Hero, targetUnit.Hero, currentValue,isCrit);
+
+            //±©ª˜…À∫¶¥¶¿Ì
             if (damage != 0 && isCrit)
             {
                 yield return dialogBox.TypeDialog($"{Localize.GetInstance().GetTextByKey("Critical Hit!")}");

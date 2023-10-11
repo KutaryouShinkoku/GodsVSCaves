@@ -17,19 +17,19 @@ MonoBehaviour:
   description: Don't select;Just for test
   sprite: {fileID: 21300000, guid: a153f0a58b66e9d42b60b574547207df, type: 3}
   bullet: {fileID: 6411294760156536683, guid: 0f9d43cb0cf175d40a2f83947bfb637d, type: 3}
-  maxHP: 2
+  maxHP: 1000
   attack: 100
   defence: 100
   magic: 1
   magicDef: 100
   speed: 4
   evasion: 0
-  luck: 99
+  luck: 1
   character: 0
   movesOfDice:
-  - moveBase: {fileID: 11400000, guid: 20fe85e674800644a95debb0ff006d8d, type: 2}
-  - moveBase: {fileID: 11400000, guid: 20fe85e674800644a95debb0ff006d8d, type: 2}
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+  - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
+  - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
+  - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
+  - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
+  - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
   - moveBase: {fileID: 11400000, guid: d5c6580948a12c44386cba4b7c403518, type: 2}

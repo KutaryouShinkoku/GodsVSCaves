@@ -48,10 +48,16 @@ public class HeroSelector : MonoBehaviour
         UpdateSelectedHeroInfoP1();
         UpdateSelectedHeroInfoP2();
 
-        //初始化引导词
+        //根据玩家选择的语言初始化引导词
         guide.text =$"{Localize.GetInstance().GetTextByKey($"Select Heros")}!";
 
     }
+    private void Update()
+    {
+        UpdateSelectedHeroInfoP1();
+        UpdateSelectedHeroInfoP2();
+    }
+
     //-----------------------------加载选人界面-----------------------------
     //把slot初始化到选人界面
     public void AddHero(Hero hero)

@@ -11,8 +11,8 @@ public class LocalizeTxt : MonoBehaviour
     public void Start()
     {
         m_text = GetComponent<Text>();
-
         Localize.GetInstance().RegisterLT(this);
+        OnLanguageChanged();
     }
 
     public void OnLanguageChanged()

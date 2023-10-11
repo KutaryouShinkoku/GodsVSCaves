@@ -17,7 +17,7 @@ MonoBehaviour:
   description: GodOfFortune_disc
   sprite: {fileID: 21300000, guid: 599ab6dd61e663f4898dd517b3dcf1c0, type: 3}
   bullet: {fileID: 0}
-  maxHP: 240
+  maxHP: 200
   attack: 85
   defence: 80
   magic: 65

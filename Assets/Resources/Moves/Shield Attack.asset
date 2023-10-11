@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: ShieldAttack_name
   description: 
-  power: 80
+  power: 70
   accuracy: 0
+  extraTime: 0
   isMagic: 0
   moveActionType: 0
   moveCatagory: 2
   moveEffects:
     boosts: []
+    status: 0
+    heal: 0
   effectTarget: 0

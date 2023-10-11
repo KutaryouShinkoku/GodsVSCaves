@@ -17,10 +17,10 @@ MonoBehaviour:
   description: CaveMagician_disc
   sprite: {fileID: 21300000, guid: 45f3991ea1edadd4398986d7278622eb, type: 3}
   bullet: {fileID: 6411294760156536683, guid: a65dfb15c6d6f4f4fa4ba708d7cd4077, type: 3}
-  maxHP: 180
+  maxHP: 200
   attack: 60
   defence: 75
-  magic: 110
+  magic: 130
   magicDef: 80
   speed: 2
   evasion: 0
@@ -30,6 +30,6 @@ MonoBehaviour:
   - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
   - moveBase: {fileID: 11400000, guid: 94ffd107d94852b4cbbf7baa925031ba, type: 2}
   - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
-  - moveBase: {fileID: 11400000, guid: a01d2c2a20249d745b35797e0261a1c7, type: 2}
+  - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
   - moveBase: {fileID: 11400000, guid: d4812f120f417e84486431d300b7bda2, type: 2}
   - moveBase: {fileID: 11400000, guid: b05b74cc5953e83448f8c83bb1f27eff, type: 2}

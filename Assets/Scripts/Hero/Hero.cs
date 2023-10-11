@@ -162,9 +162,9 @@ public class Hero
 
     //-----------------------------数值check部分-----------------------------
     //CritCheck 暴击检查
-    public bool CritCheck(int luck)
+    public bool CritCheck(int sourceLuck, int targetLuck)
     {
-        if (Random.value * 100f <= 4f+(luck/2))
+        if (Random.value * 100f <= Mathf .Abs( 4f+((targetLuck-sourceLuck)/2)))
         {
             return true;
         }
@@ -175,10 +175,10 @@ public class Hero
     }
 
     //Damage 伤害计算
-    public int CalculateDamage(Move move, Hero attacker, Hero defender, int currentValue)
+    public int CalculateDamage(Move move, Hero attacker, Hero defender, int currentValue,bool isCrit)
     {
         float attack = CalculateAttakerStat(move, attacker);
-        float defence = CalculateDefenderStat(move, attacker, defender);
+        float defence = CalculateDefenderStat(move, defender,isCrit);
 
 
         float modifiers = ((currentValue / 10f) + 0.7f+Random .Range(-0.15f,0.15f));
@@ -199,10 +199,18 @@ public class Hero
         else if (move.Base.MoveCatagory == MoveCatagory.Shield) { return attacker.Defence ; }
         else return attacker.Attack;
     }
-    public float CalculateDefenderStat(Move move, Hero attacker,Hero defender)
+    public float CalculateDefenderStat(Move move,Hero defender,bool isCrit)
     {
-        if(move .Base .MoveCatagory == MoveCatagory.Magic ) { return defender.MagicDef; }
-        else return defender.Defence;
+        if (isCrit)
+        {
+            if (move.Base.MoveCatagory == MoveCatagory.Magic) { return Mathf.Min( defender.MagicDef,defender.Base.MagicDef); }
+            else return Mathf.Min(defender.Defence,defender.Base.Defence);
+        }
+        else
+        {
+            if (move.Base.MoveCatagory == MoveCatagory.Magic) { return defender.MagicDef; }
+            else return defender.Defence;
+        }
     }
 
     //Damage 伤害处理

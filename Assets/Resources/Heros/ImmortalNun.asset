@@ -17,14 +17,14 @@ MonoBehaviour:
   description: ImmortalNun_disc
   sprite: {fileID: 21300000, guid: cd1dace9786321248a5b05ad5d9477e2, type: 3}
   bullet: {fileID: 0}
-  maxHP: 200
+  maxHP: 230
   attack: 60
   defence: 85
   magic: 75
   magicDef: 90
   speed: 2
   evasion: 0
-  luck: 10
+  luck: 5
   character: 3
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: b0de58a1df161704a86530c1ff34dddf, type: 2}
