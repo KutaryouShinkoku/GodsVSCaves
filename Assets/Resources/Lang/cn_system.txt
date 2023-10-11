@@ -8,6 +8,9 @@ Change$更换
 Begin$开战
 Odds:$赔率：
 Odds$赔率
+Unlock$解锁
+Borrowing money must be repaid!$借的钱，你会还吧...
+No enough coins!$金币不足捏
 Place a bet$这边儿会赢！
 Countdown to placing a bet$下注截止倒计时：
 TutorialConfirm_disc$为什么电子斗蛐蛐需要教学？\n看就完事儿了！

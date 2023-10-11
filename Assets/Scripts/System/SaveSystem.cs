@@ -10,7 +10,6 @@ public static class SaveSystem
         BinaryFormatter formatter = new BinaryFormatter();
         string path = Application.persistentDataPath + "/player.cheat";
         FileStream stream = new FileStream(path, FileMode.Create);
-        Debug.Log("Save");
         CoinData data = new CoinData(coin);
 
         formatter.Serialize(stream, data);
@@ -19,7 +18,6 @@ public static class SaveSystem
 
     public static CoinData LoadCoin()
     {
-        Debug.Log("Load");
         string path = Application.persistentDataPath + "/player.cheat";
         if(File.Exists(path))
         {

@@ -8,6 +8,9 @@ Change$Change
 Begin$Begin
 Odds:$Odds:
 Odds$Odds
+Unlock$Unlock
+Borrowing money must be repaid!$Borrowing money must be repaid!
+No enough coins!$No enough coins!
 Place a bet$Place a bet
 Countdown to placing a bet$Countdown to placing a bet
 TutorialConfirm_disc$Why does a game that only requires watching the battle need a tutorial?\nJust watch it and that's it!

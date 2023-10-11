@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public enum CombatState { START, P1TURN, P2TURN, P1WON, P2WON }
+public enum CombatState { START, SPEEDCHECK,P1TURN, P2TURN, P1WON, P2WON }
 
 
 public class CombatSystem : MonoBehaviour
@@ -17,13 +17,15 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] GameController gameController;
     [SerializeField] CombatDialogBox dialogBox;
     [SerializeField] UIBet uiBet;
-    [SerializeField] CoinStorer coin;
+    [SerializeField] Coin coinStorer;
+    [SerializeField] BackgroundManager bgManager;
 
     public CombatState state;
     public Dice dice = new Dice();
 
     Hero p1Hero;
     Hero p2Hero;
+    bool isLastPlayer;
     public void Start()
     {
         
@@ -36,6 +38,8 @@ public class CombatSystem : MonoBehaviour
 
         this.p1Hero = p1Hero;
         this.p2Hero = p2Hero;
+        //设置背景
+        bgManager.SetBackground(p1Hero.Base.HeroCamp, p2Hero.Base.HeroCamp);
         StartCoroutine(SetupCombat());
         Debug.Log("战斗开始");
     }
@@ -70,20 +74,26 @@ public class CombatSystem : MonoBehaviour
         yield return dialogBox.TypeDialogSlow($"3......2......1.....GO!");
         yield return new WaitForSeconds(1f);
 
-        Debug.Log("检查出手权：p" + SpeedCheck() + "先手");
-
-        //检查出手权
+        isLastPlayer = false;
+        StartCoroutine(NewTurn());
+    }
+    //开始一个新回合
+    IEnumerator NewTurn()
+    {
         if (SpeedCheck() == 1)
         {
+            Debug.Log("检查出手权：p" + SpeedCheck() + "先手");
             state = CombatState.P1TURN;
             StartCoroutine(Player1Turn());
 
         }
         else
         {
+            Debug.Log("检查出手权：p" + SpeedCheck() + "先手");
             state = CombatState.P2TURN;
             StartCoroutine(Player2Turn());
         }
+        yield return null;
     }
 
     //SpeedCheck 比较双方速度决定出手权
@@ -268,15 +278,19 @@ public class CombatSystem : MonoBehaviour
     //过回合
     void PassTurn(Unit turnUnit)
     {
-        if(turnUnit == p1Unit)
+        if(isLastPlayer) { StartCoroutine(NewTurn()); }
+        else
         {
-            state = CombatState.P2TURN;
-            StartCoroutine(Player2Turn());
-        }
-        else if (turnUnit == p2Unit)
-        {
-            state = CombatState.P1TURN;
-            StartCoroutine(Player1Turn());
+            if (turnUnit == p1Unit)
+            {
+                state = CombatState.P2TURN;
+                StartCoroutine(Player2Turn());
+            }
+            else if (turnUnit == p2Unit)
+            {
+                state = CombatState.P1TURN;
+                StartCoroutine(Player1Turn());
+            }
         }
     }
 
@@ -398,14 +412,16 @@ public class CombatSystem : MonoBehaviour
         {
             coinChange = (int)((1f + p2Odd) * p2Coin);
         }
-        coin.CoinUp(coinChange);
-        
+        coinStorer.coinAmount+=coinChange ;
+        coinStorer.SaveCoin();
+
         yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("You get {0} coins!")}", coinChange));
         yield return new WaitForSeconds(1f);
-        if (coin.coinAmount < 100)
+        if (coinStorer.coinAmount < 100)
         {
             yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("You have spent all your coins, and borrow some from the developer, remember to pay it back~")}"));
-            coin.coinAmount = 100;
+            coinStorer.coinAmount = 100;
+            coinStorer.SaveCoin();
             yield return new WaitForSeconds(2f);
         }
     }

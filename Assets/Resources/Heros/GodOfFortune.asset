@@ -22,7 +22,7 @@ MonoBehaviour:
   defence: 80
   magic: 65
   magicDef: 75
-  speed: 3
+  speed: 30
   evasion: 0
   luck: 10
   character: 3

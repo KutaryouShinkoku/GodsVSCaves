@@ -9,16 +9,18 @@ public class UIBet : MonoBehaviour
     public int p2Coin;
     public float p1Odd;
     public float p2Odd;
-    public Text odds;
-    public Text p1CoinText;
-    public Text p2CoinText;
-    public Text p1Bet;
-    public Text p2Bet;
-    public Text timer;
-    public GameObject uiTimer;
-    public GameObject btnP1GO;
-    public GameObject btnP2GO;
-    [SerializeField] CoinStorer coin;
+
+    [Header("UI")]
+    [SerializeField] Text odds;
+    [SerializeField] Text p1CoinText;
+    [SerializeField] Text p2CoinText;
+    [SerializeField] Text p1Bet;
+    [SerializeField] Text p2Bet;
+    [SerializeField] Text timer;
+    [SerializeField] GameObject uiTimer;
+    [SerializeField] GameObject btnP1GO;
+    [SerializeField] GameObject btnP2GO;
+    [SerializeField] Coin coinsStorer;
     private int bet;
 
     private float ftime;
@@ -64,18 +66,18 @@ public class UIBet : MonoBehaviour
 
     public void OnBetP1()
     {
-        if(coin.coinAmount >= 2)
+        if(coinsStorer.coinAmount >= 1)
         {
-            coin.coinAmount -= bet;
+            coinsStorer.coinAmount -= bet;
             p1Coin += bet;
         }
     }
 
     public void OnBetP2()
     {
-        if (coin.coinAmount >= 2)
+        if (coinsStorer.coinAmount >= 1)
         {
-            coin.coinAmount -= bet;
+            coinsStorer.coinAmount -= bet;
             p2Coin += bet;
         }
     }
@@ -85,7 +87,7 @@ public class UIBet : MonoBehaviour
         odds.text = $"{p1Odd:N2} : {p2Odd:N2}";
         p1CoinText.text = $"{p1Coin}";
         p2CoinText.text = $"{p2Coin}";
-        bet = coin.coinAmount / 2;
+        bet = coinsStorer.coinAmount / 2;
         p1Bet.text = $"{bet}";
         p2Bet.text = $"{bet}";
     }

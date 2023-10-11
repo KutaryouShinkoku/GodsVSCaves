@@ -30,6 +30,9 @@ public class HeroBase : ScriptableObject
     public string HeroName{
         get{ return $"{Localize.GetInstance().GetTextByKey($"{heroName}")}";}
     }
+    public HeroCamp HeroCamp{
+        get { return camp; }
+    }
 
     public string Description{
         get { return $"{Localize.GetInstance().GetTextByKey($"{description}")}"; }

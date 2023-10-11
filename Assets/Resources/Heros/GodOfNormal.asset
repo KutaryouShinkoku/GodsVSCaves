@@ -22,9 +22,10 @@ MonoBehaviour:
   defence: 60
   magic: 40
   magicDef: 95
-  speed: 3
+  speed: 30
   evasion: 0
   luck: 15
+  character: 0
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: cf38b27f26ee5ed43a67983f22dc1014, type: 2}
   - moveBase: {fileID: 11400000, guid: cf38b27f26ee5ed43a67983f22dc1014, type: 2}
