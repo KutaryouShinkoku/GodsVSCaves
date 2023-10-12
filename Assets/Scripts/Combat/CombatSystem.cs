@@ -262,6 +262,7 @@ public class CombatSystem : MonoBehaviour
         yield return StartCoroutine(HandleBoosts(move,source ,target)); //处理属性增减
         yield return StartCoroutine(HandleStatus(move, source, target)); //处理特殊状态
         yield return StartCoroutine(HandleHeal(move, source, target, diceValue)); //处理治疗
+        yield return StartCoroutine(HandlePercentDamage(move, source, target)); //处理当前生命百分比掉血
     }
 
     //显示任何变化需要的文字
@@ -395,6 +396,27 @@ public class CombatSystem : MonoBehaviour
         {
             source.Hero.UpdateHpHeal(effect.Heal, diceValue);
             StartCoroutine(source.PlayBoostedAnimation());
+            yield return ShowStatusChanges(source);
+            yield return ShowStatusChanges(target);
+        }
+    }
+
+    IEnumerator HandlePercentDamage(Move move, Unit source, Unit target) //当前生命百分比扣血
+    {
+        var effect = move.Base.MoveEffects;
+        var per = effect.LosePercentLife;
+        if(per.max != 0) 
+        {
+            if(per.target == EffectTarget.Self)
+            {
+                source.Hero.PercentDamage(per);
+                yield return (StartCoroutine(source.PlayHitAnimation(MoveActionType.Ranged)));
+            }
+            else if (per.target == EffectTarget.Enemy)
+            {
+                target.Hero.PercentDamage(per);
+                yield return (StartCoroutine(target.PlayHitAnimation(MoveActionType.Ranged)));
+            }
             yield return ShowStatusChanges(source);
             yield return ShowStatusChanges(target);
         }

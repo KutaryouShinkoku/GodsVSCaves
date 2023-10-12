@@ -21,3 +21,7 @@ Working_name$上班
 DiceAttack_name$骰击
 LuckyDay_name$欧皇
 JackPot_name$头奖！
+GravitationalForce_name$地心引力
+EscapeVelocity_name$逃逸速度
+CosmicASH_name$宇宙尘埃
+Singularity_name$奇点

@@ -1,7 +1,7 @@
 OK$OK
 Tutorial$Tutorial
-Tutorial_desc$1. Combat is automatic and players cannot intervene.\n\n2. Heros have their own six-sided die. The die sides represent different skills (6 is the ultimate skill). The points will also determine the random number range of damage.\n\n3. Heros' dice have different personalities, and the weight of each side will also change according to changes in the battle situation.\n\n4. The heros' luck will affect the critical hit rate, the possibility of resisting critical hits, and the size of the die point.\n\n5. You can bet on the hero you support in the first 20 seconds of combat.
-No, I really, really want to see the tutorial$No, I really, really want to see the tutorial
+Tutorial_desc$1. Combat is automatic and players cannot intervene.\n\n2. Heroes have their own six-sided die. The die sides represent different skills (6 is the ultimate skill). The points will also determine the random number range of damage.\n\n3. Heroes' dice have different personalities, and the weight of each side will also change according to changes in the battle situation.\n\n4. Heroes' luck will affect the critical hit chance, the possibility of resisting critical hits, and the size of the die point.\n\n5. You can bet on the hero you support in the first 20 seconds of combat.
+No, I really, really want to see the tutorial$No, I really, really want to read the tutorial
 Anything else?$Anything else?
 0$0
 Change$Change
@@ -50,3 +50,4 @@ has been poisoned$ has been poisoned
 The more {0}'s dice fights, the braver it becomes!$The more {0}'s dice fights, the braver it becomes!
 {0}'s dice is scared because its HP is too low!${0}'s dice is scared because its HP is too low!
 Boosts double {0}'s dice's confidence!$Boosts double {0}'s dice's confidence!
+{0} lose {1}% HP${0} lose {1}% HP

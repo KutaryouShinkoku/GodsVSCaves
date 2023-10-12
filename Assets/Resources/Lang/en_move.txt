@@ -21,3 +21,7 @@ Working_name$Working...
 DiceAttack_name$Dice Attack
 LuckyDay_name$Lucky Day
 JackPot_name$Jackpot!
+GravitationalForce_name$Gravitational Force
+EscapeVelocity_name$Escape Velocity
+CosmicASH_name$Cosmic ASH
+Singularity_name$Singularity

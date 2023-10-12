@@ -1956,9 +1956,21 @@ PrefabInstance:
       value: Unlock (6)
       objectReference: {fileID: 0}
     - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
+      propertyPath: price
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
+      propertyPath: isUnlock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
       propertyPath: coinStorer
       value: 
       objectReference: {fileID: 1524883269}
+    - target: {fileID: 4326343343878522365, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
+      propertyPath: m_Name
+      value: GodOfUniverse
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
 --- !u!224 &139781296 stripped
@@ -5826,6 +5838,8 @@ MonoBehaviour:
   - _base: {fileID: 11400000, guid: 76499060a2bebc94eacb8ab26fefb52d, type: 2}
     level: 100
   - _base: {fileID: 11400000, guid: b62e5c4311362344699367dbf7ee8483, type: 2}
+    level: 100
+  - _base: {fileID: 11400000, guid: ee8fab66f3f277c429a967597fd5f7a8, type: 2}
     level: 100
   heroSlots:
   - {fileID: 901560620}

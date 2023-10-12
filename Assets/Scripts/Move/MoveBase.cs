@@ -66,6 +66,7 @@ public class MoveEffects
     [SerializeField] List<StatBoost> boosts;
     [SerializeField] ConditionID status;
     [SerializeField] int heal;
+    [SerializeField] LosePercentLife losePercentLife;
 
     public List<StatBoost> Boosts
     {
@@ -79,6 +80,10 @@ public class MoveEffects
     {
         get { return heal; }
     }
+    public LosePercentLife LosePercentLife
+    {
+        get { return losePercentLife; }
+    }
 }
 
 [System.Serializable]
@@ -86,6 +91,14 @@ public class StatBoost
 {
     public Stat stat;
     public int boost;
+}
+
+[System.Serializable]
+public class LosePercentLife
+{
+    public int min;
+    public int max;
+    public EffectTarget target;
 }
 
 

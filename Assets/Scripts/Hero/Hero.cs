@@ -52,6 +52,7 @@ public class Hero
         Stats.Add(Stat.Defence, Mathf.FloorToInt((Base.Defence * Level) / 100f) + 5);
         Stats.Add(Stat.Magic, Mathf.FloorToInt((Base.Magic * Level) / 100f) + 5);
         Stats.Add(Stat.MagicDef, Mathf.FloorToInt((Base.MagicDef * Level) / 100f) + 5);
+        Stats.Add(Stat.Speed, Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5);
         Stats.Add(Stat.Luck, Mathf.FloorToInt(Base.Luck));
 
         MaxHP = Mathf.FloorToInt((Base.MaxHP * Level) / 100f) + 10;
@@ -108,7 +109,7 @@ public class Hero
     }
 
     public int Speed{
-        get { return Mathf.FloorToInt(Base.Speed); }
+        get { return GetStat(Stat.Speed); }
     }
 
     public int Evasion{
@@ -231,6 +232,14 @@ public class Hero
         }
         else { StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s HP is restored")}", Base.HeroName)); }
         HpChanged = true;
+    }
+
+    //�ٷֱȵ�Ѫ
+    public void PercentDamage(LosePercentLife losePer)
+    {
+        int percent = Random.Range(losePer.min, losePer.max);
+        UpdateHp(percent * HP/100);
+        StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0} lose {1}% HP")}", Base.HeroName,percent));
     }
 
 

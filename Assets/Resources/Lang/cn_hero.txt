@@ -12,3 +12,5 @@ AncientWarlock_name$邪神契约
 AncientWarlock_disc$我们并不知道是究竟哪位邪神，或许是变化之神。\n<color="#FF1818">1,3,4:[魔能爆]</color> 造成少量魔法伤害。\n<color="#FF1818">2:[魔能箭]</color> 造成微量魔法伤害，降低对手魔抗。\n<color="#FF1818">5:[邪神猛毒]</color> 使对手中毒。 \n<color="#4DFF28">6:[邪神咒法]</color> 降低对手攻击、防御、魔力、魔抗。
 GodOfFortune_name$机会之神
 GodOfFortune_disc$神也无法主导所有的概率，但可以获得更多的机会。\n<color="#FF1818">1,3,5:[骰击]</color> 造成2次少量物理伤害。\n<color="#FF1818">2,4:[欧皇]</color>提升攻击和幸运。\n<color="#4DFF28">6:[头奖！]</color>造成4次物理伤害，然后提升幸运。
+GodOfUniverse_name$宇宙之神
+GodOfUniversedisc$其实宇宙之神更喜欢艺术，他希望在STEM中间加入Art，变成STEAM。\n<color="#FF1818">1:[万有引力]</color> 提升攻击、魔力。\n<color="#FF1818">2,4:[逃逸速度]</color> 造成少量物理伤害，提升速度。\n<color="#FF1818">3,5:[星际艺术]</color> 造成魔法伤害。 \n<color="#4DFF28">6:[奇点]</color> 对手生命值随机减少30%~90%。

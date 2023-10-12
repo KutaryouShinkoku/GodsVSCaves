@@ -106,7 +106,7 @@ public enum HeroCamp
 }
 
 //属性
-public enum Stat {Attack,Defence,Magic,MagicDef,Luck}
+public enum Stat {Attack,Defence,Magic,MagicDef,Speed,Luck}
 
 //骰子性格
 public enum Character
