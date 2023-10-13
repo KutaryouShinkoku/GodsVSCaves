@@ -14,9 +14,9 @@ public class UIHeroUnlock : MonoBehaviour
     {
         List<string> list = new List<string>();
         list = coinStorer.unlockedHeros;
-        Debug.Log(list);
         if (list.Exists(t => t== $"{gameObject.name}"))
         {
+            Debug.Log("Unlock");
             isUnlock = true;
         }
         if (isUnlock)

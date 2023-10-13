@@ -9,6 +9,7 @@ Begin$开战
 Odds:$赔率：
 Odds$赔率
 Unlock$解锁
+Turn$回合
 Borrowing money must be repaid!$借的钱，你会还吧...
 No enough coins!$金币不足捏
 Place a bet$这边儿会赢！
@@ -31,6 +32,7 @@ Attack$攻击
 Defence$防御
 Magic$魔力
 MagicDef$魔抗
+Speed$速度
 Luck$幸运
 Select Heros$点击“更换”可选择新英雄
 Select Hero for Gods$为神界选择英雄
@@ -51,3 +53,4 @@ The more {0}'s dice fights, the braver it becomes!${0}的骰子感到生命危�
 {0}'s dice is scared because its HP is too low!${0}的骰子生命太低，开始发抖...
 Boosts double {0}'s dice's confidence!$属性强化让{0}的骰子信心倍增！
 {0} lose {1}% HP${0}失去了{1}%的HP
+{0} feels exhausted, and lose some HP${0}筋疲力尽，失去了一些HP...

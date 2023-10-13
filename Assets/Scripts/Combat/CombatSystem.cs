@@ -19,6 +19,7 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] UIBet uiBet;
     [SerializeField] Coin coinStorer;
     [SerializeField] BackgroundManager bgManager;
+    [SerializeField] Text turnCounter;
 
     public CombatState state;
     public Dice dice = new Dice();
@@ -26,10 +27,7 @@ public class CombatSystem : MonoBehaviour
     Hero p1Hero;
     Hero p2Hero;
     bool isLastPlayer;
-    public void Start()
-    {
-        
-    }
+    int turnCount;
 
     //以输入的英雄信息开始游戏
     public void HandleCombatStart(Hero p1Hero,Hero p2Hero)
@@ -49,6 +47,8 @@ public class CombatSystem : MonoBehaviour
     {
         //重置位置和对话框
         combatStatus.text = "";
+        turnCount = 0;
+        turnCounter.text = $"{Localize.GetInstance().GetTextByKey("Turn")} {turnCount}"; 
         StartCoroutine(p1Unit.AnimationReset());
         StartCoroutine(p2Unit.AnimationReset());
 
@@ -80,6 +80,9 @@ public class CombatSystem : MonoBehaviour
     //开始一个新回合
     IEnumerator NewTurn()
     {
+        turnCount += 1;
+        Debug.Log($"Turn{turnCount}");
+        turnCounter.text = $"{Localize.GetInstance().GetTextByKey("Turn")} {turnCount}";
         if (SpeedCheck() == 1)
         {
             Debug.Log("检查出手权：p" + SpeedCheck() + "先手");
@@ -205,24 +208,16 @@ public class CombatSystem : MonoBehaviour
         //回合结束阶段处理各类效果
         sourceUnit.Hero.OnAfterTurn();
         StartCoroutine(sourceUnit.PlayStatusAnimation());
+        //疲劳检定
+        StartCoroutine(CheckExhausted(sourceUnit, turnCount));
+        //上述内容的文字播报
         yield return ShowStatusChanges(sourceUnit);
         yield return sourceHUD.UpdateHp();
         yield return targetHUD.UpdateHp();
         yield return new WaitForSeconds(0.3f);
 
         //判断死亡
-        if (targetUnit.Hero .HP<=0)
-        {
-            CheckBattleOver(targetUnit);
-        }
-        else if (sourceUnit.Hero.HP <= 0)
-        {
-            CheckBattleOver(sourceUnit);
-        }
-        else
-        {
-            PassTurn(sourceUnit);
-        }
+        yield return StartCoroutine(CheckFainted(sourceUnit, targetUnit));
     }
     //算伤害
     IEnumerator HandleDamage(Unit sourceUnit, Unit targetUnit, Move move, CombatHUD targetHUD, int currentValue,bool isMagic)
@@ -243,7 +238,7 @@ public class CombatSystem : MonoBehaviour
                 yield return new WaitForSeconds(0.7f);
             }
 
-            //受伤与死亡
+            //受伤
             targetUnit.Hero.UpdateHp(damage);
             yield return targetHUD.ShowDamage(damage, isCrit, isMagic);
             yield return targetHUD.UpdateHp();
@@ -275,27 +270,56 @@ public class CombatSystem : MonoBehaviour
             yield return new WaitForSeconds(0.8f);
         }
     }
+    //疲劳鉴定
+    IEnumerator CheckExhausted(Unit unit,int turnCount)
+    {
+        if(turnCount > 20)
+        {
+            unit.Hero.ExhaustedDamage(turnCount);
+        }
+        yield return null;
+    }
 
     //过回合
     void PassTurn(Unit turnUnit)
     {
-        if(isLastPlayer) { StartCoroutine(NewTurn()); }
+        if (isLastPlayer) { isLastPlayer = false; StartCoroutine(NewTurn());}
         else
         {
             if (turnUnit == p1Unit)
             {
+                isLastPlayer = true;
                 state = CombatState.P2TURN;
                 StartCoroutine(Player2Turn());
             }
             else if (turnUnit == p2Unit)
             {
+                isLastPlayer = true;
                 state = CombatState.P1TURN;
                 StartCoroutine(Player1Turn());
             }
         }
     }
+    //判断角色是否死亡
+    IEnumerator CheckFainted(Unit source,Unit target)
+    {
 
-    //处理角色死亡
+        if (target.Hero.HP <= 0)
+        {
+             CheckBattleOver(target);
+        }
+        else if (source.Hero.HP <= 0)
+        {
+            CheckBattleOver(source);
+        }
+        else
+        {
+            PassTurn(source);
+        }
+        yield return null;
+    }
+
+    //判定游戏结束
     void CheckBattleOver(Unit faintedUnit)
     {
         if(faintedUnit == p1Unit)
@@ -316,15 +340,19 @@ public class CombatSystem : MonoBehaviour
     //Player turn 玩家一回合的流程
     IEnumerator Player1Turn()
     {
+        //箭头切换
         StartCoroutine(p1HUD.SetArrow());
         StartCoroutine(p2HUD.HideArrow());
+        //出招
         StartCoroutine(PerformP1Move());
         yield return new WaitForSeconds(1.2f);
     }
     IEnumerator Player2Turn()
     {
+        //箭头切换
         StartCoroutine(p2HUD.SetArrow());
         StartCoroutine(p1HUD.HideArrow());
+        //出招
         StartCoroutine(PerformP2Move());
         yield return new WaitForSeconds(1.2f);
     }
@@ -340,7 +368,7 @@ public class CombatSystem : MonoBehaviour
         {
             yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n...............{Localize.GetInstance().GetTextByKey("for now")}........");
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         uiBet.DisableBet();
         p1HUD.HideHUD();
         p2HUD.HideHUD();

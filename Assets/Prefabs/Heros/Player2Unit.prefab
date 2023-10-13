@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1715490860, guid: ee1a3dbb8776c204c81f4d582e1c273c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cd1dace9786321248a5b05ad5d9477e2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -100,5 +100,6 @@ MonoBehaviour:
   _base: {fileID: 11400000, guid: fd4e3e52e35a03a4b9da6342e0837b27, type: 2}
   level: 2
   smoke: {fileID: 8667643986451088083, guid: 55bfb5169879eb945b355b375133aa52, type: 3}
+  bullet: {fileID: 0}
   enterDelay: 0.2
   isPlayer1: 0

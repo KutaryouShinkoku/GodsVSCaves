@@ -9,6 +9,7 @@ Begin$Begin
 Odds:$Odds:
 Odds$Odds
 Unlock$Unlock
+Turn$Turn
 Borrowing money must be repaid!$Borrowing money must be repaid!
 No enough coins!$No enough coins!
 Place a bet$Place a bet
@@ -31,6 +32,7 @@ Attack$Attack
 Defence$Defence
 Magic$Magic
 MagicDef$MagicDef
+Speed$Speed
 Luck$Luck
 Select Heros$Click "Change" to select new heros
 Select Hero for Gods$Select Hero for Gods
@@ -51,3 +53,4 @@ The more {0}'s dice fights, the braver it becomes!$The more {0}'s dice fights, t
 {0}'s dice is scared because its HP is too low!${0}'s dice is scared because its HP is too low!
 Boosts double {0}'s dice's confidence!$Boosts double {0}'s dice's confidence!
 {0} lose {1}% HP${0} lose {1}% HP
+{0} feels exhausted, and lose some HP${0} feels exhausted, and lose some HP

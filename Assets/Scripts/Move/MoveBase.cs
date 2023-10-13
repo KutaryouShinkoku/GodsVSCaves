@@ -8,7 +8,7 @@ using UnityEngine;
 public class MoveBase : ScriptableObject 
 {
     [SerializeField] string moveName;
-
+    
     [TextArea]
     [SerializeField] string description;
 
@@ -19,6 +19,8 @@ public class MoveBase : ScriptableObject
     [SerializeField] MoveActionType moveActionType;
     [SerializeField] MoveCatagory moveCatagory;
     [SerializeField] MoveEffects moveEffects;
+
+    [Header("This setting is stat effects only")]
     [SerializeField] EffectTarget effectTarget;
     public string MoveName{
         get { return $"{Localize.GetInstance().GetTextByKey($"{moveName}")}"; }

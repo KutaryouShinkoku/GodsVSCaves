@@ -242,6 +242,13 @@ public class Hero
         StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0} lose {1}% HP")}", Base.HeroName,percent));
     }
 
+    //疲劳伤害
+    public void ExhaustedDamage(int turnCount)
+    {
+        UpdateHp((turnCount - 20) * _base.MaxHP / 4);
+        StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0} feels exhausted, and lose some HP")}", Base.HeroName));
+    }
+
 
     //-----------------------------属性增减部分-----------------------------
     //属性变化

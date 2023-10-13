@@ -19,9 +19,9 @@ MonoBehaviour:
   bullet: {fileID: 0}
   maxHP: 270
   attack: 52
-  defence: 148
+  defence: 118
   magic: 47
-  magicDef: 138
+  magicDef: 108
   speed: 10
   evasion: 0
   luck: 10
