@@ -7,6 +7,8 @@ public class UIBorrowMoney : MonoBehaviour
     [SerializeField] GameObject uiAlert;
     [SerializeField] Coin coinStorer;
     [SerializeField] GameObject achievement;//TODO:成就系统的临时方案，以后重写
+    [SerializeField] GameObject tipBox;
+    [SerializeField] private AudioSource clickSE;
 
     public void BorrowCoins()
     {
@@ -18,6 +20,7 @@ public class UIBorrowMoney : MonoBehaviour
         if (coinStorer.coinAmount < 500)
         {
             coinStorer.coinAmount = 500;
+            clickSE.Play();
             coinStorer.borrowTimes++;
             coinStorer.SaveCoin();
             if (coinStorer.borrowTimes == 100)
@@ -39,6 +42,17 @@ public class UIBorrowMoney : MonoBehaviour
     public void CloseAchievement()
     {
         achievement.SetActive(false);
+    }
+
+    public void OnMouseEnter()
+    {
+        tipBox.SetActive(true);
+        Debug.Log("11231");
+    }
+
+    public void OnMouseExit()
+    {
+        tipBox.SetActive(false);
     }
 
 }

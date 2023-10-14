@@ -14,6 +14,8 @@ public class GameController : MonoBehaviour
     [SerializeField] Camera combatCamera;
     [SerializeField] CoinStorer coin;
 
+    [SerializeField] private AudioSource beginSE;
+
 
     public GameState state;
 
@@ -41,6 +43,7 @@ public class GameController : MonoBehaviour
         //把英雄数据放进战斗系统
         combatSystem.HandleCombatStart(p1Hero ,p2Hero );
 
+        beginSE.Play();
     }
 
     //战斗结束，回到选择界面

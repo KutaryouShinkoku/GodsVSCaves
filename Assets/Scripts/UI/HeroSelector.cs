@@ -24,6 +24,10 @@ public class HeroSelector : MonoBehaviour
     public Text p2Status;
     public Text p1Name;
     public Text p2Name;
+    public GameObject selectMask;
+
+    [Header("Audio")]
+    [SerializeField] private AudioSource clickSE;
 
     [HideInInspector] public SelectState state;
 
@@ -51,11 +55,20 @@ public class HeroSelector : MonoBehaviour
         //根据玩家选择的语言初始化引导词
         guide.text =$"{Localize.GetInstance().GetTextByKey($"Select Heros")}!";
 
+        //初始化其它UI
+        selectMask.SetActive(false);
+
     }
     private void Update()
     {
         UpdateSelectedHeroInfoP1();
         UpdateSelectedHeroInfoP2();
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            selectMask.SetActive(false);
+            state = SelectState.NONE;
+        }
     }
 
     //-----------------------------加载选人界面-----------------------------
@@ -85,13 +98,17 @@ public class HeroSelector : MonoBehaviour
     public void ChangeP1()
     {
         state = SelectState.SELECTP1;
+        selectMask.SetActive(true);
         guide.text = $"{Localize.GetInstance().GetTextByKey($"Select Hero for Gods")}";
+        clickSE.Play();
     }
 
     public void ChangeP2()
     {
         state = SelectState.SELECTP2;
+        selectMask.SetActive(true);
         guide.text = $"{Localize.GetInstance().GetTextByKey($"Select Hero for Caves")}";
+        clickSE.Play();
     }
 
     //选人后更新英雄信息
@@ -108,6 +125,7 @@ public class HeroSelector : MonoBehaviour
             else
             {
                 p1Hero = hero;
+                selectMask.SetActive(false);
                 UpdateSelectedHeroInfoP1();
                 state = SelectState.NONE;
                 guide.text = $"{Localize.GetInstance().GetTextByKey($"Select Heros")}!";
@@ -125,6 +143,7 @@ public class HeroSelector : MonoBehaviour
             else
             {
                 p2Hero = hero;
+                selectMask.SetActive(false);
                 UpdateSelectedHeroInfoP2();
                 state = SelectState.NONE;
                 guide.text = $"{Localize.GetInstance().GetTextByKey($"Select Heros")}!";

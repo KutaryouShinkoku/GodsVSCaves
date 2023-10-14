@@ -54,3 +54,5 @@ The more {0}'s dice fights, the braver it becomes!$The more {0}'s dice fights, t
 Boosts double {0}'s dice's confidence!$Boosts double {0}'s dice's confidence!
 {0} lose {1}% HP${0} lose {1}% HP
 {0} feels exhausted, and lose some HP${0} feels exhausted, and lose some HP
+Betting ends!$Betting ends!
+BorrowMoney_Tips$Borrow some money from the Developer!\nThe more consecutive wrong guesses, \nThe more you borrow!

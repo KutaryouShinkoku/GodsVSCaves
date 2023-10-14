@@ -17,6 +17,7 @@ public class UIBet : MonoBehaviour
     [SerializeField] Text p1Bet;
     [SerializeField] Text p2Bet;
     [SerializeField] Text timer;
+    [SerializeField] Text timerTitle;
     [SerializeField] GameObject uiTimer;
     [SerializeField] GameObject btnP1GO;
     [SerializeField] GameObject btnP2GO;
@@ -103,6 +104,8 @@ public class UIBet : MonoBehaviour
     {
         uiTimer.SetActive(true);
         countdown = 20;
+        timerTitle.color = Color.white;
+        timerTitle.text = $"{Localize.GetInstance().GetTextByKey("Countdown to placing a bet")}";
         timer.text = $"{countdown }";
         btnP1GO.SetActive(true);
         btnP2GO.SetActive(true);
@@ -116,6 +119,8 @@ public class UIBet : MonoBehaviour
     public void DisableBet()
     {
         uiTimer.SetActive(false);
+        timerTitle.color = Color.red;
+        timerTitle.text = $"{Localize.GetInstance().GetTextByKey("Betting ends!")}";
         timer.text = $"";
         btnP1GO.SetActive(false);
         btnP2GO.SetActive(false);

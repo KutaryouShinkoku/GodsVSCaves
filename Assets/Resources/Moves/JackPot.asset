@@ -22,8 +22,12 @@ MonoBehaviour:
   moveCatagory: 0
   moveEffects:
     boosts:
-    - stat: 4
+    - stat: 5
       boost: 1
     status: 0
     heal: 0
+    losePercentLife:
+      min: 0
+      max: 0
+      target: 0
   effectTarget: 0

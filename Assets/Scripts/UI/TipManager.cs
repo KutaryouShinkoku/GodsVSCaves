@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class TipManager : MonoBehaviour
 {
     public static TipManager _instance;
-    public Camera selectorCam;
     public GameObject tipGO;
 
     public Text heroNameText;
@@ -31,7 +30,7 @@ public class TipManager : MonoBehaviour
         Cursor.visible = true;
         tipGO.SetActive(false);
     }
-
+    //-------------”¢–€–≈œ¢-------------
     public void SetAndShowTip(string name,string desc,Sprite sprite,Character character)
     {
         gameObject.SetActive(true);
@@ -48,6 +47,4 @@ public class TipManager : MonoBehaviour
         heroNameText.text = "";
         heroDiscText.text = "";
     }
-    
-
 }

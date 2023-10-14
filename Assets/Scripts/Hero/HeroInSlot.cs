@@ -28,6 +28,7 @@ public class HeroInSlot : MonoBehaviour
         heroSelector.UpdateHeroSelection(hero);
     }
 
+    //鼠标放到英雄上显示信息
     public void OnMouseEnter()
     {
         TipManager._instance.SetAndShowTip(hero.Base .HeroName, hero .Base .Description,hero.Base.Sprite,hero.Base .Character);
