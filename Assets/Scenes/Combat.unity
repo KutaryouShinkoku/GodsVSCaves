@@ -1356,7 +1356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
       propertyPath: isUnlock
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
       propertyPath: coinStorer
@@ -2036,13 +2036,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Unlock (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 4326343343878522360, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
       propertyPath: price
       value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
       propertyPath: isUnlock
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
       propertyPath: coinStorer
@@ -6454,7 +6458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
       propertyPath: isUnlock
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
       propertyPath: coinStorer
@@ -9301,7 +9305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
       propertyPath: isUnlock
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
       propertyPath: coinStorer
@@ -15638,7 +15642,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
       propertyPath: isUnlock
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4326343343878522363, guid: 2fe32e9288847de458f13fec5c92fc13, type: 3}
       propertyPath: coinStorer

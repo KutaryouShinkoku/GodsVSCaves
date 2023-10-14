@@ -362,13 +362,13 @@ public class CombatSystem : MonoBehaviour
     {
         if (state == CombatState.P1WON)
         {
-            yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n...............{Localize.GetInstance().GetTextByKey("for now")}........");
+            yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n{Localize.GetInstance().GetTextByKey("for now")}");
         }
         else if (state == CombatState.P2WON)
         {
-            yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n...............{Localize.GetInstance().GetTextByKey("for now")}........");
+            yield return dialogBox.TypeDialogSlow($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n{Localize.GetInstance().GetTextByKey("for now")}");
         }
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         uiBet.DisableBet();
         p1HUD.HideHUD();
         p2HUD.HideHUD();
@@ -385,22 +385,23 @@ public class CombatSystem : MonoBehaviour
         var effect = move.Base.MoveEffects;
         if (effect.Boosts.Count != 0)
         {
+            
             if (move.Base.EffectTarget == EffectTarget.Self)
             {
                 source.Hero.ApplyBoosts(effect.Boosts);
-                StartCoroutine(source.PlayBoostedAnimation());
+                StartCoroutine(source.PlayBoostedAnimation(source.Hero.BoostValue(effect.Boosts)));
             }
             else if (move.Base.EffectTarget == EffectTarget.Enemy)
             {
                 target.Hero.ApplyBoosts(effect.Boosts);
-                StartCoroutine(target.PlayBoostedAnimation());
+                StartCoroutine(target.PlayBoostedAnimation(source.Hero.BoostValue(effect.Boosts)));
             }
             else if (move.Base.EffectTarget == EffectTarget.All)
             {
                 source.Hero.ApplyBoosts(effect.Boosts);
                 target.Hero.ApplyBoosts(effect.Boosts);
-                StartCoroutine(source.PlayBoostedAnimation());
-                StartCoroutine(target.PlayBoostedAnimation());
+                StartCoroutine(source.PlayBoostedAnimation(source.Hero.BoostValue(effect.Boosts)));
+                StartCoroutine(target.PlayBoostedAnimation(source.Hero.BoostValue(effect.Boosts)));
             }
         }
         yield return ShowStatusChanges(source);
@@ -423,7 +424,7 @@ public class CombatSystem : MonoBehaviour
         if(effect.Heal != 0)
         {
             source.Hero.UpdateHpHeal(effect.Heal, diceValue);
-            StartCoroutine(source.PlayBoostedAnimation());
+            StartCoroutine(source.PlayHealAnimation());
             yield return ShowStatusChanges(source);
             yield return ShowStatusChanges(target);
         }

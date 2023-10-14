@@ -25,7 +25,7 @@ rolled a$rolled a
 Critical Hit!$Critical Hit!
 {0} lose {1} life${0} lose {1} life
 Victory won$Victory won
-for now$for now
+for now$But the struggle between the gods and the caves will continue.
 {0}'s {1} increase {2}%!${0}'s {1} increase by {2}%!
 {0}'s {1} decrease {2}%${0}'s {1} decrease by {2}%
 Attack$Attack
@@ -34,7 +34,7 @@ Magic$Magic
 MagicDef$MagicDef
 Speed$Speed
 Luck$Luck
-Select Heros$Click "Change" to select new heros
+Select Heros$Click "Change" to select new heroes
 Select Hero for Gods$Select Hero for Gods
 Select Hero for Caves$Select Hero for Caves
 Unable to select the same hero to fight against!$<color="#FF5B5B">Unable to select the same hero to fight against!</color>

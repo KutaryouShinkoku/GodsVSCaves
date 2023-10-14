@@ -24,7 +24,7 @@ MonoBehaviour:
   magicDef: 100
   speed: 40
   evasion: 0
-  luck: 1
+  luck: 100
   character: 0
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
@@ -32,4 +32,4 @@ MonoBehaviour:
   - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
   - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
   - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
-  - moveBase: {fileID: 11400000, guid: b37cc6301f95bc44898abf7f2f1986b6, type: 2}
+  - moveBase: {fileID: 11400000, guid: 9b1454e67237d9c4dbf69ee1f57086ce, type: 2}

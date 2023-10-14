@@ -13,7 +13,7 @@ Turn$回合
 Borrowing money must be repaid!$借的钱，你会还吧...
 No enough coins!$金币不足捏
 Place a bet$这边儿会赢！
-Countdown to placing a bet$下注截止倒计时：
+Countdown to placing a bet$买定离手：
 TutorialConfirm_disc$为什么电子斗蛐蛐需要教学？\n看就完事儿了！
 You get {0} coins!$你获得了{0}金币！
 You have spent all your coins, and borrow some from the developer, remember to pay it back~$你破产了！然后找变化之神借了点儿。记得还哦!
@@ -25,7 +25,7 @@ rolled a$掷骰结果是
 Critical Hit!$命中要害！
 {0} lose {1} life${0}失去了{1}点生命
 Victory won$获胜了
-for now$至少是这次
+for now$但神界和巢穴之间的斗争还会持续下去。
 {0}'s {1} increase {2}%!${0}的{1}提升了{2}%！
 {0}'s {1} decrease {2}%${0}的{1}下降了{2}%
 Attack$攻击
@@ -35,8 +35,8 @@ MagicDef$魔抗
 Speed$速度
 Luck$幸运
 Select Heros$点击“更换”可选择新英雄
-Select Hero for Gods$为神界选择英雄
-Select Hero for Caves$为巢穴选择英雄
+Select Hero for Gods$选择第一位英雄
+Select Hero for Caves$选择第二位英雄
 Unable to select the same hero to fight against!$<color="#FF5B5B">不要自己打自己！会导致湮灭！</color>
 basic_stats$等级:\n生命:\n攻击:\n防御:\n魔力:\n魔抗:\n速度:\n幸运:\n
 [ Character of dice: {0} ]$[ 骰子特质： {0} ]
@@ -49,8 +49,8 @@ has been poisoned$中毒了
 {0} lose life due to poison${0}因为中毒失去了部分生命
 {0}'s HP is restored${0}的生命恢复了一些
 {0}'s HP is restored to full${0}的生命回满了
-The more {0}'s dice fights, the braver it becomes!${0}的骰子感到生命危急，情急之下居然...
-{0}'s dice is scared because its HP is too low!${0}的骰子生命太低，开始发抖...
-Boosts double {0}'s dice's confidence!$属性强化让{0}的骰子信心倍增！
+The more {0}'s dice fights, the braver it becomes!${0}的骰子青筋暴起，吹响了残血反击的号角！
+{0}'s dice is scared because its HP is too low!${0}的骰子因为生命太低，瑟瑟发抖...
+Boosts double {0}'s dice's confidence!$属性强化准备妥当，{0}的骰子要开始动真格的了！
 {0} lose {1}% HP${0}失去了{1}%的HP
-{0} feels exhausted, and lose some HP${0}筋疲力尽，失去了一些HP...
+{0} feels exhausted, and lose some HP${0}不想让你等太久，自己损失了一些HP...

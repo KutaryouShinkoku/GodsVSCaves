@@ -67,6 +67,7 @@ public class Hero
             {Stat .Defence,0 },
             {Stat .Magic,0 },
             {Stat .MagicDef,0 },
+            {Stat .Speed,0 },
             {Stat .Luck,0 },
         };
     }
@@ -272,5 +273,13 @@ public class Hero
 
             Debug.Log($"{stat} has been boosted to {StatBoosts[stat]} ");
         }
+    }
+
+    //≈–∂œ Ù–‘‘ˆºı
+    public int BoostValue(List<StatBoost> statBoosts)
+    {
+        int boostValue = 0;
+        foreach (var statBoost in statBoosts) { boostValue += statBoost.boost; }
+        return boostValue;
     }
 }

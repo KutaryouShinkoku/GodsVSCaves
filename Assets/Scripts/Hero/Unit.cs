@@ -8,10 +8,15 @@ public class Unit : MonoBehaviour
 {
     [SerializeField] HeroBase _base;
     [SerializeField] int level;
-    [SerializeField] GameObject smoke;
-    [SerializeField] GameObject bullet;
+
     [SerializeField] float enterDelay;
     [SerializeField] bool isPlayer1; //用来检查角色属于哪边
+
+    [Header("Effects")]
+    [SerializeField] GameObject smoke;
+    [SerializeField] GameObject bullet;
+    [SerializeField] GameObject statUpEffect;
+    [SerializeField] GameObject statDownEffect;
 
     public Hero Hero { get; set; }
     SpriteRenderer spRenderer;
@@ -144,9 +149,8 @@ public class Unit : MonoBehaviour
         sequence.Append(spRenderer.DOColor(originalColor, 0.1f));
         yield return null;
     }
-
-    //受到强化
-    public IEnumerator PlayBoostedAnimation()
+    //受到治疗
+        public IEnumerator PlayHealAnimation()
     {
         var sequence = DOTween.Sequence();
         sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 20f, 0.1f));
@@ -154,6 +158,27 @@ public class Unit : MonoBehaviour
         sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 20f, 0.1f));
         sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y, 0.1f));
         yield return new WaitForSeconds(0.4f);
+    }
+
+    //受到强化
+    public IEnumerator PlayBoostedAnimation(int boostValue)
+    {
+        var sequence = DOTween.Sequence();
+        Debug.Log($"BoostValue = {boostValue}");
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 20f, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 20f, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y, 0.1f));
+        yield return new WaitForSeconds(0.4f);
+        if (boostValue > 0)
+        {
+            Instantiate(statUpEffect, spRenderer.transform);
+        }
+        else if (boostValue < 0)
+        {
+            Instantiate(statDownEffect, spRenderer.transform);
+        }
+        yield return new WaitForSeconds(0.2f);
     }
 
     //异常状态
