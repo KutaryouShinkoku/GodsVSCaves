@@ -20,8 +20,8 @@ public class HeroSelector : MonoBehaviour
     public HeroSelector heroSelector;
     public Image p1Showcase;
     public Image p2Showcase;
-    public Text p1Status;
-    public Text p2Status;
+    public Text p1Stats;
+    public Text p2Stats;
     public Text p1Name;
     public Text p2Name;
     public GameObject selectMask;
@@ -161,7 +161,7 @@ public class HeroSelector : MonoBehaviour
         //名称
         p1Name.text = p1Hero.Base.HeroName;
         //数值
-        p1Status.text = p1Hero.Level + "\n" + p1Hero.Base.MaxHP + "\n" + p1Hero.Base.Attack + "\n" + p1Hero.Base.Defence + "\n" + p1Hero.Base.Magic + "\n" + p1Hero.Base.MagicDef + "\n" + p1Hero.Base.Speed + "\n" + p1Hero.Base.Luck + "%";
+        p1Stats.text = p1Hero.Level + "\n" + p1Hero.Base.MaxHP + "\n" + p1Hero.Base.Attack + "\n" + p1Hero.Base.Defence + "\n" + p1Hero.Base.Magic + "\n" + p1Hero.Base.MagicDef + "\n" + p1Hero.Base.Speed + "\n" + p1Hero.Base.Luck + "%";
     }
     public void UpdateSelectedHeroInfoP2()
     {
@@ -170,7 +170,7 @@ public class HeroSelector : MonoBehaviour
         //名称
         p2Name.text = p2Hero.Base.HeroName;
         //数值
-        p2Status.text = p2Hero.Level + "\n" + p2Hero.Base.MaxHP + "\n" + p2Hero.Base.Attack + "\n" + p2Hero.Base.Defence + "\n" + p2Hero.Base.Magic + "\n" + p2Hero.Base.MagicDef + "\n" + p2Hero.Base.Speed + "\n" + p2Hero.Base.Luck + "%";
+        p2Stats.text = p2Hero.Level + "\n" + p2Hero.Base.MaxHP + "\n" + p2Hero.Base.Attack + "\n" + p2Hero.Base.Defence + "\n" + p2Hero.Base.Magic + "\n" + p2Hero.Base.MagicDef + "\n" + p2Hero.Base.Speed + "\n" + p2Hero.Base.Luck + "%";
     }
 
     //接入选人界面选到的英雄信息

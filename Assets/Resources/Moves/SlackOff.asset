@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88df5df539cc67a40b7d466b9de0bd57, type: 3}
+  m_Name: SlackOff
+  m_EditorClassIdentifier: 
+  moveName: SlackOff_name
+  description: 
+  power: 0
+  accuracy: 0
+  extraTime: 0
+  isMagic: 0
+  isNonLethal: 0
+  moveActionType: 2
+  moveCatagory: 3
+  moveEffects:
+    boosts: []
+    adaptiveDecrease:
+      adaptiveType: 0
+      boost: 0
+    status: 0
+    heal: 4
+    delay: 0
+    losePercentLife:
+      min: 0
+      max: 0
+      target: 0
+  performSE: {fileID: 8300000, guid: 6792652294e73c44f913a4b4e6f19e45, type: 3}
+  hitSE: {fileID: 0}
+  effectSE: {fileID: 8300000, guid: faaca2da35c61fc41b72b9cc43b695c5, type: 3}
+  effectTarget: 0

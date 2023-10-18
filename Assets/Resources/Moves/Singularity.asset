@@ -28,4 +28,7 @@ MonoBehaviour:
       min: 30
       max: 90
       target: 1
+  performSE: {fileID: 0}
+  hitSE: {fileID: 0}
+  effectSE: {fileID: 8300000, guid: 62c4ad9a6bf44db428ce5be9b71c5398, type: 3}
   effectTarget: 0

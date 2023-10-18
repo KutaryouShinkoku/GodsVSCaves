@@ -24,7 +24,7 @@ MonoBehaviour:
   magicDef: 75
   speed: 20
   evasion: 0
-  luck: 10
+  luck: 18
   character: 3
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: d32479616df83a34c9ad563bf175879f, type: 2}

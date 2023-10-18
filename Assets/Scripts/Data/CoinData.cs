@@ -7,6 +7,7 @@ public class CoinData
 {
     public int coinAmount;
     public int borrowTimes;
+    public int loseTimes;
     public List<string> unlockedHeros = new List<string>();
 
     public CoinData(Coin coin)
@@ -15,5 +16,6 @@ public class CoinData
         borrowTimes = coin.borrowTimes;
         unlockedHeros = new List<string>();
         unlockedHeros = coin.unlockedHeros;
+        loseTimes = coin.loseTimes;
     }
 }

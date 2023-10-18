@@ -25,3 +25,8 @@ GravitationalForce_name$Gravitational Force
 EscapeVelocity_name$Escape Velocity
 CosmicASH_name$Cosmic ASH
 Singularity_name$Singularity
+SlackOff_name$Slack Off
+Amnesia_name$Amnesia
+FutureSight_name$Future Sight
+SlowMercy_name$Slow Mercy
+SlowPsychology_name$Slow Psychology

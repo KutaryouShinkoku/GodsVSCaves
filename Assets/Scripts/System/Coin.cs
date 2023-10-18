@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class Coin:MonoBehaviour
 {
-    public int coinAmount;
+    public int coinAmount=1000;
     public int borrowTimes = 0;
+    public int loseTimes = 0;
     public List<string> unlockedHeros = new List<string>();
-    public void Start()
+    public void Awake()
     {
         LoadCoin();
+        Debug.Log("load");
     }
     public void SaveCoin()
     {
@@ -21,6 +23,7 @@ public class Coin:MonoBehaviour
         coinAmount = data.coinAmount;
         borrowTimes = data.borrowTimes;
         unlockedHeros = data.unlockedHeros;
+        loseTimes = data.loseTimes;
     }
 
 

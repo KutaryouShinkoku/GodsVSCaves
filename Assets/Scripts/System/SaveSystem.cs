@@ -19,14 +19,12 @@ public static class SaveSystem
     public static CoinData LoadCoin()
     {
         string path = Application.persistentDataPath + "/player.cheat";
-        if(File.Exists(path))
+        if (File.Exists(path))
         {
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
-
             CoinData data = formatter.Deserialize(stream) as CoinData;
             stream.Close();
-
             return data;
         }
         else

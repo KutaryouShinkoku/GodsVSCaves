@@ -115,4 +115,7 @@ public enum Character
     Brave, //勇敢
     Timid, //胆小
     Experienced, //老练
+
+    //-----专属部分
+    Slow_, //吧主甲
 }

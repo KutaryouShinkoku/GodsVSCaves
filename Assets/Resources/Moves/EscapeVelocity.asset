@@ -26,4 +26,11 @@ MonoBehaviour:
       boost: 1
     status: 0
     heal: 0
+    losePercentLife:
+      min: 0
+      max: 0
+      target: 0
+  performSE: {fileID: 0}
+  hitSE: {fileID: 8300000, guid: ee4ea61b5375abc4da259af2beaf14f6, type: 3}
+  effectSE: {fileID: 8300000, guid: 03766c635d6ea5f44ab8764026f22d69, type: 3}
   effectTarget: 0

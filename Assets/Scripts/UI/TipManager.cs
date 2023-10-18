@@ -15,7 +15,7 @@ public class TipManager : MonoBehaviour
 
     private void Awake()
     {
-        if(_instance!=null&&_instance!=this)
+        if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
         }
@@ -33,7 +33,7 @@ public class TipManager : MonoBehaviour
     //-------------”¢–€–≈œ¢-------------
     public void SetAndShowTip(string name,string desc,Sprite sprite,Character character)
     {
-        gameObject.SetActive(true);
+        tipGO.SetActive(true);
         heroNameText.text = name;
         heroDiscText.text = desc.Replace("\\n","\n");
         heroPortrait.sprite = sprite;

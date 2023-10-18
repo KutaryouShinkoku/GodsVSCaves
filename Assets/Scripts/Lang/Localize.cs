@@ -96,7 +96,7 @@ public class Localize
             string line = sr.ReadLine();
             string[] tempStrings = line.Split('$');
             m_dic_lt[tempStrings[0]] = tempStrings[1];
-            Debug.Log(line);
+            //Debug.Log(line);
         }
     }
 }

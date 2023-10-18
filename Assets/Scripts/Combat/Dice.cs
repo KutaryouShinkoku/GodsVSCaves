@@ -36,14 +36,14 @@ public class Dice
     public int CharacterRoll(Hero hero)
     {
         float par = Random.Range(0, 100); //参考用随机数
-        if (hero .Base .Character  == Character.Ordinary) //普通骰子
+        Character character = hero.Base.Character;
+        if (character == Character.Ordinary) //普通骰子
         {
             return Random.Range(0, 6);
         }
-        if(hero .Base .Character == Character.Brave) //勇敢骰子，血越少点越大
+        if(character == Character.Brave) //勇敢骰子，血越少点越大
         {
             float boost = (1f-(float)hero.HP / hero.Base.MaxHP)*50;
-            Debug.Log(par + "/" + boost);
             if (boost >= par)
             {
                 hero.CharacterRoll(hero.Base.Character); 
@@ -52,7 +52,7 @@ public class Dice
             else return Random.Range(0, 6);
 
         }
-        if(hero .Base .Character == Character.Timid)  //胆小骰子，血少有可能扔1
+        if(character == Character.Timid)  //胆小骰子，血少有可能扔1
         {
             float boost = (1f- (float)hero.HP / hero.Base.MaxHP)*20;
             if(boost >= par)
@@ -62,13 +62,24 @@ public class Dice
             }
             else return Random.Range(0, 6);
         }
-        if(hero .Base .Character == Character.Experienced) //老练骰子，被强化更可能扔6
+        if(character == Character.Experienced) //老练骰子，被强化更可能扔6
         {
             float boost = 4 * (hero.StatBoosts[Stat.Attack] + hero.StatBoosts[Stat.Defence] + hero.StatBoosts[Stat.Magic] + hero.StatBoosts[Stat.MagicDef] + hero.StatBoosts[Stat.Luck]);
             if(boost >= par)
             {
                 hero.CharacterRoll(hero.Base.Character);
                 return Mathf.Min(Random.Range(0, 6) + 1, 5);
+            }
+            else return Random.Range(0, 6);
+        }
+        //------------------------------专属骰子------------------------------------
+        if(character == Character.Slow_) //吧主甲骰子
+        {
+            float modifier = 4*hero.StatBoosts[Stat.MagicDef]+ (1f - (float)hero.HP / hero.Base.MaxHP) * 10;
+            if(modifier >par) 
+            {
+                hero.CharacterRoll(hero.Base.Character);
+                return 1;
             }
             else return Random.Range(0, 6);
         }

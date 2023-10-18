@@ -21,7 +21,7 @@ public class ConditionsDB
                 OnAfterTurn = (Hero hero) =>
                 {
                     hero.UpdateHp(hero.MaxHP/8);
-                    hero.StatusChanges.Enqueue(string .Format($"{Localize.GetInstance().GetTextByKey("{0} lose life due to poison")}",hero.Base.HeroName));
+                    hero.StatsChanges.Enqueue(string .Format($"{Localize.GetInstance().GetTextByKey("{0} lose life due to poison")}",hero.Base.HeroName));
                 }
             }
         }

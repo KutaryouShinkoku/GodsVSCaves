@@ -44,6 +44,7 @@ Ordinary$普通
 Brave$勇敢
 Timid$胆小
 Experienced$老练
+Slow_$吧主甲
 Poison$中毒
 has been poisoned$中毒了
 {0} lose life due to poison${0}因为中毒失去了部分生命
@@ -52,7 +53,12 @@ has been poisoned$中毒了
 The more {0}'s dice fights, the braver it becomes!${0}的骰子青筋暴起，吹响了残血反击的号角！
 {0}'s dice is scared because its HP is too low!${0}的骰子因为生命太低，瑟瑟发抖...
 Boosts double {0}'s dice's confidence!$属性强化准备妥当，{0}的骰子要开始动真格的了！
+Don't be anxious, there are benefits to being slow.$怎么会有呆呆之神这么帅的精灵
 {0} lose {1}% HP${0}失去了{1}%的HP
 {0} feels exhausted, and lose some HP${0}不想让你等太久，自己损失了一些HP...
 Betting ends!$下注截止了，不会有人没来得及下注吧...
 BorrowMoney_Tips$找变化之神借点儿钱！\n连续猜错的次数越多， \n借到的钱就越多！
+Show Hero Details$英雄详情
+{0} sent something to the future${0}把某样东西送去了未来
+{0} is influenced by something from the past${0}受到了某种来自过去的影响...
+{0} showed mercy$点一下！

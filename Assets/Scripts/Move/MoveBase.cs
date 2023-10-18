@@ -16,9 +16,14 @@ public class MoveBase : ScriptableObject
     [SerializeField] int accuracy;
     [SerializeField] int extraTime;
     [SerializeField] bool isMagic;
+    [SerializeField] bool isNonLethal;
     [SerializeField] MoveActionType moveActionType;
     [SerializeField] MoveCatagory moveCatagory;
     [SerializeField] MoveEffects moveEffects;
+    [Header("SoundEffects")]
+    [SerializeField] AudioClip performSE;
+    [SerializeField] AudioClip hitSE;
+    [SerializeField] AudioClip effectSE;
 
     [Header("This setting is stat effects only")]
     [SerializeField] EffectTarget effectTarget;
@@ -40,9 +45,11 @@ public class MoveBase : ScriptableObject
     public int ExtraTime{
         get { return extraTime; }
     }
-
     public bool IsMagic{
         get { return isMagic; }
+    }
+    public bool IsNonLethal{
+        get { return isNonLethal; }
     }
 
     public MoveActionType MoveActionType{
@@ -57,6 +64,20 @@ public class MoveBase : ScriptableObject
         get { return moveEffects; }
     }
 
+    public AudioClip PerformSE
+    {
+        get { return performSE; }
+    }
+    public AudioClip HitSE
+    {
+        get { return hitSE; }
+    }
+    public AudioClip EffectSE
+    {
+        get { return effectSE; }
+    }
+
+
     public EffectTarget EffectTarget{
         get { return effectTarget; }
     }
@@ -66,13 +87,20 @@ public class MoveBase : ScriptableObject
 public class MoveEffects
 {
     [SerializeField] List<StatBoost> boosts;
+    [SerializeField] AdaptiveDecrease adaptiveDecrease;
     [SerializeField] ConditionID status;
     [SerializeField] int heal;
+    [SerializeField] int delay;
     [SerializeField] LosePercentLife losePercentLife;
+
 
     public List<StatBoost> Boosts
     {
         get { return boosts; }
+    }
+    public AdaptiveDecrease AdaptiveDecrease
+    {
+        get { return adaptiveDecrease; }
     }
     public ConditionID Status
     {
@@ -82,10 +110,15 @@ public class MoveEffects
     {
         get { return heal; }
     }
+    public int Delay
+    {
+        get { return delay; }
+    }
     public LosePercentLife LosePercentLife
     {
         get { return losePercentLife; }
     }
+
 }
 
 [System.Serializable]
@@ -102,8 +135,16 @@ public class LosePercentLife
     public int max;
     public EffectTarget target;
 }
-
-
+[System.Serializable]
+public class AdaptiveDecrease
+{
+    public AdaptiveType adaptiveType;
+    public int boost;
+}
+public enum AdaptiveType
+{
+    Attack,Defence
+}
 
 //技能动画类型
 public enum MoveActionType

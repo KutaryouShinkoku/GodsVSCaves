@@ -44,6 +44,7 @@ Ordinary$Ordinary
 Brave$Brave
 Timid$Timid
 Experienced$Experienced
+Slow_$Slow
 Poison$Poison
 has been poisoned$ has been poisoned
 {0} lose life due to poison${0} lose life due to poison
@@ -52,7 +53,12 @@ has been poisoned$ has been poisoned
 The more {0}'s dice fights, the braver it becomes!$The more {0}'s dice fights, the braver it becomes!
 {0}'s dice is scared because its HP is too low!${0}'s dice is scared because its HP is too low!
 Boosts double {0}'s dice's confidence!$Boosts double {0}'s dice's confidence!
+Don't be anxious, there are benefits to being slow.$Don't be anxious, there are benefits to being slow.
 {0} lose {1}% HP${0} lose {1}% HP
 {0} feels exhausted, and lose some HP${0} feels exhausted, and lose some HP
 Betting ends!$Betting ends!
 BorrowMoney_Tips$Borrow some money from the Developer!\nThe more consecutive wrong guesses, \nThe more you borrow!
+Show Hero Details$Show Hero Details
+{0} sent something to the future${0} sent something to the future
+{0} is influenced by something from the past${0} is influenced by something from the past
+{0} showed mercy${0} showed mercy

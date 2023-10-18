@@ -13,14 +13,19 @@ public class Hero
     public int HP { get; set; }
     public List<Move> Moves { get; set; }
 
-    public Dictionary<Stat, int> Stats { get; private set; }
-    public Dictionary<Stat, int> StatBoosts { get; private set; }
-    public Condition Status { get; set; }
-    public Queue<string> StatusChanges { get; private set; } = new Queue<string>();
+    public Dictionary<Stat, int> Stats { get; private set; } //属性
+    public Dictionary<Stat, int> StatBoosts { get; private set; } //属性变化
+    public Condition Status { get; set; } //特殊状态
+    //--------------------------------------------------------
+    //文字演出信息
+    public Queue<string> StatsChanges { get; private set; } = new Queue<string>();
     public Queue<string> CharacterBoost { get; private set; } = new Queue<string>();
-
-    public bool HpChanged { get; set; }
-
+    //--------------------------------------------------------
+    //功能性部分
+    public bool HpChanged { get; set; } //判断角色有无掉血
+    public int DelayDamage { get; set; } //标记受到延迟伤害
+    public bool IsDelayDamageMagic { get; set; } //标记受到延迟伤害类型
+    //--------------------------------------------------------
     public Dice dice = new Dice(); //备用，用来给角色绑骰子
 
     //实装英雄血量和技能到unit的函数
@@ -52,7 +57,7 @@ public class Hero
         Stats.Add(Stat.Defence, Mathf.FloorToInt((Base.Defence * Level) / 100f) + 5);
         Stats.Add(Stat.Magic, Mathf.FloorToInt((Base.Magic * Level) / 100f) + 5);
         Stats.Add(Stat.MagicDef, Mathf.FloorToInt((Base.MagicDef * Level) / 100f) + 5);
-        Stats.Add(Stat.Speed, Mathf.FloorToInt((Base.Speed * Level) / 100f) + 5);
+        Stats.Add(Stat.Speed, Mathf.FloorToInt((Base.Speed)));
         Stats.Add(Stat.Luck, Mathf.FloorToInt(Base.Luck));
 
         MaxHP = Mathf.FloorToInt((Base.MaxHP * Level) / 100f) + 10;
@@ -136,6 +141,9 @@ public class Hero
             case Character.Experienced:
                 CharacterBoost.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("Boosts double {0}'s dice's confidence!")}", Base.HeroName));
                 break;
+            case Character.Slow_:
+                CharacterBoost.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("Don't be anxious, there are benefits to being slow.")}", Base.HeroName));
+                break;
         }
         
     }
@@ -148,7 +156,7 @@ public class Hero
     public void SetStatus(ConditionID conditionID)
     {
         Status = ConditionsDB.Conditions[conditionID];
-        StatusChanges.Enqueue(string.Format("{0}{1}",Base.HeroName,Status.StartMessage));
+        StatsChanges.Enqueue(string.Format("{0}{1}",Base.HeroName,Status.StartMessage));
     }
 
     public void ResetStatus() //游戏开始重置异常状态
@@ -226,12 +234,12 @@ public class Hero
     //治疗血量更新
     public void UpdateHpHeal(int heal,int diceValue)
     {
-        HP = (int)Mathf.Min(HP + (1f /heal) * MaxHP* diceValue, MaxHP);
+        HP = (int)Mathf.Min(HP + (1f /heal) * MaxHP* (diceValue+1), MaxHP);
         if (heal == 1)
         {
-            StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s HP is restored to full")}", Base.HeroName));
+            StatsChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s HP is restored to full")}", Base.HeroName));
         }
-        else { StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s HP is restored")}", Base.HeroName)); }
+        else { StatsChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s HP is restored")}", Base.HeroName)); }
         HpChanged = true;
     }
 
@@ -240,14 +248,14 @@ public class Hero
     {
         int percent = Random.Range(losePer.min, losePer.max);
         UpdateHp(percent * HP/100);
-        StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0} lose {1}% HP")}", Base.HeroName,percent));
+        StatsChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0} lose {1}% HP")}", Base.HeroName,percent));
     }
 
     //疲劳伤害
     public void ExhaustedDamage(int turnCount)
     {
         UpdateHp((turnCount - 20) * _base.MaxHP / 4);
-        StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0} feels exhausted, and lose some HP")}", Base.HeroName));
+        StatsChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0} feels exhausted, and lose some HP")}", Base.HeroName));
     }
 
 
@@ -264,11 +272,11 @@ public class Hero
 
             if (boost > 0)
             {
-                StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s {1} increase {2}%!")}", Base.HeroName, Localize.GetInstance().GetTextByKey($"{stat}"), boost * 50));
+                StatsChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s {1} increase {2}%!")}", Base.HeroName, Localize.GetInstance().GetTextByKey($"{stat}"), boost * 50));
             }
             else
             {
-                StatusChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s {1} decrease {2}%")}", Base.HeroName, Localize.GetInstance().GetTextByKey($"{stat}"), -boost * 50));
+                StatsChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s {1} decrease {2}%")}", Base.HeroName, Localize.GetInstance().GetTextByKey($"{stat}"), -boost * 50));
             }
 
             Debug.Log($"{stat} has been boosted to {StatBoosts[stat]} ");

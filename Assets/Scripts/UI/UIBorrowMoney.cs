@@ -17,9 +17,9 @@ public class UIBorrowMoney : MonoBehaviour
         {
             uiAlert.SetActive(true);
         }
-        if (coinStorer.coinAmount < 500)
+        if (coinStorer.coinAmount < 500 + 100 * coinStorer.loseTimes)
         {
-            coinStorer.coinAmount = 500;
+            coinStorer.coinAmount = 500+100*coinStorer.loseTimes;
             clickSE.Play();
             coinStorer.borrowTimes++;
             coinStorer.SaveCoin();
@@ -47,7 +47,6 @@ public class UIBorrowMoney : MonoBehaviour
     public void OnMouseEnter()
     {
         tipBox.SetActive(true);
-        Debug.Log("11231");
     }
 
     public void OnMouseExit()

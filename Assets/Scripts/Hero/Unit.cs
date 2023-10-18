@@ -17,6 +17,7 @@ public class Unit : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject statUpEffect;
     [SerializeField] GameObject statDownEffect;
+    [SerializeField] AudioManager audioManager;
 
     public Hero Hero { get; set; }
     SpriteRenderer spRenderer;
@@ -35,7 +36,6 @@ public class Unit : MonoBehaviour
     public void Setup(Hero hero)
     {
         Hero = hero;
-        Debug.Log(Hero .Base.HeroName + "的当前数值:" + Hero.HP + " " + Hero.Attack + " " + Hero.Defence + " " + Hero.Magic + " " + Hero.MagicDef + " " + Hero.Luck);
         spRenderer.sprite = Hero.Base.Sprite;
         bullet = Hero.Base.Bullet;
 
@@ -60,8 +60,9 @@ public class Unit : MonoBehaviour
     }
     
     //攻击
-    public IEnumerator PlayAttackAnimation(MoveActionType moveActionType)
+    public IEnumerator PlayAttackAnimation(Move move)
     {
+        MoveActionType moveActionType = move.Base.MoveActionType;
         var sequence = DOTween.Sequence();
         if (moveActionType == MoveActionType.Melee) //近战动画
         {
@@ -125,25 +126,42 @@ public class Unit : MonoBehaviour
                 sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 15f, 0.1f));
             }
         }
+        audioManager.PlayMovePerformAudio(0,move,false);
         sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x, 0.2f)); // 还原
         yield return new WaitForSeconds(0.3f);
     }
 
     //受击
-    public IEnumerator PlayHitAnimation(MoveActionType moveActionType)
+    public IEnumerator PlayHitAnimation(Move move)
+    {
+        MoveActionType moveActionType = move.Base.MoveActionType;
+        
+        if (moveActionType == MoveActionType.Melee|| moveActionType == MoveActionType.Ranged) //被近战远程打
+        {
+            yield return StartCoroutine(TakenDamage());
+        }
+        if (moveActionType == MoveActionType.Special)//被特殊技能打
+        {
+            if (move.Base.MoveEffects.LosePercentLife.max != 0)
+            {
+                yield return StartCoroutine(TakenDamage());
+            }
+        }
+        audioManager.PlayMoveHitAudio(1, move, false);
+        yield return null;
+    }
+    //受伤害
+    public IEnumerator TakenDamage()
     {
         var sequence = DOTween.Sequence();
-        if (moveActionType == MoveActionType.Melee|| moveActionType == MoveActionType.Ranged) //受击
+        sequence.Append(spRenderer.DOColor(Color.gray, 0.1f));
+        if (isPlayer1)
         {
-            sequence.Append(spRenderer.DOColor(Color.gray, 0.1f));
-            if (isPlayer1)
-            {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 2f, 0.1f));
-            }
-            else
-            {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 2f, 0.1f));
-            }
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 2f, 0.1f));
+        }
+        else
+        {
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 2f, 0.1f));
         }
         sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x, 0.1f));
         sequence.Append(spRenderer.DOColor(originalColor, 0.1f));
@@ -180,13 +198,37 @@ public class Unit : MonoBehaviour
         }
         yield return new WaitForSeconds(0.2f);
     }
+    //一个比较泛用的晃悠动画
+    public IEnumerator PlayHurtAnimation()
+    {
+        var sequence = DOTween.Sequence();
+        if (isPlayer1)
+        {
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.02f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
+        }
+        else
+        {
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.02f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
+        }
+        sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x, 0.02f)); // 还原
+        yield return new WaitForSeconds(0.2f);
+    }
 
     //异常状态
     public IEnumerator PlayStatusAnimation()
     {
         if(Hero.Status == ConditionsDB.Conditions[ConditionID.psn])
         {
-
             var sequence = DOTween.Sequence();
             if (isPlayer1)
             {

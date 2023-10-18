@@ -16,6 +16,7 @@ MonoBehaviour:
   description: 
   power: 0
   accuracy: 0
+  extraTime: 0
   isMagic: 0
   moveActionType: 3
   moveCatagory: 3
@@ -25,4 +26,13 @@ MonoBehaviour:
       boost: 1
     - stat: 3
       boost: 1
+    status: 0
+    heal: 0
+    losePercentLife:
+      min: 0
+      max: 0
+      target: 0
+  performSE: {fileID: 8300000, guid: fdea62ae710319c45b0cd3f3b853fcaa, type: 3}
+  hitSE: {fileID: 0}
+  effectSE: {fileID: 8300000, guid: 03766c635d6ea5f44ab8764026f22d69, type: 3}
   effectTarget: 0
