@@ -17,7 +17,7 @@ MonoBehaviour:
   description: AncientWarlock_disc
   sprite: {fileID: 21300000, guid: e853ad45aed527d4587d9baee44a73c1, type: 3}
   bullet: {fileID: 6411294760156536683, guid: 5e6e34b0e15da4f429cf058a3b1cf985, type: 3}
-  maxHP: 220
+  maxHP: 240
   attack: 40
   defence: 80
   magic: 145

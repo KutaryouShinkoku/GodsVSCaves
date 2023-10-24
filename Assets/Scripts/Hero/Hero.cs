@@ -64,7 +64,7 @@ public class Hero
     }
 
     //每场战斗结束以后属性增长初始化为0
-    void ResetStatBoost()
+    public void ResetStatBoost()
     {
         StatBoosts = new Dictionary<Stat, int>()
         {
@@ -279,7 +279,7 @@ public class Hero
                 StatsChanges.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("{0}'s {1} decrease {2}%")}", Base.HeroName, Localize.GetInstance().GetTextByKey($"{stat}"), -boost * 50));
             }
 
-            Debug.Log($"{stat} has been boosted to {StatBoosts[stat]} ");
+            //Debug.Log($"{stat} has been boosted to {StatBoosts[stat]} ");
         }
     }
 

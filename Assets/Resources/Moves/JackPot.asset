@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: JackPot_name
   description: 
-  power: 20
+  power: 25
   accuracy: 0
   extraTime: 3
   isMagic: 0

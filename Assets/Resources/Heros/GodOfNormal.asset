@@ -17,8 +17,8 @@ MonoBehaviour:
   description: GodOfNormal_disc
   sprite: {fileID: 21300000, guid: 634fd177d4227e843a5c7831bd5c5856, type: 3}
   bullet: {fileID: 6411294760156536683, guid: 0f9d43cb0cf175d40a2f83947bfb637d, type: 3}
-  maxHP: 220
-  attack: 102
+  maxHP: 240
+  attack: 92
   defence: 60
   magic: 40
   magicDef: 95

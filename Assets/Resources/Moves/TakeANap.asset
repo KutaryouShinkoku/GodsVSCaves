@@ -27,7 +27,7 @@ MonoBehaviour:
       adaptiveType: 0
       boost: 0
     status: 0
-    heal: 8
+    heal: 16
     delay: 0
     losePercentLife:
       min: 0

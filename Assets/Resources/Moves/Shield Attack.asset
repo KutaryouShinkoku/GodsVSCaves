@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveName: ShieldAttack_name
   description: 
-  power: 70
+  power: 60
   accuracy: 0
   extraTime: 0
   isMagic: 0

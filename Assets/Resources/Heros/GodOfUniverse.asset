@@ -17,14 +17,14 @@ MonoBehaviour:
   description: GodOfUniversedisc
   sprite: {fileID: 21300000, guid: 2dad54d9534bba242b22555ad868dbf7, type: 3}
   bullet: {fileID: 6411294760156536683, guid: cac6c4804aba96741bc5283df79c0d49, type: 3}
-  maxHP: 230
-  attack: 95
+  maxHP: 250
+  attack: 105
   defence: 80
   magic: 105
   magicDef: 75
   speed: 20
   evasion: 0
-  luck: 18
+  luck: 10
   character: 3
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: d32479616df83a34c9ad563bf175879f, type: 2}

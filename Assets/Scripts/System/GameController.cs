@@ -16,6 +16,9 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private AudioSource beginSE;
 
+    [Header("Test")]
+    [SerializeField] QuickCombat test;
+
 
     public GameState state;
 
@@ -54,5 +57,15 @@ public class GameController : MonoBehaviour
         combatCamera.gameObject.SetActive(false);
         selectorCamera.gameObject.SetActive(true);
         yield return null;
+    }
+
+    //快速战斗测试
+    public void QuickCombatStart()
+    {
+        state = GameState.COMBAT;
+        //把英雄选择界面的数据拿进来
+        test.p1Hero = heroSelector.GetComponent<HeroSelector>().GetP1Hero();
+        test.p2Hero = heroSelector.GetComponent<HeroSelector>().GetP2Hero();
+        test.StartTestCombat1000();
     }
 }

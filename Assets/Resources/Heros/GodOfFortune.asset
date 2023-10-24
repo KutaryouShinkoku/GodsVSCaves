@@ -17,14 +17,14 @@ MonoBehaviour:
   description: GodOfFortune_disc
   sprite: {fileID: 21300000, guid: 599ab6dd61e663f4898dd517b3dcf1c0, type: 3}
   bullet: {fileID: 0}
-  maxHP: 220
+  maxHP: 240
   attack: 85
   defence: 80
   magic: 65
   magicDef: 75
   speed: 30
   evasion: 0
-  luck: 15
+  luck: 20
   character: 3
   movesOfDice:
   - moveBase: {fileID: 11400000, guid: f5cf1e5772693ac4c9e958acc2690101, type: 2}

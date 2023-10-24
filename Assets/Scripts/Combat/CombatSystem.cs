@@ -17,10 +17,10 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] GameController gameController;
     [SerializeField] Coin coinStorer;
     [SerializeField] BackgroundManager bgManager;
-    [SerializeField] Text turnCounter;
     [SerializeField] AudioManager audioManager;
 
     [Header("UI")]
+    [SerializeField] Text turnCounter;
     [SerializeField] CombatDialogBox dialogBox;
     [SerializeField] UIBet uiBet;
     [SerializeField] UIHeroDetail detailP1;
@@ -109,11 +109,11 @@ public class CombatSystem : MonoBehaviour
     public int SpeedCheck()
     {
         int firstPlayer;
-        if (p1Unit.Hero.Base .Speed > p2Unit.Hero.Base.Speed)
+        if (p1Unit.Hero.Speed > p2Unit.Hero.Speed)
         {
             firstPlayer = 1;
         }
-        else if (p1Unit.Hero.Base.Speed < p2Unit.Hero.Base.Speed)
+        else if (p1Unit.Hero.Speed < p2Unit.Hero.Speed)
         {
             firstPlayer = 2;
         }

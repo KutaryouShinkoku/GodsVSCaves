@@ -17,7 +17,7 @@ MonoBehaviour:
   description: GodOfSlow_disc
   sprite: {fileID: 21300000, guid: 80f96961c03bb7a42957bffdf73cf762, type: 3}
   bullet: {fileID: 0}
-  maxHP: 260
+  maxHP: 270
   attack: 75
   defence: 110
   magic: 100

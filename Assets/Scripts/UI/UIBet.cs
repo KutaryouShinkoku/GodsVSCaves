@@ -120,7 +120,7 @@ public class UIBet : MonoBehaviour
     {
         uiTimer.SetActive(false);
         timerTitle.color = Color.red;
-        timerTitle.text = $"{Localize.GetInstance().GetTextByKey("Betting ends!")}";
+        timerTitle.text = $"\n{Localize.GetInstance().GetTextByKey("Betting ends!")}";
         timer.text = $"";
         btnP1GO.SetActive(false);
         btnP2GO.SetActive(false);

@@ -18,6 +18,7 @@ MonoBehaviour:
   accuracy: 0
   extraTime: 0
   isMagic: 0
+  isNonLethal: 0
   moveActionType: 3
   moveCatagory: 4
   moveEffects:
@@ -29,9 +30,13 @@ MonoBehaviour:
     - stat: 2
       boost: -1
     - stat: 3
-      boost: -1
+      boost: -2
+    adaptiveDecrease:
+      adaptiveType: 0
+      boost: 0
     status: 0
     heal: 0
+    delay: 0
     losePercentLife:
       min: 0
       max: 0
