@@ -8,12 +8,14 @@ public enum CombatState { START, SPEEDCHECK,P1TURN, P2TURN, P1WON, P2WON }
 
 public class CombatSystem : MonoBehaviour
 {
-    public Text combatStatus;
+    [HideInInspector] public Text combatStatus;
 
     [SerializeField] Unit p1Unit;
     [SerializeField] Unit p2Unit;
     [SerializeField] CombatHUD p1HUD;
     [SerializeField] CombatHUD p2HUD;
+
+    [Header("System")]
     [SerializeField] GameController gameController;
     [SerializeField] Coin coinStorer;
     [SerializeField] BackgroundManager bgManager;
@@ -27,8 +29,11 @@ public class CombatSystem : MonoBehaviour
     [SerializeField] UIHeroDetail detailP2;
     [SerializeField] GameObject uiDetail;
 
-    public CombatState state;
-    public Dice dice = new Dice();
+    [Header("Camera")]
+    [SerializeField] CameraShake cameraShake;
+
+    [HideInInspector] public CombatState state;
+    [HideInInspector] public Dice dice = new Dice();
 
     Hero p1Hero;
     Hero p2Hero;
@@ -75,11 +80,12 @@ public class CombatSystem : MonoBehaviour
         p2HUD.SetHUD(p2Unit.Hero);
 
         //开战播报
-        StartCoroutine( dialogBox.TypeDialog(string.Format($"{Localize .GetInstance ().GetTextByKey("{0} VS {1}!")}", p1Unit.Hero.Base.HeroName, p2Unit.Hero.Base.HeroName)));
-        yield return new WaitForSeconds(2f);
+        yield return StartCoroutine( dialogBox.TypeDialog(string.Format($"{Localize .GetInstance ().GetTextByKey("{0} VS {1}!")}", p1Unit.Hero.Base.HeroName, p2Unit.Hero.Base.HeroName)));
+        yield return new WaitForSeconds(1f);
         yield return dialogBox.TypeDialogSlow($"3......2......1.....GO!");
         yield return new WaitForSeconds(1f);
 
+        //其它战斗数据的重置
         isLastPlayer = false;
         StartCoroutine(NewTurn());
     }
@@ -88,20 +94,22 @@ public class CombatSystem : MonoBehaviour
     {
         turnCount += 1;
         Debug.Log($"Turn{turnCount}");
+        Unit source;
+        Unit target;
+        CombatHUD sourceHUD;
+        CombatHUD targetHUD;
         turnCounter.text = $"{Localize.GetInstance().GetTextByKey("Turn")} {turnCount}";
         if (SpeedCheck() == 1)
         {
-            Debug.Log("检查出手权：p" + SpeedCheck() + "先手");
             state = CombatState.P1TURN;
-            StartCoroutine(Player1Turn());
-
+            source = p1Unit; target = p2Unit; sourceHUD = p1HUD; targetHUD = p2HUD;
         }
         else
         {
-            Debug.Log("检查出手权：p" + SpeedCheck() + "先手");
             state = CombatState.P2TURN;
-            StartCoroutine(Player2Turn());
+            source = p2Unit; target = p1Unit; sourceHUD = p2HUD; targetHUD = p1HUD;
         }
+        StartCoroutine(HandleTurn(source, target, sourceHUD, targetHUD));
         yield return null;
     }
 
@@ -109,11 +117,11 @@ public class CombatSystem : MonoBehaviour
     public int SpeedCheck()
     {
         int firstPlayer;
-        if (p1Unit.Hero.Speed > p2Unit.Hero.Speed)
+        if (p1Hero.Speed > p2Hero.Speed)
         {
             firstPlayer = 1;
         }
-        else if (p1Unit.Hero.Speed < p2Unit.Hero.Speed)
+        else if (p1Hero.Speed < p2Hero.Speed)
         {
             firstPlayer = 2;
         }
@@ -125,32 +133,17 @@ public class CombatSystem : MonoBehaviour
     }
 
     //-----------------------------一个回合-----------------------------
-    //PlayerMovePerform 放技能
-    IEnumerator PerformP1Move()
+    IEnumerator HandleTurn(Unit source, Unit target,CombatHUD sourceHUD,CombatHUD targetHUD)
     {
+        //箭头切换
+        StartCoroutine(sourceHUD.SetArrow());
+        StartCoroutine(targetHUD.HideArrow());
+
+        //------出招部分-----
         //扔骰子
         audioManager.Play(2, "diceRoll", false);
-        int currentValue = dice.DiceRoll(p1Unit.Hero.Base.Luck,p1Unit .Hero);
-        yield return StartCoroutine(HandleDiceRoll(p1Unit, currentValue));
-        //处理任何因为技能效果增加的点数，大于6的调整为6
-        if(currentValue > 5)
-        {
-            currentValue = 5;
-        }
-
-        //选技能
-        var move = p1Unit.Hero.Moves[currentValue];
-
-        //放技能
-        StartCoroutine((RunMove(p1Unit,p2Unit,move,p1HUD,p2HUD,currentValue)));
-    }
-
-    IEnumerator PerformP2Move()
-    {
-        //扔骰子
-        audioManager.Play(2, "diceRoll", false);
-        int currentValue = dice.DiceRoll(p2Unit.Hero.Base.Luck,p2Unit.Hero);
-        yield return StartCoroutine(HandleDiceRoll(p2Unit, currentValue));
+        int currentValue = dice.DiceRoll(source.Hero.Base.Luck, source.Hero);
+        yield return StartCoroutine(HandleDiceRoll(source,currentValue));
         //处理任何因为技能效果增加的点数，大于6的调整为6
         if (currentValue > 5)
         {
@@ -158,10 +151,12 @@ public class CombatSystem : MonoBehaviour
         }
 
         //选技能
-        var move = p2Unit.Hero.Moves[currentValue];
+        var move = source.Hero.Moves[currentValue];
+
         //放技能
-        StartCoroutine((RunMove(p2Unit, p1Unit, move, p2HUD, p1HUD, currentValue)));
+        StartCoroutine((RunMove(source, target, move, sourceHUD, targetHUD, currentValue)));
     }
+
     //-----------------------------处理骰子-----------------------------
 
     IEnumerator HandleDiceRoll(Unit sourceUnit,int value)
@@ -270,6 +265,7 @@ public class CombatSystem : MonoBehaviour
 
             //受伤
             targetUnit.Hero.UpdateHp(damage);
+            if(damage >= 100) { cameraShake.ShakeCamera(); }
             yield return targetHUD.ShowDamage(damage, isCrit, isMagic);
             yield return targetHUD.UpdateHp();
             if (damage != 0)
@@ -349,13 +345,13 @@ public class CombatSystem : MonoBehaviour
             {
                 isLastPlayer = true;
                 state = CombatState.P2TURN;
-                StartCoroutine(Player2Turn());
+                StartCoroutine(HandleTurn(p2Unit, p1Unit, p2HUD, p1HUD));
             }
             else if (turnUnit == p2Unit)
             {
                 isLastPlayer = true;
                 state = CombatState.P1TURN;
-                StartCoroutine(Player1Turn());
+                StartCoroutine(HandleTurn(p1Unit, p2Unit, p1HUD, p2HUD));
             }
         }
     }
@@ -365,7 +361,7 @@ public class CombatSystem : MonoBehaviour
 
         if (target.Hero.HP <= 0)
         {
-             CheckBattleOver(target);
+            CheckBattleOver(target);
         }
         else if (source.Hero.HP <= 0)
         {
@@ -396,25 +392,6 @@ public class CombatSystem : MonoBehaviour
     }
 
     //------------------------------------------------------------------
-    //Player turn 玩家一回合的流程
-    IEnumerator Player1Turn()
-    {
-        //箭头切换
-        StartCoroutine(p1HUD.SetArrow());
-        StartCoroutine(p2HUD.HideArrow());
-        //出招
-        StartCoroutine(PerformP1Move());
-        yield return new WaitForSeconds(1.2f);
-    }
-    IEnumerator Player2Turn()
-    {
-        //箭头切换
-        StartCoroutine(p2HUD.SetArrow());
-        StartCoroutine(p1HUD.HideArrow());
-        //出招
-        StartCoroutine(PerformP2Move());
-        yield return new WaitForSeconds(1.2f);
-    }
 
     //EndBattle 游戏结束
     IEnumerator EndCombat()
@@ -422,13 +399,13 @@ public class CombatSystem : MonoBehaviour
         audioManager.Play(2, "combatEnd", false);
         if (state == CombatState.P1WON)
         {
-            yield return dialogBox.TypeDialogSlow($"{p1Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n{Localize.GetInstance().GetTextByKey("for now")}");
+            yield return dialogBox.TypeDialog($"{p1Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n{Localize.GetInstance().GetTextByKey("for now")}");
         }
         else if (state == CombatState.P2WON)
         {
-            yield return dialogBox.TypeDialogSlow($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n{Localize.GetInstance().GetTextByKey("for now")}");
+            yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n{Localize.GetInstance().GetTextByKey("for now")}");
         }
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         uiBet.DisableBet();
         p1HUD.HideHUD();
         p2HUD.HideHUD();

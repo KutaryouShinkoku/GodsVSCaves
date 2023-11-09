@@ -38,7 +38,6 @@ public class Unit : MonoBehaviour
         Hero = hero;
         spRenderer.sprite = Hero.Base.Sprite;
         bullet = Hero.Base.Bullet;
-
         StartCoroutine (PlayEnterAnimation());
     }
 
@@ -46,7 +45,7 @@ public class Unit : MonoBehaviour
     //动画复原
     public IEnumerator AnimationReset()
     {
-        spRenderer.transform.localPosition = new Vector3(originalPos.x, 270f);
+        spRenderer.transform.localPosition = new Vector3(originalPos.x, 13.5f);
         spRenderer.DOFade(1, 0.01f);
         yield return new WaitForSeconds(0.1f);
     }
@@ -58,6 +57,11 @@ public class Unit : MonoBehaviour
         yield return new WaitForSeconds(enterDelay);
         Instantiate(smoke, spRenderer.transform);
     }
+
+    public void DestroyObject()
+    {
+        Destroy(gameObject);
+    }
     
     //攻击
     public IEnumerator PlayAttackAnimation(Move move)
@@ -68,18 +72,18 @@ public class Unit : MonoBehaviour
         {
             if (isPlayer1)
             {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 443f, 0.25f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 10.7f, 0.25f));
             }
             else
             {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 443f, 0.25f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 10.7f, 0.25f));
             }
         }
         if (moveActionType == MoveActionType.Ranged) //远程动画
         {
             if (isPlayer1)
             {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 50f, 0.2f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 1.1f, 0.2f));
                 yield return new WaitForSeconds(0.2f);
                 if (bullet != null)
                 {
@@ -88,11 +92,13 @@ public class Unit : MonoBehaviour
             }
             else
             {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 50f, 0.2f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 1.1f, 0.2f));
                 yield return new WaitForSeconds(0.2f);
                 if (bullet != null)
                 {
-                    Instantiate(bullet, spRenderer.transform.position ,Quaternion.Euler(0,180,0));
+                    Instantiate(bullet, spRenderer.transform);
+                    Debug.Log("生成子弹");
+                    //Instantiate(bullet, spRenderer.transform.position ,Quaternion.Euler(0,180,0));
                 }
             }
         }
@@ -100,30 +106,30 @@ public class Unit : MonoBehaviour
         {
             if (isPlayer1)
             {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 20f, 0.05f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 20f, 0.1f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 20f, 0.1f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.4f, 0.05f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.4f, 0.1f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.4f, 0.1f));
             }
             else
             {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 20f, 0.05f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 20f, 0.1f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 20f, 0.1f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.4f, 0.05f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.4f, 0.1f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.4f, 0.1f));
             }
         }
         if (moveActionType == MoveActionType.Special) //特殊动画
         {
             if (isPlayer1)
             {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 20f, 0.05f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 20f, 0.1f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 20f, 0.1f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.4f, 0.05f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.4f, 0.1f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.4f, 0.1f));
             }
             else
             {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 15f, 0.05f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 15f, 0.1f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 15f, 0.1f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.4f, 0.05f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.4f, 0.1f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.4f, 0.1f));
             }
         }
         audioManager.PlayMovePerformAudio(0,move,false);
@@ -157,11 +163,11 @@ public class Unit : MonoBehaviour
         sequence.Append(spRenderer.DOColor(Color.gray, 0.1f));
         if (isPlayer1)
         {
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 2f, 0.1f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.4f, 0.1f));
         }
         else
         {
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 2f, 0.1f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.4f, 0.1f));
         }
         sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x, 0.1f));
         sequence.Append(spRenderer.DOColor(originalColor, 0.1f));
@@ -171,9 +177,9 @@ public class Unit : MonoBehaviour
         public IEnumerator PlayHealAnimation()
     {
         var sequence = DOTween.Sequence();
-        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 20f, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 0.5f, 0.1f));
         sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y, 0.1f));
-        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 20f, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 0.5f, 0.1f));
         sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y, 0.1f));
         yield return new WaitForSeconds(0.4f);
     }
@@ -183,9 +189,9 @@ public class Unit : MonoBehaviour
     {
         var sequence = DOTween.Sequence();
         Debug.Log($"BoostValue = {boostValue}");
-        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 20f, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 0.5f, 0.1f));
         sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y, 0.1f));
-        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 20f, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 0.5f, 0.1f));
         sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y, 0.1f));
         yield return new WaitForSeconds(0.4f);
         if (boostValue > 0)
@@ -204,21 +210,21 @@ public class Unit : MonoBehaviour
         var sequence = DOTween.Sequence();
         if (isPlayer1)
         {
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.02f));
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.2f, 0.02f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.2f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.2f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.2f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.2f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.2f, 0.04f));
         }
         else
         {
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.02f));
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
-            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.2f, 0.02f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.2f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.2f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.2f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.2f, 0.04f));
+            sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.2f, 0.04f));
         }
         sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x, 0.02f)); // 还原
         yield return new WaitForSeconds(0.2f);
@@ -232,21 +238,21 @@ public class Unit : MonoBehaviour
             var sequence = DOTween.Sequence();
             if (isPlayer1)
             {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.02f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.2f, 0.02f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.2f, 0.04f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.2f, 0.04f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.2f, 0.04f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.2f, 0.04f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.2f, 0.04f));
             }
             else
             {
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.02f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 5f, 0.04f));
-                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 5f, 0.04f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.2f, 0.02f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.2f, 0.04f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.2f, 0.04f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.2f, 0.04f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x - 0.2f, 0.04f));
+                sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x + 0.2f, 0.04f));
             }
             sequence.Append(spRenderer.transform.DOLocalMoveX(originalPos.x, 0.02f)); // 还原
             yield return new WaitForSeconds(0.2f);
@@ -258,8 +264,8 @@ public class Unit : MonoBehaviour
     {
         var sequence = DOTween.Sequence();
         
-        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 10f, 0.2f));
-        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y -80f, 0.8f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 0.6f, 0.2f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y -3f, 0.8f));
         sequence.Join(spRenderer.DOFade(0, 1f));
 
         yield return null;

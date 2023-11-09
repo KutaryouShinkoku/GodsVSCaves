@@ -7,7 +7,7 @@ public class BackgroundManager : MonoBehaviour
 {
     [SerializeField] Sprite bgSky;
     [SerializeField] Sprite bgCity;
-    [SerializeField] Image bg;
+    [SerializeField] SpriteRenderer bg;
 
     public void SetBackground(HeroCamp p1camp,HeroCamp p2camp)
     {
