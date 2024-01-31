@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7026118851274589815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7026118851274589817}
+  - component: {fileID: 7026118851274589814}
+  - component: {fileID: 7026118851274589816}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7026118851274589817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7026118851274589815}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &7026118851274589814
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7026118851274589815}
+  m_Enabled: 1
+--- !u!114 &7026118851274589816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7026118851274589815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 457c5960656d4654f92511627246b9e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  diceRoll: {fileID: 8300000, guid: c069294a6fa8034419e9e3e6e9f6c263, type: 3}
+  luckyBoost: {fileID: 8300000, guid: 1edec5750e5262742b85db738bf5753d, type: 3}
+  combatEnd: {fileID: 8300000, guid: dde2ada4d1ba7d4419fe0e59a8f18009, type: 3}
+  getCoin: {fileID: 8300000, guid: 3e9a7b9f96b006847a4b820318082132, type: 3}
+  futureAttack: {fileID: 8300000, guid: 581876525b4594848a6a3a615ea602eb, type: 3}
+  reborn: {fileID: 8300000, guid: faaca2da35c61fc41b72b9cc43b695c5, type: 3}
+  heal: {fileID: 8300000, guid: faaca2da35c61fc41b72b9cc43b695c5, type: 3}

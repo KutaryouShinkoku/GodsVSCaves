@@ -204,6 +204,18 @@ public class Unit : MonoBehaviour
         }
         yield return new WaitForSeconds(0.2f);
     }
+
+    //复活
+    public IEnumerator PlayRebornAnimation()
+    {
+        var sequence = DOTween.Sequence();
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 0.5f, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y + 0.5f, 0.1f));
+        sequence.Append(spRenderer.transform.DOLocalMoveY(originalPos.y, 0.1f));
+        yield return new WaitForSeconds(0.2f);
+    }
+
     //一个比较泛用的晃悠动画
     public IEnumerator PlayHurtAnimation()
     {

@@ -12,6 +12,9 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioClip combatEnd;
     [SerializeField] AudioClip getCoin;
     [SerializeField] AudioClip futureAttack;
+    [SerializeField] AudioClip reborn;
+    [SerializeField] AudioClip heal;
+
 
     private void Start()
     {
@@ -85,6 +88,10 @@ public class AudioManager : MonoBehaviour
                 return getCoin;
             case "futureAttack":
                 return futureAttack;
+            case "reborn":
+                return reborn;
+            case "heal":
+                return heal;
         }
         return null;
     }

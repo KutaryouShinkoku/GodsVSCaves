@@ -31,6 +31,7 @@ MonoBehaviour:
       adaptiveType: 0
       boost: 0
     status: 0
+    reborn: 0
     heal: 0
     delay: 0
     losePercentLife:
@@ -40,4 +41,5 @@ MonoBehaviour:
   performSE: {fileID: 8300000, guid: 39ae51fc50cfae84ea5aab39063ba68a, type: 3}
   hitSE: {fileID: 0}
   effectSE: {fileID: 8300000, guid: 27cb85a5a987b8a4daf4f2a7512fe8c1, type: 3}
-  effectTarget: 1
+  statChangeTarget: 1
+  StatusTarget: 0

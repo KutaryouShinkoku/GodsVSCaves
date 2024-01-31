@@ -59,9 +59,17 @@ public class CombatHUD : MonoBehaviour
     //根据异常状态更新血条颜色
     public IEnumerator UpdateHpBarColor()
     {
-        if(_hero.Status == ConditionsDB.Conditions[ConditionID.psn])
+        if (_hero.Status == ConditionsDB.Conditions[ConditionID.none])
+        {
+            hPColor.color = new Color(0.20f, 0.87f, 0.24f, 1f);
+        }
+        if (_hero.Status == ConditionsDB.Conditions[ConditionID.psn])
         {
             hPColor.color = new Color(0.66f, 0.12f, 0.61f, 1f);
+        }
+        if (_hero.Status == ConditionsDB.Conditions[ConditionID.heal])
+        {
+            hPColor.color = new Color(0.20f, 0.87f, 0.24f, 1f);
         }
         yield return null;
     }
@@ -122,10 +130,26 @@ public class CombatHUD : MonoBehaviour
         {
             dmgText.color = Color.yellow;
         }
-        if(damage != 0)
+        if(damage > 0)
         {
             dmgText.text = "-" + damage;
             yield return sequence.Append(dmgText .transform.DOLocalMoveY(originalDmgPos.y + 20f, 0.8f));
+            yield return sequence.Join(dmgText.DOFade(0, 0.8f));
+            yield return new WaitForSeconds(0.1f);
+        }
+        if(damage < 0)
+        {
+            dmgText.color = Color.green;
+            dmgText.text = "+" + (-damage);
+            yield return sequence.Append(dmgText.transform.DOLocalMoveY(originalDmgPos.y + 20f, 0.8f));
+            yield return sequence.Join(dmgText.DOFade(0, 0.8f));
+            yield return new WaitForSeconds(0.1f);
+        }
+        if(damage == 0)
+        {
+            dmgText.color = Color.black ;
+            dmgText.text = "0";
+            yield return sequence.Append(dmgText.transform.DOLocalMoveY(originalDmgPos.y + 20f, 0.8f));
             yield return sequence.Join(dmgText.DOFade(0, 0.8f));
             yield return new WaitForSeconds(0.1f);
         }

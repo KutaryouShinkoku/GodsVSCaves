@@ -118,4 +118,5 @@ public enum Character
 
     //-----专属部分
     Slow_, //吧主甲
+    Nature_, //情报屋
 }

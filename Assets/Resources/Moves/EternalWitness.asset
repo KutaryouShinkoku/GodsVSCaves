@@ -10,34 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 88df5df539cc67a40b7d466b9de0bd57, type: 3}
-  m_Name: AngelsGrace
+  m_Name: EternalWitness
   m_EditorClassIdentifier: 
-  moveName: AngelsGrace_name
+  moveName: EternalWitness_name
   description: 
   power: 0
   accuracy: 0
   extraTime: 0
   isMagic: 0
   isNonLethal: 0
-  moveActionType: 2
-  moveCatagory: 3
+  moveActionType: 3
+  moveCatagory: 5
   moveEffects:
-    boosts:
-    - stat: 2
-      boost: 1
+    boosts: []
     adaptiveDecrease:
       adaptiveType: 0
       boost: 0
     status: 0
-    reborn: 0
-    heal: 1
+    reborn: 1
+    heal: 0
     delay: 0
     losePercentLife:
       min: 0
       max: 0
       target: 0
-  performSE: {fileID: 8300000, guid: 73e7b85e82299604ca04206cbf937a98, type: 3}
+  performSE: {fileID: 8300000, guid: da679c66b18133a469608debcf594ae3, type: 3}
   hitSE: {fileID: 0}
   effectSE: {fileID: 8300000, guid: faaca2da35c61fc41b72b9cc43b695c5, type: 3}
-  statChangeTarget: 0
-  StatusTarget: 1
+  effectTarget: 0

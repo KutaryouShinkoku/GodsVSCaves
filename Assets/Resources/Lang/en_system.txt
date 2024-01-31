@@ -24,6 +24,7 @@ rolled a$rolled a
 {0} used {1}${0} used {1}
 Critical Hit!$Critical Hit!
 {0} lose {1} life${0} lose {1} life
+{0} drained {1} life${0} drained {1} life
 Victory won$Victory won
 for now$But the struggle between the gods and the caves will continue.
 {0}'s {1} increase {2}%!${0}'s {1} increase by {2}%!
@@ -45,7 +46,10 @@ Brave$Brave
 Timid$Timid
 Experienced$Experienced
 Slow_$Slow
+Nature_$Nature
+None$None
 Poison$Poison
+become healthy$become healthy
 has been poisoned$ has been poisoned
 {0} lose life due to poison${0} lose life due to poison
 {0}'s HP is restored${0}'s HP is restored
@@ -62,3 +66,6 @@ Show Hero Details$Show Hero Details
 {0} sent something to the future${0} sent something to the future
 {0} is influenced by something from the past${0} is influenced by something from the past
 {0} showed mercy${0} showed mercy
+{0} is reborn!${0} is reborn!
+{0} planted the seeds of life${0} planted the seeds of life
+Nature is beautiful, so {0} wants to draw something.$Nature is beautiful, so {0} wants to draw something.

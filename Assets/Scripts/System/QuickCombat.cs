@@ -37,7 +37,6 @@ public class QuickCombat : MonoBehaviour
         p2Hero.ResetStatBoost();
         isLastPlayer = false;
         NewTurn();
-
     }
 
     public void NewTurn()
@@ -95,6 +94,9 @@ public class QuickCombat : MonoBehaviour
         HandleMoveEffects(move, source, target, currentValue);
         //回合结束阶段处理各类效果
         source.OnAfterTurn();
+        //处理复活效果
+        HandleReborn(source); 
+        HandleReborn(target); 
         //疲劳检定
         CheckExhausted(source, turnCount);
 
@@ -164,6 +166,7 @@ public class QuickCombat : MonoBehaviour
         HandleStatus(move, source, target); //处理特殊状态
         HandleHeal(move, source, target, diceValue); //处理治疗
         HandlePercentDamage(move, source, target); //处理当前生命百分比掉血
+        HandleBuffReborn(move, source); //处理复活Buff
     }
 
     //疲劳鉴定
@@ -197,6 +200,17 @@ public class QuickCombat : MonoBehaviour
             }
         }
     }
+    //复活
+    void HandleReborn(Hero hero)
+    {
+        if (hero.IsReborn)
+        {
+            hero.HpChanged = true;
+            hero.HP = hero.MaxHP / 2;
+            hero.IsReborn = false;
+        }
+    }
+
     //判断角色是否死亡
     public void CheckFainted(Hero source, Hero target)
     {
@@ -230,15 +244,15 @@ public class QuickCombat : MonoBehaviour
         if (effect.Boosts.Count != 0)
         {
 
-            if (move.Base.EffectTarget == EffectTarget.Self)
+            if (move.Base.StatChangeTarget == EffectTarget.Self)
             {
                 source.ApplyBoosts(effect.Boosts);
             }
-            else if (move.Base.EffectTarget == EffectTarget.Enemy)
+            else if (move.Base.StatChangeTarget == EffectTarget.Enemy)
             {
                 target.ApplyBoosts(effect.Boosts);
             }
-            else if (move.Base.EffectTarget == EffectTarget.All)
+            else if (move.Base.StatChangeTarget == EffectTarget.All)
             {
                 source.ApplyBoosts(effect.Boosts);
                 target.ApplyBoosts(effect.Boosts);
@@ -305,6 +319,14 @@ public class QuickCombat : MonoBehaviour
             {
                 target.PercentDamage(per);
             }
+        }
+    }
+    void HandleBuffReborn(Move move, Hero source) //复活
+    {
+        var effect = move.Base.MoveEffects;
+        if (effect.Reborn)
+        {
+            source.IsReborn = true;
         }
     }
 

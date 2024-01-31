@@ -11,22 +11,25 @@ public class MoveBase : ScriptableObject
     
     [TextArea]
     [SerializeField] string description;
-
+    [SerializeField] bool isMagic;
+    [SerializeField] bool isNonLethal;
+    [SerializeField] bool isDrain;
     [SerializeField] int power;
     [SerializeField] int accuracy;
     [SerializeField] int extraTime;
-    [SerializeField] bool isMagic;
-    [SerializeField] bool isNonLethal;
+
     [SerializeField] MoveActionType moveActionType;
     [SerializeField] MoveCatagory moveCatagory;
     [SerializeField] MoveEffects moveEffects;
+
+    [Header("Targets")]
+    [SerializeField] EffectTarget statChangeTarget;
+    [SerializeField] EffectTarget statusTarget;
+
     [Header("SoundEffects")]
     [SerializeField] AudioClip performSE;
     [SerializeField] AudioClip hitSE;
     [SerializeField] AudioClip effectSE;
-
-    [Header("This setting is stat effects only")]
-    [SerializeField] EffectTarget effectTarget;
     public string MoveName{
         get { return $"{Localize.GetInstance().GetTextByKey($"{moveName}")}"; }
     }
@@ -50,6 +53,10 @@ public class MoveBase : ScriptableObject
     }
     public bool IsNonLethal{
         get { return isNonLethal; }
+    }
+    public bool IsDrain
+    {
+        get { return isDrain; }
     }
 
     public MoveActionType MoveActionType{
@@ -77,9 +84,12 @@ public class MoveBase : ScriptableObject
         get { return effectSE; }
     }
 
-
-    public EffectTarget EffectTarget{
-        get { return effectTarget; }
+    public EffectTarget StatChangeTarget{
+        get { return statChangeTarget; }
+    }
+    public EffectTarget StatusTarget
+    {
+        get { return statusTarget; }
     }
 }
 [System.Serializable]
@@ -89,6 +99,7 @@ public class MoveEffects
     [SerializeField] List<StatBoost> boosts;
     [SerializeField] AdaptiveDecrease adaptiveDecrease;
     [SerializeField] ConditionID status;
+    [SerializeField] bool reborn;
     [SerializeField] int heal;
     [SerializeField] int delay;
     [SerializeField] LosePercentLife losePercentLife;
@@ -105,6 +116,10 @@ public class MoveEffects
     public ConditionID Status
     {
         get { return status; }
+    }
+    public bool Reborn
+    {
+        get { return reborn; }
     }
     public int Heal
     {

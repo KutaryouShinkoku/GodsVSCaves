@@ -30,3 +30,7 @@ Amnesia_name$瞬间失忆
 FutureSight_name$预知未来
 SlowMercy_name$点一下
 SlowPsychology_name$心理学
+EternalWitness_name$见证不朽
+Neoform_name$形体一新
+RhysticStudy_name$琉晶研究
+NaturesClaim_name$还诸自然

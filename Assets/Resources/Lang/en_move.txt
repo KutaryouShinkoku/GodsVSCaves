@@ -30,3 +30,7 @@ Amnesia_name$Amnesia
 FutureSight_name$Future Sight
 SlowMercy_name$Slow Mercy
 SlowPsychology_name$Slow Psychology
+EternalWitness_name$Eternal Witness
+Neoform_name$Neoform
+RhysticStudy_name$Rhystic Study
+NaturesClaim_name$Nature's Claim

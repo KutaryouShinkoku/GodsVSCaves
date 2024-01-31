@@ -25,6 +25,7 @@ public class Hero
     public bool HpChanged { get; set; } //判断角色有无掉血
     public int DelayDamage { get; set; } //标记受到延迟伤害
     public bool IsDelayDamageMagic { get; set; } //标记受到延迟伤害类型
+    public bool IsReborn { get; set; } //标记复活buff
     //--------------------------------------------------------
     public Dice dice = new Dice(); //备用，用来给角色绑骰子
 
@@ -143,6 +144,9 @@ public class Hero
                 break;
             case Character.Slow_:
                 CharacterBoost.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("Don't be anxious, there are benefits to being slow.")}", Base.HeroName));
+                break;
+            case Character.Nature_:
+                CharacterBoost.Enqueue(string.Format($"{Localize.GetInstance().GetTextByKey("Nature is beautiful, so {0} wants to draw something.")}", Base.HeroName));
                 break;
         }
         

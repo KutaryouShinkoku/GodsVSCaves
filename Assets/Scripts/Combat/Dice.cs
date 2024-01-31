@@ -43,7 +43,7 @@ public class Dice
         }
         if(character == Character.Brave) //勇敢骰子，血越少点越大
         {
-            float boost = (1f-(float)hero.HP / hero.Base.MaxHP)*50;
+            float boost = (1f-(float)hero.HP / hero.MaxHP)*50;
             if (boost > par)
             {
                 hero.CharacterRoll(hero.Base.Character); 
@@ -54,7 +54,7 @@ public class Dice
         }
         if(character == Character.Timid)  //胆小骰子，血少有可能扔1
         {
-            float boost = (1f- (float)hero.HP / hero.Base.MaxHP)*20;
+            float boost = (1f- (float)hero.HP / hero.MaxHP)*20;
             if(boost > par)
             {
                 hero.CharacterRoll(hero.Base.Character);
@@ -75,11 +75,21 @@ public class Dice
         //------------------------------专属骰子------------------------------------
         if(character == Character.Slow_) //吧主甲骰子
         {
-            float modifier = 4*hero.StatBoosts[Stat.MagicDef]+ (1f - (float)hero.HP / hero.Base.MaxHP) * 10;
+            float modifier = 4*hero.StatBoosts[Stat.MagicDef]+ (1f - (float)hero.HP / hero.MaxHP) * 10;
             if(modifier >par) 
             {
                 hero.CharacterRoll(hero.Base.Character);
                 return 1;
+            }
+            else return DiceRollBase();
+        }
+        if (character == Character.Nature_) //情报屋骰子
+        {
+            float modifier = hero.HP/hero .MaxHP*30;
+            if (modifier > par)
+            {
+                hero.CharacterRoll(hero.Base.Character);
+                return 0;
             }
             else return DiceRollBase();
         }

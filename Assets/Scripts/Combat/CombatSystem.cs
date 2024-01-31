@@ -31,6 +31,7 @@ public class CombatSystem : MonoBehaviour
 
     [Header("Camera")]
     [SerializeField] CameraShake cameraShake;
+    [SerializeField] CameraCloseUp cameraCloseup;
 
     [HideInInspector] public CombatState state;
     [HideInInspector] public Dice dice = new Dice();
@@ -89,6 +90,8 @@ public class CombatSystem : MonoBehaviour
         isLastPlayer = false;
         StartCoroutine(NewTurn());
     }
+    //-----------------------------回合结构-----------------------------
+
     //开始一个新回合
     IEnumerator NewTurn()
     {
@@ -132,8 +135,8 @@ public class CombatSystem : MonoBehaviour
         return firstPlayer;
     }
 
-    //-----------------------------一个回合-----------------------------
-    IEnumerator HandleTurn(Unit source, Unit target,CombatHUD sourceHUD,CombatHUD targetHUD)
+    //主回合结构
+    IEnumerator HandleTurn(Unit source, Unit target, CombatHUD sourceHUD, CombatHUD targetHUD)
     {
         //箭头切换
         StartCoroutine(sourceHUD.SetArrow());
@@ -143,7 +146,7 @@ public class CombatSystem : MonoBehaviour
         //扔骰子
         audioManager.Play(2, "diceRoll", false);
         int currentValue = dice.DiceRoll(source.Hero.Base.Luck, source.Hero);
-        yield return StartCoroutine(HandleDiceRoll(source,currentValue));
+        yield return StartCoroutine(HandleDiceRoll(source, currentValue));
         //处理任何因为技能效果增加的点数，大于6的调整为6
         if (currentValue > 5)
         {
@@ -155,6 +158,57 @@ public class CombatSystem : MonoBehaviour
 
         //放技能
         StartCoroutine((RunMove(source, target, move, sourceHUD, targetHUD, currentValue)));
+    }
+
+    //过回合
+    void PassTurn(Unit turnUnit)
+    {
+        if (isLastPlayer) { isLastPlayer = false; StartCoroutine(NewTurn()); }
+        else
+        {
+            if (turnUnit == p1Unit)
+            {
+                isLastPlayer = true;
+                state = CombatState.P2TURN;
+                StartCoroutine(HandleTurn(p2Unit, p1Unit, p2HUD, p1HUD));
+            }
+            else if (turnUnit == p2Unit)
+            {
+                isLastPlayer = true;
+                state = CombatState.P1TURN;
+                StartCoroutine(HandleTurn(p1Unit, p2Unit, p1HUD, p2HUD));
+            }
+        }
+    }
+
+    //判定游戏结束
+    void CheckBattleOver(Unit faintedUnit)
+    {
+        //隐藏相关UI
+        uiBet.DisableBet();
+        p1HUD.HideHUD();
+        p2HUD.HideHUD();
+        //子弹时间
+        Time.timeScale = 0.25f;
+
+        if (faintedUnit == p1Unit)
+        {
+            cameraCloseup.HeroCloseup("CloseupCameraP2");
+            StartCoroutine(faintedUnit.PlayFaintAnimation());
+            Time.timeScale = 1;
+            cameraCloseup.HeroCloseup("CloseupCameraP2");
+            state = CombatState.P2WON;
+            StartCoroutine(EndCombat());
+        }
+        else if (faintedUnit == p2Unit)
+        {
+            cameraCloseup.HeroCloseup("CloseupCameraP1");
+            StartCoroutine(faintedUnit.PlayFaintAnimation());
+            Time.timeScale = 1;
+            cameraCloseup.HeroCloseup("CloseupCameraP1");
+            state = CombatState.P1WON;
+            StartCoroutine(EndCombat());
+        }
     }
 
     //-----------------------------处理骰子-----------------------------
@@ -186,7 +240,7 @@ public class CombatSystem : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         //技能动画，然后算伤害
-        if (move.Base.MoveEffects.Delay == 0) { yield return StartCoroutine(HandleBaseAttack(sourceUnit, targetUnit, move, targetHUD, currentValue, move.Base.IsMagic)); }
+        if (move.Base.MoveEffects.Delay == 0) { yield return StartCoroutine(HandleBaseAttack(sourceUnit, targetUnit, move, sourceHUD, targetHUD, currentValue)); }
         else
         {
             yield return (StartCoroutine(sourceUnit.PlayAttackAnimation(move)));
@@ -204,12 +258,16 @@ public class CombatSystem : MonoBehaviour
         //结算延迟伤害
         if (sourceUnit.Hero.DelayDamage!=0)
         {
-            yield return (StartCoroutine(TakeDelayDamage(targetUnit,sourceUnit,sourceHUD)));
+            yield return StartCoroutine(TakeDelayDamage(targetUnit,sourceUnit,sourceHUD));
         }
 
         //回合结束阶段处理各类效果
         sourceUnit.Hero.OnAfterTurn();
         StartCoroutine(sourceUnit.PlayStatusAnimation());
+        //处理复活效果
+        if (sourceUnit.Hero.HP <= 0) { yield return StartCoroutine(HandleReborn(sourceUnit, sourceHUD)); }
+        if (targetUnit.Hero.HP <= 0) { yield return StartCoroutine(HandleReborn(targetUnit, targetHUD)); }
+
         //疲劳检定
         StartCoroutine(CheckExhausted(sourceUnit, turnCount));
         //上述内容的文字播报
@@ -222,7 +280,7 @@ public class CombatSystem : MonoBehaviour
         yield return StartCoroutine(CheckFainted(sourceUnit, targetUnit));
     }
     //攻击的基础部分
-    IEnumerator HandleBaseAttack(Unit sourceUnit, Unit targetUnit, Move move, CombatHUD targetHUD, int currentValue, bool isMagic)
+    IEnumerator HandleBaseAttack(Unit sourceUnit, Unit targetUnit, Move move,CombatHUD sourceHUD, CombatHUD targetHUD, int currentValue)
     {
         if (move.Base.ExtraTime > 0)
         {
@@ -230,15 +288,15 @@ public class CombatSystem : MonoBehaviour
             {
                 yield return (StartCoroutine(sourceUnit.PlayAttackAnimation(move)));
                 yield return (StartCoroutine(targetUnit.PlayHitAnimation(move)));
-                yield return (StartCoroutine(HandleDamage(sourceUnit, targetUnit, move, targetHUD, currentValue, move.Base.IsMagic)));
+                yield return (StartCoroutine(HandleDamage(sourceUnit, targetUnit, move, sourceHUD,targetHUD, currentValue, move.Base.IsMagic)));
             }
         }
         yield return (StartCoroutine(sourceUnit.PlayAttackAnimation(move)));
         yield return (StartCoroutine(targetUnit.PlayHitAnimation(move)));
-        yield return (StartCoroutine(HandleDamage(sourceUnit, targetUnit, move, targetHUD, currentValue, move.Base.IsMagic)));
+        yield return (StartCoroutine(HandleDamage(sourceUnit, targetUnit, move, sourceHUD,targetHUD, currentValue, move.Base.IsMagic)));
     }
     //算伤害
-    IEnumerator HandleDamage(Unit sourceUnit, Unit targetUnit, Move move, CombatHUD targetHUD, int currentValue,bool isMagic)
+    IEnumerator HandleDamage(Unit sourceUnit, Unit targetUnit, Move move, CombatHUD sourceHUD, CombatHUD targetHUD, int currentValue,bool isMagic)
     {
         if (move.Base.Power != 0)
         {
@@ -253,7 +311,7 @@ public class CombatSystem : MonoBehaviour
             {
                 yield return dialogBox.TypeDialog($"{Localize.GetInstance().GetTextByKey("Critical Hit!")}");
                 damage = (int)(damage * 1.5f);
-                yield return new WaitForSeconds(0.7f);
+                yield return new WaitForSeconds(0.6f);
             }
             //非致死效果处理
             if (damage >= targetUnit.Hero.HP&&move.Base.IsNonLethal==true)
@@ -265,7 +323,7 @@ public class CombatSystem : MonoBehaviour
 
             //受伤
             targetUnit.Hero.UpdateHp(damage);
-            if(damage >= 100) { cameraShake.ShakeCamera(); }
+            cameraShake.ShakeCamera(damage/50f);//伤害抖屏
             yield return targetHUD.ShowDamage(damage, isCrit, isMagic);
             yield return targetHUD.UpdateHp();
             if (damage != 0)
@@ -274,6 +332,21 @@ public class CombatSystem : MonoBehaviour
             }
             yield return new WaitForSeconds(0.7f);
             yield return targetHUD.HideDamage();
+            //吸血效果处理
+            if (move.Base.IsDrain)
+            {
+                int heal = -damage / 2;
+                sourceUnit.Hero.UpdateHp(heal / 2);
+                audioManager.Play(2, "heal", false);
+                yield return sourceHUD.ShowDamage(heal, isCrit, isMagic);
+                yield return sourceHUD.UpdateHp();
+                if (damage != 0)
+                {
+                    yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("{0} drained {1} life")}", sourceUnit.Hero.Base.HeroName, -heal));
+                }
+                yield return new WaitForSeconds(0.7f);
+                yield return targetHUD.HideDamage();
+            }
         }
     }
     //延迟伤害
@@ -295,6 +368,7 @@ public class CombatSystem : MonoBehaviour
         }
 
         target.Hero.UpdateHp(target .Hero.DelayDamage);
+        cameraShake.ShakeCamera(target.Hero.DelayDamage / 50f);//伤害抖屏
         yield return targetHUD.ShowDamage(target.Hero.DelayDamage, isCrit, target .Hero.IsDelayDamageMagic);
         yield return targetHUD.UpdateHp();
         yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("{0} lose {1} life")}", target.Hero.Base.HeroName, target.Hero.DelayDamage));
@@ -307,12 +381,13 @@ public class CombatSystem : MonoBehaviour
     IEnumerator HandleMoveEffects(Move move,Unit source, Unit target,int diceValue)
     {
         audioManager.PlayMoveEffectAudio(1, move, false);
-        yield return StartCoroutine(HandleDelayDamage(move, source, target)); //处理延迟伤害
+        yield return StartCoroutine(HandleDelayDamage(move, source)); //处理延迟伤害
         yield return StartCoroutine(HandleBoosts(move,source ,target)); //处理属性增减
         yield return StartCoroutine(HandleAdaptiveBoosts(move, source, target)); //处理智能属性增减
-        yield return StartCoroutine(HandleStatus(move, source, target)); //处理特殊状态
         yield return StartCoroutine(HandleHeal(move, source, target, diceValue)); //处理治疗
         yield return StartCoroutine(HandlePercentDamage(move, source, target)); //处理当前生命百分比掉血
+        yield return StartCoroutine(HandleBuffReborn(move,source)); //处理复活Buff
+        yield return StartCoroutine(HandleStatus(move, source, target)); //处理特殊状态
     }
 
     //显示任何变化需要的文字
@@ -325,6 +400,23 @@ public class CombatSystem : MonoBehaviour
             yield return new WaitForSeconds(0.8f);
         }
     }
+
+    //复活
+    IEnumerator HandleReborn(Unit unit,CombatHUD HUD)
+    {
+        if (unit.Hero.IsReborn)
+        {
+            unit.Hero.HpChanged = true;
+            unit.Hero.HP = unit.Hero.MaxHP / 2;
+            audioManager.Play(2, "reborn", false);
+            yield return StartCoroutine(unit.PlayRebornAnimation());
+            yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("{0} is reborn!")}", unit.Hero.Base.HeroName));
+            yield return new WaitForSeconds(0.5f);
+            yield return HUD.UpdateHp();
+            unit.Hero.IsReborn = false;
+        }
+    }
+
     //疲劳鉴定
     IEnumerator CheckExhausted(Unit unit,int turnCount)
     {
@@ -335,26 +427,7 @@ public class CombatSystem : MonoBehaviour
         yield return null;
     }
 
-    //过回合
-    void PassTurn(Unit turnUnit)
-    {
-        if (isLastPlayer) { isLastPlayer = false; StartCoroutine(NewTurn());}
-        else
-        {
-            if (turnUnit == p1Unit)
-            {
-                isLastPlayer = true;
-                state = CombatState.P2TURN;
-                StartCoroutine(HandleTurn(p2Unit, p1Unit, p2HUD, p1HUD));
-            }
-            else if (turnUnit == p2Unit)
-            {
-                isLastPlayer = true;
-                state = CombatState.P1TURN;
-                StartCoroutine(HandleTurn(p1Unit, p2Unit, p1HUD, p2HUD));
-            }
-        }
-    }
+   
     //判断角色是否死亡
     IEnumerator CheckFainted(Unit source,Unit target)
     {
@@ -374,22 +447,6 @@ public class CombatSystem : MonoBehaviour
         yield return null;
     }
 
-    //判定游戏结束
-    void CheckBattleOver(Unit faintedUnit)
-    {
-        if(faintedUnit == p1Unit)
-        {
-            StartCoroutine(faintedUnit.PlayFaintAnimation());
-            state = CombatState.P2WON;
-            StartCoroutine(EndCombat());
-        }
-        else if (faintedUnit == p2Unit)
-        {
-            StartCoroutine(faintedUnit.PlayFaintAnimation());
-            state = CombatState.P1WON;
-            StartCoroutine(EndCombat());
-        }
-    }
 
     //------------------------------------------------------------------
 
@@ -406,9 +463,7 @@ public class CombatSystem : MonoBehaviour
             yield return dialogBox.TypeDialog($"{p2Unit.Hero.Base.HeroName} {Localize.GetInstance().GetTextByKey("Victory won")}! \n{Localize.GetInstance().GetTextByKey("for now")}");
         }
         yield return new WaitForSeconds(1f);
-        uiBet.DisableBet();
-        p1HUD.HideHUD();
-        p2HUD.HideHUD();
+
         Time.timeScale = 1;
         yield return StartCoroutine(ResolveCoins(uiBet .p1Odd,uiBet.p2Odd,uiBet.p1Coin,uiBet.p2Coin,state));
         yield return new WaitForSeconds(1f);
@@ -423,17 +478,17 @@ public class CombatSystem : MonoBehaviour
         if (effect.Boosts.Count != 0)
         {
             
-            if (move.Base.EffectTarget == EffectTarget.Self)
+            if (move.Base.StatChangeTarget == EffectTarget.Self)
             {
                 source.Hero.ApplyBoosts(effect.Boosts);
                 StartCoroutine(source.PlayBoostedAnimation(source.Hero.BoostValue(effect.Boosts)));
             }
-            else if (move.Base.EffectTarget == EffectTarget.Enemy)
+            else if (move.Base.StatChangeTarget == EffectTarget.Enemy)
             {
                 target.Hero.ApplyBoosts(effect.Boosts);
                 StartCoroutine(target.PlayBoostedAnimation(source.Hero.BoostValue(effect.Boosts)));
             }
-            else if (move.Base.EffectTarget == EffectTarget.All)
+            else if (move.Base.StatChangeTarget == EffectTarget.All)
             {
                 source.Hero.ApplyBoosts(effect.Boosts);
                 target.Hero.ApplyBoosts(effect.Boosts);
@@ -481,7 +536,8 @@ public class CombatSystem : MonoBehaviour
         var effect = move.Base.MoveEffects;
         if(effect .Status != ConditionID.none)
         {
-            target.Hero.SetStatus(effect.Status);
+            if(move.Base.StatusTarget == EffectTarget.Self) { source.Hero.SetStatus(effect.Status); }
+            else if (move.Base.StatusTarget == EffectTarget.Enemy) { target.Hero.SetStatus(effect.Status); }
             yield return ShowStatusChanges(source);
             yield return ShowStatusChanges(target);
         }
@@ -519,13 +575,25 @@ public class CombatSystem : MonoBehaviour
             yield return ShowStatusChanges(target);
         }
     }
-    IEnumerator HandleDelayDamage(Move move, Unit source, Unit target) //延迟伤害
+    IEnumerator HandleDelayDamage(Move move, Unit source) //延迟伤害
     {
         var effect = move.Base.MoveEffects;
         if (effect.Delay != 0)
         {
             yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("{0} sent something to the future")}", source.Hero.Base.HeroName));
             yield return new WaitForSeconds(0.8f);
+        }
+    }
+
+    IEnumerator HandleBuffReborn(Move move,Unit source) //复活
+    {
+        var effect = move.Base.MoveEffects;
+        if(effect.Reborn)
+        {
+            source.Hero.IsReborn = true;
+            StartCoroutine(source.PlayHealAnimation());
+            yield return dialogBox.TypeDialog(string.Format($"{Localize.GetInstance().GetTextByKey("{0} planted the seeds of life")}", source.Hero.Base.HeroName));
+            yield return new WaitForSeconds(0.6f);
         }
     }
     //------------------------------局外和UI------------------------------------
@@ -564,7 +632,7 @@ public class CombatSystem : MonoBehaviour
     }
 
     //英雄信息
-    public void showHeroDetails() 
+    public void ShowHeroDetails() 
     {
         uiDetail.SetActive(true);
         detailP1.ShowHeroDetails(p1Unit.Hero);
